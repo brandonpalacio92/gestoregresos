@@ -1,6 +1,5 @@
 [phases.setup]
 nixPkgs = ["nodejs_20"]
-nodeVersion = "20.19.1"
 
 [phases.install]
 cmds = ["npm ci"]
@@ -10,3 +9,6 @@ cmds = ["npm run build:prod"]
 
 [phases.start]
 cmd = "cd backend && npm run prod"
+
+[variables]
+NODE_VERSION = "20.19.1"
