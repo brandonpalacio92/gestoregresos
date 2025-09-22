@@ -67,6 +67,10 @@
     "typescript": "~5.8.0"
   },
   "description": "An Ionic project",
+  "engines": {
+    "node": "20.19.1",
+    "npm": "10.8.2"
+  },
   "overrides": {
     "zone.js": "~0.15.0"
   }
