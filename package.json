@@ -15,6 +15,7 @@
     "build:dev": "ng build --configuration development",
     "start:prod": "bash start.sh",
     "postinstall": "npm run build:prod",
+    "vercel-build": "npm run build:prod",
     "dev": "ng serve",
     "dev:backend": "cd backend && npm run dev",
     "dev:full": "start cmd /k \"npm run dev:backend\" && npm run dev"
