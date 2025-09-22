@@ -12,7 +12,8 @@
     "serve": "ng serve",
     "e2e": "ng e2e",
     "build:prod": "ng build --configuration production",
-    "build:dev": "ng build --configuration development"
+    "build:dev": "ng build --configuration development",
+    "start:prod": "cd backend && npm run prod"
   },
   "private": true,
   "dependencies": {
