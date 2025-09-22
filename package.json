@@ -13,12 +13,8 @@
     "e2e": "ng e2e",
     "build:prod": "ng build --configuration production",
     "build:dev": "ng build --configuration development",
-    "start:prod": "bash start.sh",
-    "postinstall": "npm run build:prod",
-    "vercel-build": "npm run build:prod",
     "dev": "ng serve",
-    "dev:backend": "cd backend && npm run dev",
-    "dev:full": "start cmd /k \"npm run dev:backend\" && npm run dev"
+    "dev:backend": "cd backend && npm run dev"
   },
   "private": true,
   "dependencies": {
@@ -71,10 +67,6 @@
     "typescript": "~5.8.0"
   },
   "description": "An Ionic project",
-  "engines": {
-    "node": ">=20.19.0",
-    "npm": ">=10.0.0"
-  },
   "overrides": {
     "zone.js": "~0.15.0"
   }
