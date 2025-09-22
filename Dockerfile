@@ -29,4 +29,5 @@ COPY backend/ .
 EXPOSE 3000
 
 # Start the application
+WORKDIR /app/backend
 CMD ["npm", "run", "prod"]
