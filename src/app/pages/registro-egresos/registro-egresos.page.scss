@@ -1,0 +1,353 @@
+.container {
+  padding: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+ion-datetime {
+  background: transparent;
+  color: var(--ion-color-medium);
+  font-size: 14px;
+  padding: 1px 0;
+}
+
+ion-datetime::part(native) {
+  border: none;
+  box-shadow: none;
+}
+
+ion-card {
+  margin: 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+ion-card-header {
+  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+  color: white;
+  border-radius: 16px 16px 0 0;
+}
+
+ion-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+ion-card-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+ion-item {
+  --border-radius: 8px;
+  --background: var(--ion-color-light);
+  margin-bottom: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+}
+
+ion-item:hover {
+  --background: var(--ion-color-light-shade);
+}
+
+ion-label[position="stacked"] {
+  font-weight: 600;
+  color: var(--ion-color-dark);
+  margin-bottom: 8px;
+}
+
+ion-input, ion-select, ion-datetime, ion-textarea {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --background: white;
+  border-radius: 8px;
+  margin-top: 4px;
+}
+
+ion-checkbox {
+  --size: 20px;
+  --checkbox-background-checked: var(--ion-color-primary);
+  --border-color-checked: var(--ion-color-primary);
+}
+
+.ion-invalid {
+  --border-color: var(--ion-color-danger);
+  --background: rgba(235, 68, 90, 0.1);
+}
+
+ion-note[slot="error"] {
+  color: var(--ion-color-danger);
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: block;
+}
+
+ion-button {
+  margin-top: 16px;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-weight: 600;
+  height: 48px;
+}
+
+ion-button[color="primary"] {
+  --background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+}
+
+ion-button[fill="outline"] {
+  --border-width: 2px;
+  --border-color: var(--ion-color-medium);
+  --color: var(--ion-color-medium);
+}
+
+ion-button:hover {
+  --box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+/* Estilos para campos de gastos periódicos */
+div[ngIf="esPeriodico"] {
+  background: rgba(var(--ion-color-primary-rgb), 0.05);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  border-left: 4px solid var(--ion-color-primary);
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .container {
+    padding: 8px;
+  }
+  
+  ion-card-title {
+    font-size: 1.3rem;
+  }
+  
+  ion-button {
+    height: 44px;
+  }
+}
+
+/* Animaciones */
+ion-item {
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilos para el estado de carga */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Estilos para mensajes de éxito/error */
+.success-message {
+  background: var(--ion-color-success);
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 16px 0;
+  text-align: center;
+}
+
+.error-message {
+  background: var(--ion-color-danger);
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 16px 0;
+  text-align: center;
+}
+
+/* Estilos para el tipo seleccionado */
+.tipo-seleccionado {
+  margin-left: 8px;
+  animation: fadeInScale 0.3s ease-out;
+}
+
+.tipo-seleccionado ion-chip {
+  --background: var(--ion-color-secondary);
+  --color: white;
+  font-size: 0.85rem;
+  height: 28px;
+  margin: 0;
+}
+
+.tipo-seleccionado ion-icon {
+  font-size: 16px;
+  margin-right: 4px;
+}
+
+/* Estilos para la categoría seleccionada */
+.categoria-seleccionada {
+  margin-left: 8px;
+  animation: fadeInScale 0.3s ease-out;
+}
+
+.categoria-seleccionada ion-chip {
+  --background: var(--ion-color-primary);
+  --color: white;
+  font-size: 0.85rem;
+  height: 28px;
+  margin: 0;
+}
+
+.categoria-seleccionada ion-icon {
+  font-size: 16px;
+  margin-right: 4px;
+}
+
+/* Estilos mejorados para el select de tipo */
+ion-select {
+  --placeholder-color: var(--ion-color-medium);
+  --placeholder-opacity: 0.7;
+  font-weight: 500;
+}
+
+ion-select-option {
+  --color: var(--ion-color-dark);
+  --background: white;
+  --background-hover: var(--ion-color-light);
+  --background-selected: var(--ion-color-primary);
+  --color-selected: white;
+}
+
+/* Animación para el chip de tipo seleccionado */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+ion-modal.custom-fecha-modal::part(content) {
+  width: 90%;
+  height: 60%;
+  max-width: 400px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  background: var(--ion-background-color, #fff);
+}
+
+ion-modal.custom-fecha-modal::part(backdrop) {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para el modal de progreso */
+.modal-progreso::part(content) {
+  width: 90%;
+  height: auto;
+  max-width: 400px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.progreso-container {
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.progreso-header {
+  margin-bottom: 32px;
+  
+  ion-icon {
+    margin-bottom: 16px;
+    animation: pulse 2s infinite;
+  }
+  
+  h2 {
+    margin: 0 0 8px 0;
+    color: var(--ion-color-dark);
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  p {
+    margin: 0;
+    color: var(--ion-color-medium);
+    font-size: 1rem;
+  }
+}
+
+.progreso-content {
+  .progreso-bar-container {
+    margin-bottom: 24px;
+    
+    ion-progress-bar {
+      height: 8px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    
+    .progreso-text {
+      font-size: 0.9rem;
+      color: var(--ion-color-medium);
+      margin-bottom: 4px;
+    }
+    
+    .progreso-porcentaje {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--ion-color-primary);
+    }
+  }
+  
+  .progreso-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: var(--ion-color-medium);
+    
+    ion-icon {
+      font-size: 1.2rem;
+      color: var(--ion-color-primary);
+    }
+  }
+}
+
+/* Animación de pulso para el icono */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.texto-un-linea {
+  white-space: nowrap;       /* Evita el salto de línea */
+  //overflow: hidden;          /* Oculta el texto que se desborda */
+  text-overflow: ellipsis;   /* Agrega "..." si el texto es muy largo */
+}

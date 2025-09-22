@@ -1,0 +1,94 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Iniciar Sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="login-container">
+    <!-- Logo o título de la app -->
+    <div class="logo-section">
+      <ion-icon name="wallet-outline" size="large" color="primary"></ion-icon>
+      <h1>GestorEgresos</h1>
+      <p>Gestiona tus finanzas de manera inteligente</p>
+    </div>
+
+    <!-- Formulario de login -->
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+      <!-- Email -->
+      <ion-item class="form-item">
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input 
+          type="email" 
+          formControlName="email"
+          placeholder="tu@email.com"
+          [class.ion-invalid]="email?.invalid && email?.touched"
+          [class.ion-touched]="email?.touched">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="email?.invalid && email?.touched">
+        <span *ngIf="email?.errors?.['required']">El email es requerido</span>
+        <span *ngIf="email?.errors?.['email']">Ingresa un email válido</span>
+      </div>
+
+      <!-- Contraseña -->
+      <ion-item class="form-item">
+        <ion-label position="stacked">Contraseña</ion-label>
+        <ion-input 
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          placeholder="Tu contraseña"
+          [class.ion-invalid]="password?.invalid && password?.touched"
+          [class.ion-touched]="password?.touched">
+        </ion-input>
+        <ion-button 
+          fill="clear" 
+          slot="end" 
+          (click)="togglePasswordVisibility()"
+          class="password-toggle">
+          <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <div class="error-message" *ngIf="password?.invalid && password?.touched">
+        <span *ngIf="password?.errors?.['required']">La contraseña es requerida</span>
+        <span *ngIf="password?.errors?.['minlength']">Mínimo 6 caracteres</span>
+      </div>
+
+      <!-- Botón de login -->
+      <ion-button 
+        expand="block" 
+        type="submit" 
+        [disabled]="loginForm.invalid"
+        class="login-button">
+        Iniciar Sesión
+      </ion-button>
+
+      <!-- Enlaces adicionales -->
+      <div class="form-links">
+        <ion-button 
+          fill="clear" 
+          (click)="forgotPassword()"
+          class="link-button">
+          ¿Olvidaste tu contraseña?
+        </ion-button>
+      </div>
+    </form>
+
+    <!-- Separador -->
+    <div class="separator">
+      <span>o</span>
+    </div>
+
+    <!-- Botón de registro -->
+    <div class="register-section">
+      <p>¿No tienes una cuenta?</p>
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        (click)="goToRegister()"
+        class="register-button">
+        Crear Cuenta
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

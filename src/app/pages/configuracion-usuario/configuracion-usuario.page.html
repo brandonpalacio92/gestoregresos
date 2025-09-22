@@ -1,0 +1,391 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Configuración</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    
+    <!-- Perfil de Usuario -->
+    <ion-card class="perfil-usuario">
+      <ion-card-header>
+        <ion-card-title (click)="togglePerfil()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="person-outline"></ion-icon>
+            <span>Perfil de Usuario</span>
+          </div>
+          <ion-icon 
+            [name]="perfilExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!perfilExpandido">
+        <div class="perfil-info" *ngIf="usuario">
+          <div class="usuario-avatar">
+            <ion-icon name="person-circle-outline" size="large"></ion-icon>
+          </div>
+          <div class="usuario-datos">
+            <h3>{{ usuario.nombre || 'Usuario' }}</h3>
+            <p>{{ usuario.email }}</p>
+            <p class="fecha-registro">Miembro desde {{ usuario.created_at | date:'MMMM yyyy' }}</p>
+          </div>
+        </div>
+
+        <div class="formulario-perfil">
+          <ion-item>
+            <ion-label position="stacked">Nombre</ion-label>
+            <ion-input 
+              [(ngModel)]="perfilForm.nombre" 
+              placeholder="Ingresa tu nombre">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input 
+              [(ngModel)]="perfilForm.email" 
+              type="email" 
+              placeholder="tu@email.com">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Teléfono</ion-label>
+            <ion-input 
+              [(ngModel)]="perfilForm.telefono" 
+              type="tel" 
+              placeholder="+57 300 123 4567">
+            </ion-input>
+          </ion-item>
+
+          <ion-button 
+            expand="block" 
+            color="primary" 
+            (click)="actualizarPerfil()"
+            class="boton-guardar">
+            <ion-icon name="save-outline" slot="start"></ion-icon>
+            Actualizar Perfil
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Preferencias de la App -->
+    <ion-card class="preferencias-app">
+      <ion-card-header>
+        <ion-card-title (click)="togglePreferencias()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="settings-outline"></ion-icon>
+            <span>Preferencias de la App</span>
+          </div>
+          <ion-icon 
+            [name]="preferenciasExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!preferenciasExpandido">
+        <ion-item>
+          <ion-label>Tema</ion-label>
+          <ion-select 
+            [(ngModel)]="preferencias.tema" 
+            interface="popover">
+            <ion-select-option value="claro">Claro</ion-select-option>
+            <ion-select-option value="oscuro">Oscuro</ion-select-option>
+            <ion-select-option value="auto">Automático</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Moneda</ion-label>
+          <ion-select 
+            [(ngModel)]="preferencias.moneda" 
+            interface="popover">
+            <ion-select-option value="USD">USD ($)</ion-select-option>
+            <ion-select-option value="COP">COP ($)</ion-select-option>
+            <ion-select-option value="EUR">EUR (€)</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Idioma</ion-label>
+          <ion-select 
+            [(ngModel)]="preferencias.idioma" 
+            interface="popover">
+            <ion-select-option value="es">Español</ion-select-option>
+            <ion-select-option value="en">English</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button 
+          expand="block" 
+          color="secondary" 
+          (click)="guardarPreferencias()"
+          class="boton-guardar">
+          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+          Guardar Preferencias
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Personalización de Colores -->
+    <ion-card class="personalizacion-colores">
+      <ion-card-header>
+        <ion-card-title (click)="togglePreferencias()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="color-palette-outline"></ion-icon>
+            <span>🎨 Personalización de Colores</span>
+          </div>
+          <ion-icon 
+            [name]="preferenciasExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!preferenciasExpandido">
+        
+        <!-- Esquemas Predefinidos -->
+        <div class="esquemas-colores">
+          <h3>Esquemas Predefinidos</h3>
+          <div class="esquemas-grid">
+            <div 
+              *ngFor="let esquema of coloresPredefinidos" 
+              class="esquema-color"
+              (click)="seleccionarEsquemaColor(esquema)"
+              [class.seleccionado]="preferencias.colorPrimario === esquema.primario">
+              <div class="esquema-preview">
+                <div class="color-circulo" [style.background-color]="esquema.primario"></div>
+                <div class="color-circulo" [style.background-color]="esquema.secundario"></div>
+                <div class="color-circulo" [style.background-color]="esquema.acento"></div>
+              </div>
+              <span class="esquema-nombre">{{ esquema.nombre }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Personalización Individual -->
+        <div class="personalizacion-individual">
+          <h3>Personalización Individual</h3>
+          
+          <div class="color-picker-item">
+            <ion-label>Color Primario</ion-label>
+            <div class="color-picker-container">
+              <input 
+                type="color" 
+                [value]="preferencias.colorPrimario"
+                (input)="personalizarColor('primario', $event.target.value)"
+                class="color-picker">
+              <span class="color-value">{{ preferencias.colorPrimario }}</span>
+            </div>
+          </div>
+
+          <div class="color-picker-item">
+            <ion-label>Color Secundario</ion-label>
+            <div class="color-picker-container">
+              <input 
+                type="color" 
+                [value]="preferencias.colorSecundario"
+                (input)="personalizarColor('secundario', $event.target.value)"
+                class="color-picker">
+              <span class="color-value">{{ preferencias.colorSecundario }}</span>
+            </div>
+          </div>
+
+          <div class="color-picker-item">
+            <ion-label>Color de Acento</ion-label>
+            <div class="color-picker-container">
+              <input 
+                type="color" 
+                [value]="preferencias.colorAcento"
+                (input)="personalizarColor('acento', $event.target.value)"
+                class="color-picker">
+              <span class="color-value">{{ preferencias.colorAcento }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview de Colores -->
+        <div class="color-preview">
+          <h3>Vista Previa</h3>
+          <div class="preview-buttons">
+            <ion-button color="primary">Botón Primario</ion-button>
+            <ion-button color="secondary">Botón Secundario</ion-button>
+            <ion-button color="tertiary">Botón Acento</ion-button>
+          </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="color-actions">
+          <ion-button expand="block" fill="outline" (click)="resetearColores()">
+            <ion-icon name="refresh-outline" slot="start"></ion-icon>
+            Resetear Colores
+          </ion-button>
+          
+          <ion-button expand="block" (click)="guardarPreferencias()" class="boton-guardar">
+            <ion-icon name="save-outline" slot="start"></ion-icon>
+            Guardar Colores
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Notificaciones -->
+    <ion-card class="notificaciones">
+      <ion-card-header>
+        <ion-card-title (click)="toggleNotificaciones()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="notifications-outline"></ion-icon>
+            <span>Notificaciones</span>
+          </div>
+          <ion-icon 
+            [name]="notificacionesExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!notificacionesExpandido">
+        <ion-item>
+          <ion-label>Notificaciones Push</ion-label>
+          <ion-toggle [(ngModel)]="preferencias.notificaciones"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Recordatorios de Pago</ion-label>
+          <ion-toggle [(ngModel)]="preferencias.recordatorios"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Resumen Diario</ion-label>
+          <ion-toggle [(ngModel)]="preferencias.resumenDiario"></ion-toggle>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Gestión de Datos -->
+    <ion-card class="gestion-datos">
+      <ion-card-header>
+        <ion-card-title (click)="toggleDatos()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="cloud-download-outline"></ion-icon>
+            <span>Gestión de Datos</span>
+          </div>
+          <ion-icon 
+            [name]="datosExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!datosExpandido">
+        <div class="datos-opciones">
+          <ion-button 
+            expand="block" 
+            fill="outline" 
+            color="primary" 
+            (click)="exportarDatos()">
+            <ion-icon name="download-outline" slot="start"></ion-icon>
+            Exportar Datos
+          </ion-button>
+
+          <ion-button 
+            expand="block" 
+            fill="outline" 
+            color="warning" 
+            disabled>
+            <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+            Importar Datos
+            <ion-note slot="end">Próximamente</ion-note>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Seguridad -->
+    <ion-card class="seguridad">
+      <ion-card-header>
+        <ion-card-title (click)="toggleSeguridad()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <span>Seguridad</span>
+          </div>
+          <ion-icon 
+            [name]="seguridadExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!seguridadExpandido">
+        <div class="formulario-password">
+          <h4>Cambiar Contraseña</h4>
+          
+          <ion-item>
+            <ion-label position="stacked">Contraseña Actual</ion-label>
+            <ion-input 
+              [(ngModel)]="cambioPasswordForm.passwordActual" 
+              type="password" 
+              placeholder="Ingresa tu contraseña actual">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Nueva Contraseña</ion-label>
+            <ion-input 
+              [(ngModel)]="cambioPasswordForm.passwordNuevo" 
+              type="password" 
+              placeholder="Ingresa tu nueva contraseña">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Confirmar Contraseña</ion-label>
+            <ion-input 
+              [(ngModel)]="cambioPasswordForm.passwordConfirmar" 
+              type="password" 
+              placeholder="Confirma tu nueva contraseña">
+            </ion-input>
+          </ion-item>
+
+          <ion-button 
+            expand="block" 
+            color="warning" 
+            (click)="cambiarPassword()"
+            class="boton-guardar">
+            <ion-icon name="key-outline" slot="start"></ion-icon>
+            Cambiar Contraseña
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Cerrar Sesión -->
+    <ion-card class="cerrar-sesion">
+      <ion-card-content>
+        <ion-button 
+          expand="block" 
+          color="danger" 
+          fill="outline" 
+          (click)="cerrarSesion()">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          Cerrar Sesión
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+
+  <!-- Estado de carga -->
+  <div class="loading" *ngIf="cargando">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando configuración...</p>
+  </div>
+</ion-content>

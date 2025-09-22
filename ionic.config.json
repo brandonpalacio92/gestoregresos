@@ -1,0 +1,7 @@
+{
+  "name": "GestorEgresos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

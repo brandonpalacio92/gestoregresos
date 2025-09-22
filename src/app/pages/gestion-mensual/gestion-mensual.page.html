@@ -1,0 +1,249 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Gestión Mensual</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <!-- Selector de mes -->
+    <ion-card class="mes-selector">
+      <ion-card-header>
+        <ion-card-title (click)="toggleMesSelector()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>Navegación del Mes</span>
+          </div>
+          <ion-icon 
+            [name]="mesSelectorExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!mesSelectorExpandido">
+        <div class="mes-navegacion">
+          <ion-button fill="clear" (click)="cambiarMes('anterior')">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </ion-button>
+          
+          <div class="mes-actual">
+            <h2>{{ getNombreMes(mesActual) }} {{ anioActual }}</h2>
+          </div>
+          
+          <ion-button fill="clear" (click)="cambiarMes('siguiente')">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Resumen de gastos por estado -->
+    <ion-card class="resumen-gastos">
+      <ion-card-header>
+        <ion-card-title (click)="toggleResumen()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="cash-outline"></ion-icon>
+            <span>Gastos del Mes por Estado</span>
+          </div>
+          <ion-icon 
+            [name]="resumenExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!resumenExpandido">
+        <div class="resumen-grid">
+          <div class="resumen-item">
+            <div class="resumen-valor total">{{ formatearMoneda(getTotalGastadoPorCategoria()) }}</div>
+            <div class="resumen-label">Total</div>
+          </div>
+          
+          <div class="resumen-item">
+            <div class="resumen-valor pagado">{{ formatearMoneda(getTotalGastadoPagadoBackend()) }}</div>
+            <div class="resumen-label">Pagado</div>
+          </div>
+          
+          <div class="resumen-item">
+            <div class="resumen-valor pendiente">{{ formatearMoneda(getTotalGastadoPendienteBackend()) }}</div>
+            <div class="resumen-label">Pendiente</div>
+          </div>
+
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Análisis de tendencias -->
+    <ion-card class="tendencias">
+      <ion-card-header>
+        <ion-card-title (click)="toggleAnalisis()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="analytics-outline"></ion-icon>
+            <span>Análisis del Mes</span>
+          </div>
+          <ion-icon 
+            [name]="analisisExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!analisisExpandido">
+        <div class="tendencias-grid">
+          <div class="tendencia-item">
+            <div class="tendencia-valor">{{ formatearMoneda(getPromedioGastoDiario()) }}</div>
+            <div class="tendencia-label">Promedio Diario</div>
+          </div>
+          
+          <div class="tendencia-item">
+            <div class="tendencia-valor">{{ getEgresosProximosVencer().length }}</div>
+            <div class="tendencia-label">Próximos a Vencer</div>
+          </div>
+
+          <div class="tendencia-item">
+            <div class="resumen-valor pagos-tardios">{{ formatearMoneda(getTotalPagosTardios()) }}</div>
+            <div class="resumen-label">Pagos Tardíos</div>
+          </div>
+        </div>
+        
+        <div class="tendencia-destacada" *ngIf="getCategoriaMayorGasto()">
+          <ion-icon name="trophy-outline"></ion-icon>
+          <div class="destacada-info">
+            <div class="destacada-titulo">Mayor Gasto</div>
+            <div class="destacada-descripcion">{{ getCategoriaMayorGasto().categoria_nombre }}</div>
+            <div class="destacada-monto">{{ formatearMoneda(getCategoriaMayorGasto().monto_total) }}</div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Gastos por categoría -->
+    <ion-card class="categorias-gastos" *ngIf="estadisticasCategorias.length > 0">
+      <ion-card-header>
+        <ion-card-title (click)="toggleCategorias()" class="categorias-header-clickeable">
+          <div class="categorias-title-content">
+            <ion-icon name="pie-chart-outline"></ion-icon>
+            <span>Gastos por Categoría</span>
+            <span class="categorias-count">({{ estadisticasCategorias.length }})</span>
+          </div>
+          <ion-icon 
+            [name]="categoriasExpandidas ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.categorias-colapsadas]="!categoriasExpandidas">
+        
+        <!-- Lista de categorías -->
+        <div class="categorias-scroll-container">
+          <div class="categoria-item" *ngFor="let categoria of estadisticasCategorias">
+            <div class="categoria-header">
+              <div class="categoria-info">
+                <div class="categoria-nombre">
+                  <ion-icon [name]="getIconoCategoria(categoria)" [style.color]="getColorCategoria(categoria)"></ion-icon>
+                  {{ categoria.categoria_nombre }}
+                </div>
+                <div class="categoria-monto">{{ formatearMoneda(categoria.monto_total) }}</div>
+              </div>
+              
+              <div class="categoria-porcentaje">
+                {{ getPorcentajeCategoriaTemplate(categoria) | number:'1.0-0' }}%
+              </div>
+            </div>
+            
+            <!-- Barra de progreso para todas las categorías -->
+            <div class="categoria-progreso">
+              <ion-progress-bar 
+                [value]="getProgresoDeuda(categoria)"
+                [color]="getColorProgresoDeuda(categoria)">
+              </ion-progress-bar>
+              <div class="progreso-texto">
+                {{ getTextoProgresoDeuda(categoria) }}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Indicador de scroll -->
+        <div class="scroll-indicator" *ngIf="categoriasExpandidas && estadisticasCategorias.length > 3">
+          <ion-icon name="chevron-down-outline"></ion-icon>
+          <span>Desplaza para ver más</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Lista de egresos recientes -->
+    <ion-card class="egresos-recientes">
+      <ion-card-header>
+        <ion-card-title (click)="toggleEgresos()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="list-outline"></ion-icon>
+            <span>Egresos Recientes</span>
+            <span class="acordeon-count">({{ egresos.length }})</span>
+          </div>
+          <ion-icon 
+            [name]="egresosExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!egresosExpandido">
+        <div class="egreso-item" *ngFor="let egreso of egresos.slice(0, 5)">
+          <div class="egreso-info">
+            <div class="egreso-descripcion">{{ egreso.descripcion }}</div>
+            <div class="egreso-fecha">{{ egreso.fecha | date:'shortDate' }}</div>
+            <div class="egreso-categoria" *ngIf="egreso.categoria_nombre">
+              <ion-icon name="folder-outline"></ion-icon>
+              {{ egreso.categoria_nombre }}
+            </div>
+          </div>
+          
+          <div class="egreso-monto">
+            <div class="monto-valor">{{ formatearMoneda(egreso.monto) }}</div>
+            <ion-badge [color]="egreso.estado === 'pagado' ? 'success' : egreso.estado === 'vencido' ? 'danger' : 'warning'">
+              {{ egreso.estado }}
+            </ion-badge>
+          </div>
+          
+          <div class="egreso-acciones" *ngIf="egreso.estado !== 'pagado'">
+            <ion-button 
+              size="small" 
+              fill="outline" 
+              color="success"
+              (click)="actualizarEstadoEgreso(egreso.id, 'pagado')">
+              <ion-icon name="checkmark-outline"></ion-icon>
+              Pagar
+            </ion-button>
+            <ion-button 
+              size="small" 
+              fill="outline" 
+              color="danger"
+              (click)="actualizarEstadoEgreso(egreso.id, 'vencido')">
+              <ion-icon name="alert-outline"></ion-icon>
+              Vencido
+            </ion-button>
+          </div>
+        </div>
+        
+        <div class="ver-todos" *ngIf="egresos.length > 5">
+          <ion-button fill="clear" expand="block" routerLink="/gestion-egresos">
+            Ver todos los egresos
+            <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Estado de carga -->
+  <div class="loading" *ngIf="cargando">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando datos del mes...</p>
+  </div>
+</ion-content>

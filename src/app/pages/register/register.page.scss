@@ -1,0 +1,194 @@
+.register-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.logo-section {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-top: 20px;
+
+  ion-icon {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: var(--ion-color-primary);
+    margin: 0 0 8px 0;
+  }
+
+  p {
+    color: var(--ion-color-medium);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+}
+
+.register-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .form-item {
+    --background: var(--ion-color-light);
+    --border-radius: 12px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    margin-bottom: 6px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    ion-label {
+      font-weight: 600;
+      color: var(--ion-color-dark);
+      font-size: 0.9rem;
+    }
+
+    ion-input {
+      --padding-top: 12px;
+      --padding-bottom: 12px;
+    }
+
+    ion-datetime {
+      --padding-top: 12px;
+      --padding-bottom: 12px;
+    }
+
+    .password-toggle {
+      --color: var(--ion-color-medium);
+      margin: 0;
+    }
+  }
+
+  .error-message {
+    color: var(--ion-color-danger);
+    font-size: 0.8rem;
+    margin-top: -6px;
+    margin-bottom: 6px;
+    padding-left: 16px;
+  }
+
+  .register-button {
+    --border-radius: 12px;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    margin-top: 24px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.3);
+  }
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  text-align: center;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--ion-color-light-shade);
+  }
+
+  span {
+    padding: 0 16px;
+    color: var(--ion-color-medium);
+    font-size: 0.9rem;
+  }
+}
+
+.login-section {
+  text-align: center;
+  padding-bottom: 20px;
+
+  p {
+    color: var(--ion-color-medium);
+    margin-bottom: 16px;
+    font-size: 1rem;
+  }
+
+  .login-button {
+    --border-radius: 12px;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}
+
+// Responsive design
+@media (max-width: 480px) {
+  .register-container {
+    padding: 16px;
+  }
+
+  .logo-section {
+    margin-bottom: 24px;
+
+    ion-icon {
+      font-size: 3rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .register-form {
+    gap: 10px;
+
+    .form-item {
+      margin-bottom: 4px;
+    }
+
+    .error-message {
+      font-size: 0.75rem;
+      margin-top: -4px;
+      margin-bottom: 4px;
+    }
+  }
+}
+
+// Animaciones
+.register-form .form-item {
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Estados de validación
+.form-item.ion-invalid.ion-touched {
+  --border-color: var(--ion-color-danger);
+  --highlight-color: var(--ion-color-danger);
+}
+
+.form-item.ion-valid.ion-touched {
+  --border-color: var(--ion-color-success);
+  --highlight-color: var(--ion-color-success);
+}
+
+// Estilos para el datetime
+ion-datetime {
+  --background: transparent;
+  --color: var(--ion-color-dark);
+}

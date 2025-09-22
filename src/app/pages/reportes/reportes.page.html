@@ -1,0 +1,156 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>📊 Reportes Anuales</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    
+    <!-- Selector de Año -->
+    <ion-card class="selector-año">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="calendar-outline"></ion-icon>
+          Seleccionar Año
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-segment [(ngModel)]="anioSeleccionado" (ionChange)="cambiarAnio($event.detail.value)">
+          <ion-segment-button *ngFor="let anio of aniosDisponibles" [value]="anio">
+            {{ anio }}
+          </ion-segment-button>
+        </ion-segment>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Resumen General -->
+    <ion-card class="resumen-general" *ngIf="reporteAnual">
+    
+      <ion-card-content>
+        <div class="resumen-stats">
+          <div class="stat-item total-gastado">
+            <div class="stat-valor">{{ formatearMoneda(reporteAnual.totalGastado) }}</div>
+            <div class="stat-label">Total Gastado en el Año</div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  
+
+    <!-- Selector de Visualización -->
+    <ion-card class="selector-visualizacion">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="eye-outline"></ion-icon>
+          Tipo de Análisis
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-segment [(ngModel)]="tipoVisualizacion" (ionChange)="cambiarTipoVisualizacion($event.detail.value)">
+          <ion-segment-button value="tipo">
+            <ion-icon name="pricetag-outline"></ion-icon>
+            Por Tipo de Egreso
+          </ion-segment-button>
+          <ion-segment-button value="categoria">
+            <ion-icon name="folder-outline"></ion-icon>
+            Por Categoría
+          </ion-segment-button>
+        </ion-segment>
+      </ion-card-content>
+    </ion-card>
+
+  
+
+    <!-- Tabla de Detalles -->
+    <ion-card class="tabla-detalles" *ngIf="reporteAnual">
+      <ion-card-header class="acordeon-header-clickeable" (click)="toggleDetalles()">
+        <ion-card-title>
+          <div class="acordeon-title-content">
+            <ion-icon name="list-outline"></ion-icon>
+            <span>Detalle por {{ tipoVisualizacion === 'tipo' ? 'Tipo de Egreso' : 'Categoría' }}</span>
+            <ion-icon name="chevron-down-outline" class="acordeon-icon" [class.rotated]="detallesExpandido"></ion-icon>
+          </div>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content [class.acordeon-colapsado]="!detallesExpandido">
+        <div class="tabla-container">
+          <div class="tabla-header">
+            <div class="col-nombre">Nombre</div>
+            <div class="col-monto">Monto</div>
+            <div class="col-porcentaje">%</div>
+          </div>
+          
+          <div class="tabla-body">
+            <div 
+              *ngFor="let item of obtenerDatosOrdenados(tipoVisualizacion === 'tipo' ? reporteAnual.gastosPorTipo : reporteAnual.gastosPorCategoria)"
+              class="tabla-fila">
+              <div class="col-nombre">{{ item.nombre }}</div>
+              <div class="col-monto">{{ formatearMoneda(item.valor) }}</div>
+              <div class="col-porcentaje">
+                {{ obtenerPorcentaje(item.valor, reporteAnual.totalGastado) | number:'1.1-1' }}%
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Análisis por Mes -->
+    <ion-card class="analisis-mes" *ngIf="reporteAnual">
+      <ion-card-header class="acordeon-header-clickeable" (click)="toggleMeses()">
+        <ion-card-title>
+          <div class="acordeon-title-content">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>Gastos por Mes</span>
+            <ion-icon name="chevron-down-outline" class="acordeon-icon" [class.rotated]="mesesExpandido"></ion-icon>
+          </div>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content [class.acordeon-colapsado]="!mesesExpandido">
+        <div class="meses-grid">
+          <div 
+            *ngFor="let mes of obtenerDatosOrdenados(reporteAnual.gastosPorMes)"
+            class="mes-item">
+            <div class="mes-nombre">{{ mes.nombre }}</div>
+            <div class="mes-monto">{{ formatearMoneda(mes.valor) }}</div>
+            <div class="mes-barra">
+              <div 
+                class="mes-barra-fill"
+                [style.width.%]="obtenerPorcentaje(mes.valor, reporteAnual.totalGastado)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Gráfica (Temporalmente deshabilitada) -->
+    <ion-card class="grafica-container">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="bar-chart-outline"></ion-icon>
+          Distribución de Gastos
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="sin-datos">
+          <ion-icon name="bar-chart-outline" size="large"></ion-icon>
+          <p>Gráfica temporalmente deshabilitada para debugging</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+
+
+
+  <!-- Estado de carga -->
+  <div class="loading" *ngIf="cargando">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Generando reporte...</p>
+  </div>
+</ion-content>

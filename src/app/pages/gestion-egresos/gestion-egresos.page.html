@@ -1,0 +1,469 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Gestión de Egresos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+
+     <!-- Filtros -->
+     <ion-card class="filtros">
+      <ion-card-header>
+        <ion-card-title (click)="toggleFiltros()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="filter-outline"></ion-icon>
+            <span>Filtros</span>
+          </div>
+          <ion-icon 
+            [name]="filtrosExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!filtrosExpandido">
+        <div class="filtros-header">
+          <!--<h3>Filtros</h3>-->
+          <ion-button 
+            *ngIf="filtrosConfigurados" 
+            fill="clear" 
+            size="small" 
+            (click)="limpiarFiltros()">
+            <ion-icon name="refresh-outline" slot="start"></ion-icon>
+            Limpiar
+          </ion-button>
+        </div>
+        
+        <div class="filtros-grid">
+
+        <!-- Filtro por período -->
+        <ion-item>
+          <ion-label position="stacked">Período</ion-label>
+          <ion-select 
+            [(ngModel)]="filtroPeriodo" 
+            (ionChange)="onPeriodoChange()"
+            interface="popover">
+            <ion-select-option value="mes">Este mes</ion-select-option>
+            <ion-select-option value="proximos">Próximos 7 días</ion-select-option>
+            <ion-select-option value="personalizado">Mes/Año específico</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- Botón para abrir modal de selección personalizada -->
+        <ion-item *ngIf="mostrarSelectorPersonalizado">
+          <ion-label position="stacked">Período Personalizado</ion-label>
+          <ion-button 
+            fill="outline" 
+            expand="block" 
+            (click)="abrirModalPersonalizado()"
+            class="boton-personalizado">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            {{ getNombreMes(mesSeleccionado) }} - {{ anioSeleccionado || 'Año' }}
+          </ion-button>
+        </ion-item>
+
+          <!-- Filtro por estado -->
+          <ion-item>
+            <ion-label position="stacked">Estado</ion-label>
+            <ion-select 
+              [(ngModel)]="filtroEstado" 
+              (ionChange)="onFiltroChange()"
+              interface="popover">
+              <ion-select-option 
+                *ngFor="let estado of estados" 
+                [value]="estado.valor">
+                {{ estado.label }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <!-- Filtro por tipo de egreso -->
+          <ion-item>
+            <ion-label position="stacked">Tipo de Egreso</ion-label>
+            <ion-select 
+              [(ngModel)]="filtroTipoEgreso" 
+              (ionChange)="onFiltroChange()"
+              interface="popover">
+              <ion-select-option value="todos">Todos los tipos</ion-select-option>
+              <ion-select-option 
+                *ngFor="let tipo of tiposEgreso" 
+                [value]="tipo.id">
+                {{ tipo.nombre }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Resumen de estados -->
+    <ion-card class="resumen-estados">
+      <ion-card-header>
+        <ion-card-title (click)="toggleResumen()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="stats-chart-outline"></ion-icon>
+            <span>Resumen de Estados</span>
+          </div>
+          <ion-icon 
+            [name]="resumenExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!resumenExpandido">
+        <div class="resumen-grid">
+          <div class="resumen-item">
+            <div class="resumen-valor total">{{ getTotalEgresos() | currency:'USD':'symbol':'1.0-0' }}</div>
+            <div class="resumen-label">Total</div>
+          </div>
+          
+          <div class="resumen-item">
+            <div class="resumen-valor pendiente">{{ getTotalPendientes() | currency:'USD':'symbol':'1.0-0' }}</div>
+            <div class="resumen-label">Pendientes</div>
+          </div>
+          
+          <div class="resumen-item">
+            <div class="resumen-valor pagado">{{ getTotalPagados() | currency:'USD':'symbol':'1.0-0' }}</div>
+            <div class="resumen-label">Pagados</div>
+          </div>
+          
+        </div>
+        
+        <!-- Indicadores de pagos tardíos -->
+        <div class="resumen-grid-detalle" *ngIf="filtrosConfigurados && getTotalPagados() > 0">
+          <div class="resumen-item">
+            <div class="resumen-valor pagado-a-tiempo">{{ getTotalPagosATiempo() | currency:'USD':'symbol':'1.0-0' }}</div>
+            <div class="resumen-label">A tiempo</div>
+          </div>
+          
+          <div class="resumen-item">
+            <div class="resumen-valor pagado-tardio">{{ getTotalPagosTardios() | currency:'USD':'symbol':'1.0-0' }}</div>
+            <div class="resumen-label">Tardíos</div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>  
+
+    <!-- Lista de egresos -->
+    <ion-card class="lista-egresos">
+      <ion-card-header>
+        <ion-card-title (click)="toggleEgresos()" class="acordeon-header-clickeable">
+          <div class="acordeon-title-content">
+            <ion-icon name="list-outline"></ion-icon>
+            <span>Egresos</span>
+            <span class="acordeon-count">
+              <span *ngIf="!filtrosConfigurados">(Configura filtros)</span>
+              <span *ngIf="filtrosConfigurados && !cargando">({{ egresosFiltrados.length }} encontrados)</span>
+              <span *ngIf="cargando">(Cargando...)</span>
+            </span>
+          </div>
+          <ion-icon 
+            [name]="egresosExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
+            class="acordeon-icon">
+          </ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content [class.acordeon-colapsado]="!egresosExpandido">
+        <!-- Mensaje cuando no hay filtros configurados -->
+        <div class="sin-filtros" *ngIf="!filtrosConfigurados">
+          <ion-icon name="filter-outline" size="large"></ion-icon>
+          <h3>Configura los filtros para ver los egresos</h3>
+          <p>Selecciona al menos un filtro para cargar y mostrar los egresos registrados.</p>
+        </div>
+
+        <!-- Indicador de carga -->
+        <div class="cargando-filtros" *ngIf="cargando">
+          <ion-spinner name="crescent"></ion-spinner>
+          <p>Aplicando filtros...</p>
+        </div>
+
+        <!-- Lista de egresos cuando hay filtros configurados -->
+        <div *ngIf="filtrosConfigurados && !cargando">
+          <div class="egresos-scroll-container">
+            <div class="egreso-item" *ngFor="let egreso of egresosFiltrados">
+          <div class="egreso-header">
+            <div class="egreso-categoria">
+              <ion-icon 
+                [name]="getCategoriaIcono(egreso)"
+                [style.color]="getCategoriaColor(egreso)">
+              </ion-icon>
+              <span>{{ getCategoriaNombre(egreso) }}</span>
+            </div>
+            
+            <div class="egreso-estado">
+              <ion-badge [color]="getEstadoColor(egreso.estado)">
+                {{ getEstadoLabel(egreso.estado) }}
+              </ion-badge>
+              
+              <!-- Indicador de pago tardío -->
+              <ion-chip 
+                *ngIf="esPagoTardio(egreso)" 
+                color="warning" 
+                size="small"
+                class="pago-tardio-chip">
+                <ion-icon name="time-outline"></ion-icon>
+                <ion-label>Tardío</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+
+          <div class="egreso-info">
+            <div class="egreso-descripcion">{{ egreso.descripcion }}</div>
+            <div class="egreso-fecha">
+              <ion-icon name="calendar-outline"></ion-icon>
+              {{ isValidDate(egreso.fecha) ? (egreso.fecha | date:'shortDate') : 'Fecha inválida' }}
+            </div>
+            <div class="egreso-monto">
+              <ion-icon name="cash-outline"></ion-icon>
+              {{ egreso.monto | currency:'USD':'symbol':'1.0-0' }}
+            </div>
+          </div>
+
+          <!-- Información adicional -->
+          <div class="egreso-detalles" *ngIf="egreso.esPeriodico">
+            <ion-chip color="primary" size="small">
+              <ion-icon name="repeat-outline"></ion-icon>
+              <ion-label>{{ egreso.frecuencia }}</ion-label>
+            </ion-chip>
+          </div>
+
+
+          <!-- Controles de estado -->
+          <div class="egreso-controles">
+            <ion-button 
+              *ngIf="egreso.estado !== 'pagado'"
+              size="small" 
+              color="success" 
+              fill="outline"
+              (click)="marcarComoPagado(egreso)">
+              <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+              Pagado
+            </ion-button>
+            
+            <ion-button 
+              *ngIf="egreso.estado !== 'pagado'"
+              size="small" 
+              color="primary" 
+              fill="outline"
+              (click)="abrirModalPagoParcial(egreso)">
+              <ion-icon name="card-outline" slot="start"></ion-icon>
+              Pago Parcial
+            </ion-button>
+            
+            <ion-button 
+              *ngIf="egreso.estado !== 'pendiente'"
+              size="small" 
+              color="warning" 
+              fill="outline"
+              (click)="marcarComoPendiente(egreso)">
+              <ion-icon name="time-outline" slot="start"></ion-icon>
+              Pendiente
+            </ion-button>
+            
+            <!-- Botón de eliminación -->
+            <ion-button 
+              size="small" 
+              color="danger" 
+              fill="outline"
+              (click)="eliminarEgreso(egreso)">
+              <ion-icon name="trash-outline" slot="start"></ion-icon>
+              Eliminar
+            </ion-button>
+            
+          </div>
+
+          <!-- Notas -->
+          <div class="egreso-notas" *ngIf="egreso.notas">
+            <ion-icon name="chatbubble-outline"></ion-icon>
+            <span>{{ egreso.notas }}</span>
+          </div>
+        </div>
+
+            <!-- Mensaje cuando no hay egresos -->
+            <div class="sin-egresos" *ngIf="egresosFiltrados.length === 0 && !cargando">
+              <ion-icon name="document-outline" size="large"></ion-icon>
+              <p>No hay egresos que coincidan con los filtros seleccionados</p>
+              <p class="filtros-info">Filtros aplicados: {{ getFiltrosAplicados() }}</p>
+            </div>
+          </div>
+          
+          <!-- Indicador de scroll -->
+          <div class="scroll-indicator" *ngIf="egresosFiltrados.length > 5">
+            <ion-icon name="chevron-down-outline"></ion-icon>
+            <span>Desplaza para ver más</span>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Estado de carga -->
+  <div class="loading" *ngIf="cargando">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando egresos...</p>
+  </div>
+</ion-content>
+
+<!-- Modal para pago parcial -->
+<ion-modal [isOpen]="modalPagoParcialAbierto" (didDismiss)="cerrarModalPagoParcial()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Pago Parcial</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarModalPagoParcial()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="ion-padding">
+      <div class="pago-parcial-content">
+        <div class="egreso-info-modal">
+          <h3>{{ egresoSeleccionado?.descripcion }}</h3>
+          <p class="monto-total">
+            <strong>Monto total: {{ egresoSeleccionado?.monto | currency:'USD':'symbol':'1.0-0' }}</strong>
+          </p>
+        </div>
+        
+        <ion-item>
+          <ion-label position="stacked">Monto a abonar</ion-label>
+          <ion-input 
+            type="number" 
+            [(ngModel)]="montoPagoParcial"
+            placeholder="Ingrese el monto"
+            min="1"
+            [max]="(egresoSeleccionado?.monto || 0) - 1">
+          </ion-input>
+        </ion-item>
+        
+        <div class="saldo-info" *ngIf="montoPagoParcial > 0">
+          <p class="saldo-pendiente">
+            <ion-icon name="calculator-outline"></ion-icon>
+            Saldo pendiente: {{ calcularSaldoPendiente() | currency:'USD':'symbol':'1.0-0' }}
+          </p>
+        </div>
+        
+        <!-- Mensaje de validación -->
+        <div class="validacion-info" *ngIf="montoPagoParcial >= (egresoSeleccionado?.monto || 0)">
+          <p class="error-message">
+            <ion-icon name="warning-outline"></ion-icon>
+            El monto debe ser menor al total ({{ egresoSeleccionado?.monto | currency:'USD':'symbol':'1.0-0' }})
+          </p>
+        </div>
+        
+        <div class="botones-modal">
+          <ion-button 
+            expand="block" 
+            color="primary"
+            (click)="procesarPagoParcial()"
+            [disabled]="!montoPagoParcial || montoPagoParcial <= 0 || montoPagoParcial >= (egresoSeleccionado?.monto || 0)">
+            <ion-icon name="card-outline" slot="start"></ion-icon>
+            Procesar Pago Parcial
+          </ion-button>
+          
+          <ion-button 
+            expand="block" 
+            color="medium" 
+            fill="outline"
+            (click)="cerrarModalPagoParcial()">
+            Cancelar
+          </ion-button>
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Modal para selección de período personalizado -->
+<ion-modal [isOpen]="modalPersonalizadoAbierto" (didDismiss)="cerrarModalPersonalizado()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Seleccionar Período</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarModalPersonalizado()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="ion-padding">
+      <div class="periodo-personalizado-content">
+        <div class="periodo-info">
+          <h3>Selecciona el mes y año</h3>
+          <p>Elige el período específico para filtrar los egresos</p>
+        </div>
+        
+        <div class="selectores-periodo">
+          <ion-item>
+            <ion-label position="stacked">Mes</ion-label>
+            <ion-select 
+              [(ngModel)]="mesSeleccionado" 
+              interface="popover">
+              <ion-select-option 
+                *ngFor="let mes of getMeses()" 
+                [value]="mes.valor">
+                {{ mes.nombre }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Año</ion-label>
+            <ion-select 
+              [(ngModel)]="anioSeleccionado" 
+              interface="popover">
+              <ion-select-option 
+                *ngFor="let anio of getAnios()" 
+                [value]="anio">
+                {{ anio }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        
+        <div class="periodo-preview" *ngIf="mesSeleccionado && anioSeleccionado">
+          <ion-card>
+            <ion-card-content>
+              <div class="preview-content">
+                <ion-icon name="calendar-outline" size="large"></ion-icon>
+                <div class="preview-text">
+                  <h4>{{ getNombreMes(mesSeleccionado) }} {{ anioSeleccionado }}</h4>
+                  <p>Período seleccionado</p>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+        
+        <div class="botones-modal">
+          <ion-button 
+            expand="block" 
+            color="primary"
+            (click)="aplicarPeriodoPersonalizado()"
+            [disabled]="!mesSeleccionado || !anioSeleccionado">
+            <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+            Aplicar Período
+          </ion-button>
+          
+          <ion-button 
+            expand="block" 
+            color="medium" 
+            fill="outline"
+            (click)="cerrarModalPersonalizado()">
+            Cancelar
+          </ion-button>
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

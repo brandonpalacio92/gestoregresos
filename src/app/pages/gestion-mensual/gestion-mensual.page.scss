@@ -1,0 +1,591 @@
+.container {
+  padding: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+ion-card {
+  margin: 0 0 16px 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+ion-card-header {
+  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+  color: white;
+  border-radius: 16px 16px 0 0;
+}
+
+ion-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff; 
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+ion-card-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+/* Selector de mes */
+.mes-selector {
+  background: linear-gradient(135deg, var(--ion-color-secondary), var(--ion-color-secondary-shade));
+  color: var(--ion-color-primary-shade);
+}
+
+.mes-navegacion {
+  background-color: white;  
+  border-radius: 16px;  
+  display: flex;
+  align-items: center;  
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.mes-actual h2 {
+  margin: 0;
+  color: rgb(61, 44, 112);
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Resumen del mes */
+.resumen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.resumen-item {
+  text-align: center;
+  padding: 16px;
+  background: var(--ion-color-light);
+  border-radius: 12px;
+}
+
+.resumen-valor {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-align: center;
+  width: 100%;
+}
+
+.resumen-valor.gastado {
+  color: var(--ion-color-warning);
+}
+
+.resumen-valor.ahorro {
+  color: var(--ion-color-success);
+}
+
+.resumen-valor.deficit {
+  color: var(--ion-color-danger);
+}
+
+.resumen-valor.pagos-tardios {
+  color: var(--ion-color-warning);
+}
+
+.resumen-label {
+  font-size: 0.9rem;
+  color: var(--ion-color-medium);
+  font-weight: 500;
+}
+
+/* Tendencias */
+.tendencias-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.tendencia-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 12px;
+  background: var(--ion-color-light);
+  border-radius: 8px;
+}
+
+.tendencia-valor {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+  margin-bottom: 4px;
+  text-align: center;
+  width: 100%;
+}
+
+.tendencia-label {
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+  font-weight: 500;
+}
+
+.tendencia-destacada {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-secondary));
+  border-radius: 12px;
+  color: white;
+}
+
+.tendencia-destacada ion-icon {
+  font-size: 2rem;
+  color: #ffd700;
+}
+
+.destacada-info {
+  flex: 1;
+}
+
+.destacada-titulo {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+.destacada-descripcion {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.destacada-monto {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffd700;
+  text-align: center;
+  width: 100%;
+}
+
+/* Gastos por categoría */
+.categoria-item {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: var(--ion-color-light);
+  border-radius: 12px;
+}
+
+.categoria-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.categoria-nombre {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--ion-color-dark);
+}
+
+.categoria-monto {
+  font-weight: 700;
+  color: var(--ion-color-primary);
+  font-size: 1.1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.categoria-progreso {
+  position: relative;
+}
+
+.progreso-porcentaje {
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+  margin-top: 4px;
+}
+
+/* Lista de egresos recientes */
+.egreso-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ion-color-light);
+}
+
+.egreso-item:last-child {
+  border-bottom: none;
+}
+
+.egreso-info {
+  flex: 1;
+}
+
+.egreso-descripcion {
+  font-weight: 600;
+  color: var(--ion-color-dark);
+  margin-bottom: 4px;
+}
+
+.egreso-fecha {
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+}
+
+.egreso-monto {
+  text-align: right;
+}
+
+.monto-valor {
+  font-weight: 700;
+  color: var(--ion-color-primary);
+  margin-bottom: 4px;
+  text-align: center;
+  width: 100%;
+}
+
+.ver-todos {
+  margin-top: 16px;
+  text-align: center;
+}
+
+/* Información adicional */
+.info-adicional {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ion-color-light);
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: var(--ion-color-medium);
+}
+
+.info-item ion-icon {
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+
+/* Categorías */
+.categoria-detalles {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.detalle-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+}
+
+.detalle-item span {
+  color: var(--ion-color-medium);
+}
+
+/* Egresos */
+.egreso-categoria {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+  margin-top: 4px;
+}
+
+.egreso-acciones {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.egreso-acciones ion-button {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  font-size: 0.8rem;
+}
+
+/* Estado de carga */
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  color: var(--ion-color-medium);
+}
+
+.loading p {
+  margin-top: 16px;
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .container {
+    padding: 8px;
+  }
+  
+  .resumen-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .obligaciones-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .mes-actual h2 {
+    font-size: 1.3rem;
+  }
+  
+  .resumen-valor {
+    font-size: 1.5rem;
+  }
+}
+
+/* Animaciones */
+ion-card {
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Nuevos estilos para categorías mejoradas */
+.categorias-resumen {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: var(--ion-color-light);
+  border-radius: 12px;
+}
+
+.categoria-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 16px;
+}
+
+.categoria-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.categoria-porcentaje {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+
+/* Hover effects */
+.resumen-item:hover,
+.obligacion-item:hover,
+.categoria-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+/* Estilos para el acordeón de categorías */
+.categorias-header-clickeable {
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+  
+  .categorias-title-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    .categorias-count {
+      font-size: 0.9rem;
+      color: var(--ion-color-medium);
+      font-weight: 400;
+    }
+  }
+  
+  .acordeon-icon {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+    color: var(--ion-color-medium);
+  }
+}
+
+.categorias-colapsadas {
+  max-height: 0;
+  padding: 0 16px !important;
+  opacity: 0;
+  transform: translateY(-10px);
+  overflow: hidden;
+}
+
+// Animación suave para el contenido del acordeón
+.categorias-gastos ion-card-content {
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              padding 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.3s ease-in-out, 
+              transform 0.3s ease-in-out;
+}
+
+// Estado expandido
+.categorias-gastos ion-card-content:not(.categorias-colapsadas) {
+  max-height: 450px; // Altura máxima para permitir scroll
+  opacity: 1;
+  transform: translateY(0);
+  overflow: visible; // Permitir que el contenido interno maneje el scroll
+}
+
+// Contenedor de scroll para las categorías
+.categorias-scroll-container {
+  max-height: 350px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px; // Espacio para el scrollbar
+}
+
+// Estilos para el scroll interno
+.categorias-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.categorias-scroll-container::-webkit-scrollbar-track {
+  background: var(--ion-color-light);
+  border-radius: 3px;
+}
+
+.categorias-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--ion-color-medium);
+  border-radius: 3px;
+}
+
+.categorias-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: var(--ion-color-primary);
+}
+
+// Indicador de scroll
+.scroll-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+  background: var(--ion-color-light);
+  border-radius: 8px;
+  animation: pulse 2s infinite;
+  
+  ion-icon {
+    font-size: 1rem;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Estilos para acordeones adicionales */
+.acordeon-header-clickeable {
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+  
+  .acordeon-title-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    
+    .acordeon-count {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 400;
+      margin-left: 8px;
+    }
+  }
+  
+  .acordeon-icon {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.acordeon-colapsado {
+  max-height: 0;
+  padding: 0 16px !important;
+  opacity: 0;
+  transform: translateY(-10px);
+  overflow: hidden;
+}
+
+.mes-selector ion-card-content,
+.resumen-gastos ion-card-content,
+.tendencias ion-card-content,
+.egresos-recientes ion-card-content {
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              padding 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.3s ease-in-out, 
+              transform 0.3s ease-in-out;
+}
+
+.mes-selector ion-card-content:not(.acordeon-colapsado),
+.resumen-gastos ion-card-content:not(.acordeon-colapsado),
+.tendencias ion-card-content:not(.acordeon-colapsado),
+.egresos-recientes ion-card-content:not(.acordeon-colapsado) {
+  max-height: 1000px;
+  opacity: 1;
+  transform: translateY(0);
+  overflow: visible;
+}

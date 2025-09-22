@@ -1,0 +1,413 @@
+.container {
+  padding: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+ion-card {
+  margin: 0 0 16px 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+ion-card-header {
+  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+  color: white;
+  border-radius: 16px 16px 0 0;
+}
+
+ion-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff; 
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+/* Estilos para acordeones */
+.acordeon-header-clickeable {
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+  
+  .acordeon-title-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+  }
+  
+  .acordeon-icon {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.acordeon-colapsado {
+  max-height: 0;
+  padding: 0 16px !important;
+  opacity: 0;
+  transform: translateY(-10px);
+  overflow: hidden;
+}
+
+.perfil-usuario ion-card-content,
+.preferencias-app ion-card-content,
+.personalizacion-colores ion-card-content,
+.notificaciones ion-card-content,
+.gestion-datos ion-card-content,
+.seguridad ion-card-content {
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              padding 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.3s ease-in-out, 
+              transform 0.3s ease-in-out;
+}
+
+.perfil-usuario ion-card-content:not(.acordeon-colapsado),
+.preferencias-app ion-card-content:not(.acordeon-colapsado),
+.personalizacion-colores ion-card-content:not(.acordeon-colapsado),
+.notificaciones ion-card-content:not(.acordeon-colapsado),
+.gestion-datos ion-card-content:not(.acordeon-colapsado),
+.seguridad ion-card-content:not(.acordeon-colapsado) {
+  max-height: 1000px;
+  opacity: 1;
+  transform: translateY(0);
+  overflow: visible;
+}
+
+/* Perfil de Usuario */
+.perfil-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: var(--ion-color-light);
+  border-radius: 12px;
+}
+
+.usuario-avatar {
+  flex-shrink: 0;
+  
+  ion-icon {
+    font-size: 4rem;
+    color: var(--ion-color-primary);
+  }
+}
+
+.usuario-datos {
+  flex: 1;
+  
+  h3 {
+    margin: 0 0 4px 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+  }
+  
+  p {
+    margin: 0 0 4px 0;
+    color: var(--ion-color-medium);
+    font-size: 0.9rem;
+  }
+  
+  .fecha-registro {
+    font-size: 0.8rem;
+    color: var(--ion-color-medium);
+    font-style: italic;
+  }
+}
+
+.formulario-perfil {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Preferencias de la App */
+.preferencias-app ion-item {
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+}
+
+/* Notificaciones */
+.notificaciones ion-item {
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+}
+
+/* Gestión de Datos */
+.datos-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Seguridad */
+.formulario-password {
+  h4 {
+    margin: 0 0 16px 0;
+    color: var(--ion-color-dark);
+    font-weight: 600;
+  }
+}
+
+/* Botones */
+.boton-guardar {
+  margin-top: 16px;
+  --border-radius: 12px;
+  font-weight: 600;
+}
+
+/* Cerrar Sesión */
+.cerrar-sesion {
+  margin-top: 24px;
+  
+  ion-card-content {
+    padding: 16px;
+  }
+  
+  ion-button {
+    --border-radius: 12px;
+    font-weight: 600;
+  }
+}
+
+/* Estado de carga */
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  
+  ion-spinner {
+    margin-bottom: 16px;
+  }
+  
+  p {
+    margin: 0;
+    color: var(--ion-color-medium);
+    font-size: 1rem;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+  
+  .perfil-info {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .usuario-avatar {
+    margin-bottom: 8px;
+  }
+}
+
+/* Hover effects */
+ion-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+/* Animaciones */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+ion-card {
+  animation: slideInUp 0.3s ease-out;
+}
+
+/* Personalización de Colores */
+.personalizacion-colores {
+  .esquemas-colores {
+    margin-bottom: 24px;
+    
+    h3 {
+      color: var(--ion-color-primary);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    
+    .esquemas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      
+      .esquema-color {
+        padding: 12px;
+        border: 2px solid var(--ion-color-light);
+        border-radius: 12px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        &.seleccionado {
+          border-color: var(--ion-color-primary);
+          background: var(--ion-color-primary-tint);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.3);
+        }
+        
+        .esquema-preview {
+          display: flex;
+          justify-content: center;
+          gap: 4px;
+          margin-bottom: 8px;
+          
+          .color-circulo {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+        }
+        
+        .esquema-nombre {
+          font-size: 12px;
+          font-weight: 500;
+          color: var(--ion-color-dark);
+        }
+      }
+    }
+  }
+  
+  .personalizacion-individual {
+    margin-bottom: 24px;
+    
+    h3 {
+      color: var(--ion-color-primary);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    
+    .color-picker-item {
+      margin-bottom: 16px;
+      
+      ion-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--ion-color-dark);
+      }
+      
+      .color-picker-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        
+        .color-picker {
+          width: 50px;
+          height: 50px;
+          border: none;
+          border-radius: 50%;
+          cursor: pointer;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: transform 0.2s ease;
+          
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+        
+        .color-value {
+          font-family: 'Courier New', monospace;
+          font-size: 14px;
+          color: var(--ion-color-medium);
+          background: var(--ion-color-light);
+          padding: 4px 8px;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+  
+  .color-preview {
+    margin-bottom: 24px;
+    padding: 16px;
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    
+    h3 {
+      color: var(--ion-color-primary);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    
+    .preview-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      
+      ion-button {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+  }
+  
+  .color-actions {
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+    
+    ion-button {
+      margin: 0;
+    }
+  }
+}
+
+/* Responsive para personalización de colores */
+@media (max-width: 768px) {
+  .personalizacion-colores {
+    .esquemas-grid {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 8px;
+    }
+    
+    .color-preview .preview-buttons {
+      flex-direction: column;
+      
+      ion-button {
+        min-width: auto;
+      }
+    }
+  }
+}

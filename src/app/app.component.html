@@ -1,0 +1,60 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <!-- Menú lateral - Solo visible cuando el usuario esté autenticado -->
+    <ion-menu contentId="main-content" type="overlay" *ngIf="isAuthenticated && currentUser">
+      <ion-content>
+        <!-- Información del usuario -->
+        <ion-list id="user-info" *ngIf="currentUser">
+          <ion-list-header>
+            <ion-avatar slot="start">
+              <ion-icon name="person-circle" size="large"></ion-icon>
+            </ion-avatar>
+            <div>
+              <h2>{{ currentUser.nombre }} {{ currentUser.apellido }}</h2>
+              <p>{{ currentUser.email }}</p>
+            </div>
+          </ion-list-header>
+        </ion-list>
+
+        <!-- Navegación principal -->
+        <ion-list id="main-navigation">
+          <ion-list-header>GestorEgresos</ion-list-header>
+          <ion-note>Aplicación de Gestión Financiera</ion-note>
+
+          @for (p of appPages; track p; let i = $index) {
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+                <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          }
+        </ion-list>
+
+
+        <!-- Opciones de usuario -->
+        <ion-list id="user-actions">
+          <ion-item button (click)="goToProfile()" lines="none">
+            <ion-icon aria-hidden="true" slot="start" ios="person-outline" md="person-sharp"></ion-icon>
+            <ion-label>Mi Perfil</ion-label>
+          </ion-item>
+          
+          <ion-item button (click)="logout()" lines="none" class="logout-item">
+            <ion-icon aria-hidden="true" slot="start" ios="log-out-outline" md="log-out-sharp"></ion-icon>
+            <ion-label>Cerrar Sesión</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    
+    <!-- Contenido principal -->
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+    
+    <!-- Indicador de carga mientras se verifica la autenticación -->
+    <ion-loading 
+      [isOpen]="!isAuthReady" 
+      message="Verificando autenticación..."
+      spinner="crescent">
+    </ion-loading>
+  </ion-split-pane>
+</ion-app>
