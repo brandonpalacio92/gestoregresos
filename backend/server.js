@@ -1,9 +1,9 @@
 // 📦 Importación de dependencias
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-require('dotenv').config();
 
 // 🚀 Inicialización de la aplicación
 const app = express();

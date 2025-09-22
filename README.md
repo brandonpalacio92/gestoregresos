@@ -1,106 +1,112 @@
-# 💰 GestorEgresos - Aplicación Móvil de Gestión Financiera
+# GestorEgresos 📱
 
-Una aplicación móvil completa para gestionar egresos personales, desarrollada con Ionic/Angular y Node.js.
+Aplicación móvil para gestión de egresos personales desarrollada con Angular, Ionic y Node.js.
 
 ## 🚀 Características
 
-- **Gestión de Egresos**: Registro y seguimiento de gastos
-- **Presupuesto Mensual**: Control de presupuestos y ahorros
-- **Pagos Parciales**: Sistema de pagos a plazos
-- **Reportes Anuales**: Análisis detallado de gastos
-- **Configuración Personalizable**: Temas de colores y preferencias
-- **Autenticación Segura**: Sistema de login con JWT
+- ✅ Gestión de egresos periódicos y ocasionales
+- ✅ Categorización de gastos
+- ✅ Reportes mensuales y anuales
+- ✅ Presupuesto personalizado
+- ✅ Autenticación segura
+- ✅ Base de datos PostgreSQL (Neon.tech)
 
 ## 🛠️ Tecnologías
 
-### Frontend
-- **Ionic 8** - Framework móvil
-- **Angular 20** - Framework web
-- **TypeScript** - Lenguaje de programación
-- **Capacitor** - Puente nativo
+- **Frontend:** Angular 20 + Ionic 8
+- **Backend:** Node.js + Express
+- **Base de datos:** PostgreSQL (Neon.tech)
+- **Autenticación:** JWT
+- **Plataforma:** Android (Capacitor)
 
-### Backend
-- **Node.js** - Runtime de JavaScript
-- **Express** - Framework web
-- **PostgreSQL** - Base de datos (Neon.tech)
-- **JWT** - Autenticación
-
-## 📱 Instalación
+## 📦 Instalación
 
 ### Prerrequisitos
-- Node.js 18+
-- Ionic CLI
+- Node.js 20.19.1+
+- npm 10.0.0+
 - Android Studio (para APK)
 
 ### Desarrollo
-```bash
-# Instalar dependencias
-npm install
-cd backend && npm install
 
-# Ejecutar en desarrollo
-ionic serve
+1. **Clonar el repositorio:**
+```bash
+git clone https://github.com/brandonpalacio92/gestoregresos.git
+cd gestoregresos
 ```
 
-### Producción
+2. **Instalar dependencias:**
 ```bash
-# Construir aplicación
+# Frontend
+npm install
+
+# Backend
+cd backend
+npm install
+cd ..
+```
+
+3. **Configurar base de datos:**
+```bash
+# Crear archivo .env en backend/
+DATABASE_URL=postgresql://usuario:password@host:port/database
+PORT=3000
+JWT_SECRET=tu-clave-secreta
+```
+
+4. **Iniciar aplicación:**
+```bash
+# Opción 1: Script automático
+start-app.bat
+
+# Opción 2: Manual
+# Terminal 1 - Backend
+cd backend && node server.js
+
+# Terminal 2 - Frontend
+ionic serve --port=8101
+```
+
+## 📱 URLs de acceso
+
+- **Frontend:** http://localhost:8101
+- **Backend:** http://localhost:3000
+- **API:** http://localhost:3000/api
+
+## 🔨 Generar APK
+
+```bash
+# Build de producción
 ionic build --prod
 
-# Generar APK
+# Sincronizar con Capacitor
 npx cap sync
+
+# Abrir en Android Studio
 npx cap open android
 ```
 
-## 🌐 Despliegue
-
-La aplicación está configurada para desplegarse en Railway:
-
-1. **Backend**: Automáticamente desplegado en Railway
-2. **Base de datos**: Neon.tech (PostgreSQL en la nube)
-3. **Frontend**: Compilado y empaquetado para Android
-
-## 📊 Estructura del Proyecto
+## 📁 Estructura del proyecto
 
 ```
-GestorEgresos/
-├── src/                    # Código fuente Angular/Ionic
-├── backend/               # API Node.js/Express
-├── android/               # Proyecto Android nativo
-├── www/                   # Build de producción
-└── railway.json          # Configuración de Railway
+gestoregresos/
+├── src/                    # Frontend Angular
+├── backend/               # API Node.js
+├── android/              # Proyecto Android
+├── start-app.bat         # Script de inicio
+└── README.md
 ```
 
-## 🔧 Configuración
+## 🔧 Scripts disponibles
 
-### Variables de Entorno
-- `DATABASE_URL`: URL de la base de datos Neon.tech
-- `JWT_SECRET`: Clave secreta para JWT
-- `CORS_ORIGIN`: Orígenes permitidos para CORS
-
-### Base de Datos
-- **Tablas**: usuarios, categorias_egreso, tipo_egreso, egresos, presupuesto_mensual
-- **Datos iniciales**: Categorías y tipos de egreso predefinidos
-
-## 📱 Uso
-
-1. **Registro/Login**: Crear cuenta o iniciar sesión
-2. **Registrar Egresos**: Agregar gastos con categorías
-3. **Gestión Mensual**: Ver resumen y presupuesto
-4. **Reportes**: Análisis anual de gastos
-5. **Configuración**: Personalizar colores y preferencias
-
-## 🚀 Despliegue en Railway
-
-1. Conectar repositorio en Railway
-2. Configurar variables de entorno
-3. Desplegar automáticamente
-4. Actualizar URL en la app móvil
+- `npm run dev` - Iniciar frontend
+- `npm run dev:backend` - Iniciar backend
+- `npm run build:prod` - Build de producción
+- `start-app.bat` - Iniciar aplicación completa
 
 ## 📄 Licencia
 
-Este proyecto es de uso personal y educativo.
+ISC
 
-## 👨‍💻 Desarrollado con IA
+## 👨‍💻 Autor
 
-Aplicación desarrollada con asistencia de IA, demostrando las capacidades de desarrollo colaborativo humano-IA.
+Brandon Palacio
