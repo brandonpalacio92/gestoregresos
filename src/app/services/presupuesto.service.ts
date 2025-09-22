@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class PresupuestoService {
 
-  private baseUrl = `${environment.apiUrl}/api/egresos`;
+  private baseUrl = `${environment.apiUrl}/egresos`;
 
   constructor(private http: HttpClient) { }
 
