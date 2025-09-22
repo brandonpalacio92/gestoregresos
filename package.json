@@ -71,8 +71,8 @@
   },
   "description": "An Ionic project",
   "engines": {
-    "node": "20.19.1",
-    "npm": "10.8.2"
+    "node": ">=20.19.0",
+    "npm": ">=10.0.0"
   },
   "overrides": {
     "zone.js": "~0.15.0"

@@ -9,6 +9,12 @@
     }
   ],
   "stack": "heroku-22",
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
   "env": {
     "NODE_ENV": {
       "description": "Environment",
