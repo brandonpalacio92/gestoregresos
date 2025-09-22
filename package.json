@@ -14,7 +14,9 @@
     "build:prod": "ng build --configuration production",
     "build:dev": "ng build --configuration development",
     "dev": "ng serve",
-    "dev:backend": "cd backend && npm run dev"
+    "dev:backend": "cd backend && npm run dev",
+    "start:backend": "cd backend && node server.js",
+    "start:app": "start-app.bat"
   },
   "private": true,
   "dependencies": {
