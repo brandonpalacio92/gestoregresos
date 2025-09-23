@@ -20,5 +20,11 @@ echo ========================================
 echo Backend: http://localhost:3000
 echo Frontend: http://localhost:8101
 echo.
+echo ========================================
+echo    ACCESO DESDE RED LOCAL
+echo ========================================
+echo Backend: http://192.168.1.7:3000
+echo Frontend: http://192.168.1.7:8101
+echo.
 echo Presiona cualquier tecla para cerrar...
 pause > nul

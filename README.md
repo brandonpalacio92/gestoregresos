@@ -47,7 +47,7 @@ cd ..
 
 3. **Configurar base de datos:**
 ```bash
-# Crear archivo .env en backend/
+#  archivo .env en backend/
 DATABASE_URL=postgresql://usuario:password@host:port/database
 PORT=3000
 JWT_SECRET=tu-clave-secreta
@@ -68,9 +68,15 @@ ionic serve --port=8101
 
 ## 📱 URLs de acceso
 
+### Local (mismo PC)
 - **Frontend:** http://localhost:8101
 - **Backend:** http://localhost:3000
 - **API:** http://localhost:3000/api
+
+### Red Local (desde otros dispositivos)
+- **Frontend:** http://192.168.1.7:8101
+- **Backend:** http://192.168.1.7:3000
+- **API:** http://192.168.1.7:3000/api
 
 ## 🔨 Generar APK
 

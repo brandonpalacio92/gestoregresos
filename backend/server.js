@@ -15,7 +15,10 @@ app.use(cors({
   origin: [
     process.env.FRONTEND_URL || 'http://localhost:8100',
     'http://localhost:8101',
-    'http://localhost:4200'
+    'http://localhost:4200',
+    'http://192.168.1.7:8101',
+    'http://192.168.1.7:8100',
+    'http://192.168.1.7:4200'
   ],
   credentials: true
 }));
@@ -82,12 +85,13 @@ const startServer = async () => {
       });
     });
 
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
       console.log(`📱 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:8101'}`);
       console.log(`🔗 API URL: http://localhost:${PORT}`);
+      console.log(`🌐 API URL (Red Local): http://192.168.1.7:${PORT}`);
       console.log(`🗄️ Base de datos: PostgreSQL (Neon.tech Serverless)`);
-      console.log(`📡 API Endpoints: http://localhost:${PORT}/api`);
+      console.log(`📡 API Endpoints: http://192.168.1.7:${PORT}/api`);
     });
   } catch (error) {
     console.error('❌ Error al iniciar el servidor:', error);

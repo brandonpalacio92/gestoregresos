@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api',
-  frontendUrl: 'http://localhost:8101',
+  apiUrl: 'http://192.168.1.7:3000/api',
+  frontendUrl: 'http://192.168.1.7:8101',
   logLevel: 'debug',
   mockFallback: true 
 };
