@@ -1,9 +1,30 @@
 // 📦 Importación de dependencias
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+
+// Configuración de producción
+const productionConfig = require('./production-config');
+
+// Debug: Mostrar variables de entorno
+console.log('🔍 NODE_ENV detectado:', process.env.NODE_ENV);
+console.log('🔍 DATABASE_URL actual:', process.env.DATABASE_URL ? 'Definida' : 'No definida');
+
+// Configurar variables de entorno según el modo
+if (process.env.NODE_ENV === 'production') {
+  // Modo producción - usar configuración de producción
+  process.env.DATABASE_URL = productionConfig.DATABASE_URL;
+  process.env.JWT_SECRET = productionConfig.JWT_SECRET;
+  process.env.CORS_ORIGIN = productionConfig.CORS_ORIGIN;
+  console.log('🚀 Modo PRODUCCIÓN activado');
+  console.log('🗄️ Base de datos:', productionConfig.DATABASE_URL.substring(0, 50) + '...');
+} else {
+  // Modo desarrollo - cargar desde .env
+  require('dotenv').config();
+  console.log('🛠️ Modo DESARROLLO activado');
+  console.log('🗄️ Base de datos:', process.env.DATABASE_URL ? process.env.DATABASE_URL.substring(0, 50) + '...' : 'No definida');
+}
 
 // 🚀 Inicialización de la aplicación
 const app = express();
@@ -18,7 +39,8 @@ app.use(cors({
     'http://localhost:4200',
     'http://192.168.1.7:8101',
     'http://192.168.1.7:8100',
-    'http://192.168.1.7:4200'
+    'http://192.168.1.7:4200',
+    productionConfig.CORS_ORIGIN
   ],
   credentials: true
 }));

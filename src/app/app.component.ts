@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { AuthService, User } from './services/auth.service';
-import { AppInitService } from './services/app-init.service';
+ import { AppInitService } from './services/app-init.service';
 import { Subscription } from 'rxjs';
 
 @Component({

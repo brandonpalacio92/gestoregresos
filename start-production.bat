@@ -21,7 +21,8 @@ if %errorlevel% neq 0 (
 )
 
 echo [3/3] Iniciando servidores de producción...
-start "Backend Producción" cmd /k "cd backend && node server.js"
+echo.
+start "Backend Producción" cmd /k "cd backend && set NODE_ENV=production && node server.js"
 timeout /t 3 /nobreak > nul
 start "Frontend Producción" cmd /k "node serve-production.js"
 

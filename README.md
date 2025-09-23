@@ -103,16 +103,13 @@ gestoregresos/
 ```
 
 ## 🔧 Scripts disponibles
-
-### Desarrollo
-- `npm run dev` - Iniciar frontend
-- `npm run dev:backend` - Iniciar backend
-- `start-app.bat` - Iniciar aplicación completa (desarrollo)
-
-### Producción
-- `start-production.bat` - Iniciar aplicación en modo producción
+- `start-app.bat` - Iniciar aplicación en modo DESARROLLO
+- `start-production.bat` - Iniciar aplicación en modo PRODUCCIÓN
 - `build-apk.bat` - Generar APK para Android
-- `npm run build:prod` - Build de producción
+
+### Diferencias
+- **Desarrollo:** Usa base de datos de desarrollo (backend/.env)
+- **Producción:** Usa base de datos de producción (backend/production-config.js)
 
 ## 📄 Licencia
 
