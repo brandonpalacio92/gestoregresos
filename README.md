@@ -104,10 +104,15 @@ gestoregresos/
 
 ## 🔧 Scripts disponibles
 
+### Desarrollo
 - `npm run dev` - Iniciar frontend
 - `npm run dev:backend` - Iniciar backend
+- `start-app.bat` - Iniciar aplicación completa (desarrollo)
+
+### Producción
+- `start-production.bat` - Iniciar aplicación en modo producción
+- `build-apk.bat` - Generar APK para Android
 - `npm run build:prod` - Build de producción
-- `start-app.bat` - Iniciar aplicación completa
 
 ## 📄 Licencia
 
