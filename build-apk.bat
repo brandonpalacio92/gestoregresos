@@ -4,8 +4,8 @@ echo    GENERANDO APK PARA ANDROID
 echo ========================================
 echo.
 
-echo [1/4] Construyendo aplicación para producción...
-call ionic build --prod
+echo [1/4] Construyendo aplicación para APK...
+call ionic build --configuration=apk
 if %errorlevel% neq 0 (
     echo ❌ Error en el build de producción
     pause
