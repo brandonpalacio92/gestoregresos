@@ -151,20 +151,22 @@ export class ConfiguracionUsuarioPage implements OnInit {
   }
 
   // Guardar preferencias
-  async guardarPreferencias() {
+  async guardarPreferencias(mostrarToast: boolean = false) {
     try {
       localStorage.setItem('preferenciasApp', JSON.stringify(this.preferencias));
       
       // Actualizar tema con los colores actuales
       this.actualizarTema();
       
-      const toast = await this.toastController.create({
-        message: 'Preferencias guardadas exitosamente',
-        duration: 2000,
-        color: 'success',
-        position: 'top'
-      });
-      await toast.present();
+      if (mostrarToast) {
+        const toast = await this.toastController.create({
+          message: 'Preferencias guardadas exitosamente',
+          duration: 2000,
+          color: 'success',
+          position: 'top'
+        });
+        await toast.present();
+      }
     } catch (error) {
       console.error('Error guardando preferencias:', error);
     }
@@ -188,6 +190,9 @@ export class ConfiguracionUsuarioPage implements OnInit {
     
     // Aplicar inmediatamente para preview
     this.actualizarTema();
+    
+    // Guardar automáticamente las preferencias
+    this.guardarPreferencias();
   }
 
   // Personalizar color individual
@@ -195,6 +200,9 @@ export class ConfiguracionUsuarioPage implements OnInit {
     const propiedad = `color${tipo.charAt(0).toUpperCase() + tipo.slice(1)}` as keyof PreferenciasApp;
     (this.preferencias as any)[propiedad] = color;
     this.actualizarTema();
+    
+    // Guardar automáticamente las preferencias
+    this.guardarPreferencias();
   }
 
   // Resetear a colores por defecto
@@ -203,6 +211,9 @@ export class ConfiguracionUsuarioPage implements OnInit {
     this.preferencias.colorSecundario = '#3dc2ff';
     this.preferencias.colorAcento = '#5260ff';
     this.themeService.resetToDefault();
+    
+    // Guardar automáticamente las preferencias
+    this.guardarPreferencias();
   }
 
   // Actualizar perfil

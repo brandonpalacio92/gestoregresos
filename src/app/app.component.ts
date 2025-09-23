@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { AuthService, User } from './services/auth.service';
+import { AppInitService } from './services/app-init.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -27,10 +28,14 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private menuController: MenuController
+    private menuController: MenuController,
+    private appInitService: AppInitService
   ) {}
 
   async ngOnInit() {
+    // Inicializar la aplicación (cargar tema personalizado, etc.)
+    await this.appInitService.initializeApp();
+    
     // Esperar a que el AuthService se inicialice completamente
     await this.waitForAuthServiceInit();
     this.isAuthReady = true;

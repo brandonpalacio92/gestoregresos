@@ -24,7 +24,28 @@ export class ThemeService {
   }
 
   private loadThemeFromStorage() {
-    const savedTheme = localStorage.getItem('colorTheme');
+    // Primero intentar cargar desde colorTheme
+    let savedTheme = localStorage.getItem('colorTheme');
+    
+    // Si no existe, intentar cargar desde preferenciasApp
+    if (!savedTheme) {
+      const preferencias = localStorage.getItem('preferenciasApp');
+      if (preferencias) {
+        try {
+          const prefs = JSON.parse(preferencias);
+          if (prefs.colorPrimario && prefs.colorSecundario && prefs.colorAcento) {
+            savedTheme = JSON.stringify({
+              colorPrimario: prefs.colorPrimario,
+              colorSecundario: prefs.colorSecundario,
+              colorAcento: prefs.colorAcento
+            });
+          }
+        } catch (error) {
+          console.error('Error loading theme from preferences:', error);
+        }
+      }
+    }
+    
     if (savedTheme) {
       try {
         const theme = JSON.parse(savedTheme);
@@ -40,6 +61,21 @@ export class ThemeService {
     this.applyTheme(theme);
     this.themeSubject.next(theme);
     localStorage.setItem('colorTheme', JSON.stringify(theme));
+    
+    // También actualizar las preferencias generales para mantener sincronización
+    this.updatePreferences(theme);
+  }
+
+  private updatePreferences(theme: ColorTheme) {
+    const preferenciasGuardadas = localStorage.getItem('preferenciasApp');
+    let preferencias = preferenciasGuardadas ? JSON.parse(preferenciasGuardadas) : {};
+    
+    // Actualizar solo los colores en las preferencias
+    preferencias.colorPrimario = theme.colorPrimario;
+    preferencias.colorSecundario = theme.colorSecundario;
+    preferencias.colorAcento = theme.colorAcento;
+    
+    localStorage.setItem('preferenciasApp', JSON.stringify(preferencias));
   }
 
   private applyTheme(theme: ColorTheme) {
