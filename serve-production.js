@@ -13,7 +13,8 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Servidor de producción corriendo en puerto ${PORT}`);
-  console.log(`📱 Frontend: http://localhost:${PORT}`);
+  //console.log(`📱 Frontend: http://localhost:${PORT}`);
+  console.log(`📱 Frontend: http://192.168.1.7:${PORT}`);
   console.log(`🌐 Frontend (Red Local): http://192.168.1.7:${PORT}`);
   console.log(`📁 Sirviendo archivos desde: ${path.join(__dirname, 'www')}`);
 });

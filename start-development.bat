@@ -1,24 +1,24 @@
 @echo off
 echo ========================================
-echo    INICIANDO GESTOR EGRESOS
+echo    INICIANDO GESTOR EGRESOS - DESARROLLO
 echo ========================================
 echo.
 
-echo [1/2] Iniciando Backend...
-start "Backend" cmd /k "cd backend && node server.js"
+echo [1/2] Iniciando Backend en modo desarrollo...
+start "Backend Desarrollo" cmd /k "cd backend && set NODE_ENV=development && node server.js"
 
 echo [2/2] Esperando 3 segundos para que el backend inicie...
 timeout /t 3 /nobreak > nul
 
-echo [2/2] Iniciando Frontend...
-start "Frontend" cmd /k "ionic serve --host=192.168.1.7 --port=8101 --open=false"
+echo [2/2] Iniciando Frontend en modo desarrollo...
+start "Frontend Desarrollo" cmd /k "ionic serve --host=192.168.1.7 --port=8101 --open=false"
 
 echo.
 echo ========================================
-echo    APLICACION INICIADA
+echo    APLICACION EN DESARROLLO
 echo ========================================
-//echo Backend: http://localhost:3000
-//echo Frontend: http://localhost:8101
+echo Backend: http://192.168.1.7:3000
+echo Frontend: http://192.168.1.7:8101
 echo.
 echo ========================================
 echo    ACCESO DESDE RED LOCAL

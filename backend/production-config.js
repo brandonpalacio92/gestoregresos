@@ -1,7 +1,7 @@
 // Configuración de producción
 module.exports = {
-  // Base de datos de producción
-  DATABASE_URL: process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_iqUIK2WoBeC3@ep-mute-mode-adye8fyz-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require',
+  // Base de datos de producción (forzada)
+  DATABASE_URL: 'postgresql://neondb_owner:npg_iqUIK2WoBeC3@ep-mute-mode-adye8fyz-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require',
   
   // Configuración del servidor
   PORT: process.env.PORT || 3000,

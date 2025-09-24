@@ -7,18 +7,19 @@ const morgan = require('morgan');
 // Configuración de producción
 const productionConfig = require('./production-config');
 
-// Debug: Mostrar variables de entorno
+// Debug: Mostrar variables de entorno ANTES de cargar dotenv
 console.log('🔍 NODE_ENV detectado:', process.env.NODE_ENV);
 console.log('🔍 DATABASE_URL actual:', process.env.DATABASE_URL ? 'Definida' : 'No definida');
 
 // Configurar variables de entorno según el modo
 if (process.env.NODE_ENV === 'production') {
-  // Modo producción - usar configuración de producción
+  // Modo producción - usar configuración de producción (NO cargar .env)
   process.env.DATABASE_URL = productionConfig.DATABASE_URL;
   process.env.JWT_SECRET = productionConfig.JWT_SECRET;
   process.env.CORS_ORIGIN = productionConfig.CORS_ORIGIN;
   console.log('🚀 Modo PRODUCCIÓN activado');
   console.log('🗄️ Base de datos:', productionConfig.DATABASE_URL.substring(0, 50) + '...');
+  console.log('🔒 JWT Secret:', productionConfig.JWT_SECRET.substring(0, 10) + '...');
 } else {
   // Modo desarrollo - cargar desde .env
   require('dotenv').config();
@@ -34,9 +35,9 @@ const PORT = process.env.PORT || 3000;
 app.use(helmet());
 app.use(cors({
   origin: [
-    process.env.FRONTEND_URL || 'http://localhost:8100',
-    'http://localhost:8101',
-    'http://localhost:4200',
+    process.env.FRONTEND_URL || //'http://localhost:8100',
+    //'http://localhost:8101',
+    //'http://localhost:4200',
     'http://192.168.1.7:8101',
     'http://192.168.1.7:8100',
     'http://192.168.1.7:4200',
@@ -109,8 +110,9 @@ const startServer = async () => {
 
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
-      console.log(`📱 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:8101'}`);
-      console.log(`🔗 API URL: http://localhost:${PORT}`);
+      console.log(`📱 Frontend URL: ${process.env.FRONTEND_URL || 'http://192.168.1.7:8101'}`);
+      //console.log(`📱 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:8101'}`);      
+      //console.log(`🔗 API URL: http://localhost:${PORT}`);
       console.log(`🌐 API URL (Red Local): http://192.168.1.7:${PORT}`);
       console.log(`🗄️ Base de datos: PostgreSQL (Neon.tech Serverless)`);
       console.log(`📡 API Endpoints: http://192.168.1.7:${PORT}/api`);

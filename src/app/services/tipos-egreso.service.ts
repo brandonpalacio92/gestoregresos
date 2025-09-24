@@ -10,7 +10,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TiposEgresoService {
 
-  private apiUrl = 'http://localhost:3000/api/egresos/tipos-egreso';
+  //private apiUrl = 'http://localhost:3000/api/egresos/tipos-egreso';
+  private apiUrl = 'http://192.168.1.7:3000/api/egresos/tipos-egreso';
 
   constructor(private http: HttpClient) { }
 

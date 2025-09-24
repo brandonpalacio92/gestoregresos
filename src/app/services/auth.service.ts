@@ -46,7 +46,8 @@ export interface AuthError {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'http://localhost:3000/api/auth';
+  private readonly API_URL = 'http://192.168.1.7:3000/api/auth';
+  //private readonly API_URL = 'http://localhost:3000/api/auth';
   private readonly ACCESS_TOKEN_KEY = 'access_token';
   private readonly REFRESH_TOKEN_KEY = 'refresh_token';
   private readonly USER_KEY = 'user_data';

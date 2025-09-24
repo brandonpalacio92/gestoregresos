@@ -8,7 +8,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CategoriasService {
 
-  private apiUrl = 'http://localhost:3000/api/egresos/tipos-egreso/con-categorias';
+  //private apiUrl = 'http://localhost:3000/api/egresos/tipos-egreso/con-categorias';
+  private apiUrl = 'http://192.168.1.7:3000/api/egresos/tipos-egreso/con-categorias';
 
   constructor(private http: HttpClient) { }
 
