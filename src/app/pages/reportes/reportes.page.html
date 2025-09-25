@@ -65,37 +65,48 @@
 
   
 
-    <!-- Tabla de Detalles -->
-    <ion-card class="tabla-detalles" *ngIf="reporteAnual">
-      <ion-card-header class="acordeon-header-clickeable" (click)="toggleDetalles()">
+    <!-- Visualización de Gráficas -->
+    <ion-card class="grafica-container" *ngIf="reporteAnual">
+      <ion-card-header>
         <ion-card-title>
-          <div class="acordeon-title-content">
-            <ion-icon name="list-outline"></ion-icon>
-            <span>Detalle por {{ tipoVisualizacion === 'tipo' ? 'Tipo de Egreso' : 'Categoría' }}</span>
-            <ion-icon name="chevron-down-outline" class="acordeon-icon" [class.rotated]="detallesExpandido"></ion-icon>
-          </div>
+          <ion-icon name="bar-chart-outline"></ion-icon>
+          Visualización de Datos
         </ion-card-title>
       </ion-card-header>
-      <ion-card-content [class.acordeon-colapsado]="!detallesExpandido">
-        <div class="tabla-container">
-          <div class="tabla-header">
-            <div class="col-nombre">Nombre</div>
-            <div class="col-monto">Monto</div>
-            <div class="col-porcentaje">%</div>
+      <ion-card-content>
+        
+
+        <!-- Visualización de datos de gráfica -->
+        <div class="visualizacion-datos" *ngIf="mostrarDatosGrafica && datosGrafica.length > 0">
+          <div class="datos-header">
+            <h3>{{ obtenerTituloGrafica() }}</h3>
+            <p>Año {{ anioSeleccionado }} - {{ datosGrafica.length }} elementos</p>
           </div>
-          
-          <div class="tabla-body">
-            <div 
-              *ngFor="let item of obtenerDatosOrdenados(tipoVisualizacion === 'tipo' ? reporteAnual.gastosPorTipo : reporteAnual.gastosPorCategoria)"
-              class="tabla-fila">
-              <div class="col-nombre">{{ item.nombre }}</div>
-              <div class="col-monto">{{ formatearMoneda(item.valor) }}</div>
-              <div class="col-porcentaje">
-                {{ obtenerPorcentaje(item.valor, reporteAnual.totalGastado) | number:'1.1-1' }}%
+
+          <!-- Gráfica de barras simple -->
+          <div class="grafica-barras-simple">
+            <div class="barra-item" *ngFor="let item of datosGrafica; let i = index">
+              <div class="barra-label">{{ item.nombre }}</div>
+              <div class="barra-container">
+                <div 
+                  class="barra-fill" 
+                  [style.width.%]="obtenerPorcentaje(item.valor, reporteAnual.totalGastado)"
+                  [style.background-color]="obtenerColorElemento(i)">
+                </div>
+                <div class="barra-valor">
+                  {{ formatearMoneda(item.valor) }} ({{ obtenerPorcentaje(item.valor, reporteAnual.totalGastado) | number:'1.1-1' }}%)
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- Mensaje cuando no hay datos -->
+        <div class="sin-datos" *ngIf="!tieneDatosParaGrafica()">
+          <ion-icon name="bar-chart-outline" size="large"></ion-icon>
+          <p>No hay datos para mostrar en la visualización</p>
+        </div>
+
       </ion-card-content>
     </ion-card>
 
@@ -128,21 +139,6 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Gráfica (Temporalmente deshabilitada) -->
-    <ion-card class="grafica-container">
-      <ion-card-header>
-        <ion-card-title>
-          <ion-icon name="bar-chart-outline"></ion-icon>
-          Distribución de Gastos
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <div class="sin-datos">
-          <ion-icon name="bar-chart-outline" size="large"></ion-icon>
-          <p>Gráfica temporalmente deshabilitada para debugging</p>
-        </div>
-      </ion-card-content>
-    </ion-card>
 
   </div>
 
