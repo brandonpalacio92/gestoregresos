@@ -41,7 +41,6 @@ export class ThemeService {
             });
           }
         } catch (error) {
-          console.error('Error loading theme from preferences:', error);
         }
       }
     }
@@ -52,7 +51,6 @@ export class ThemeService {
         this.applyTheme(theme);
         this.themeSubject.next(theme);
       } catch (error) {
-        console.error('Error loading theme from storage:', error);
       }
     }
   }

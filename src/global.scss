@@ -35,3 +35,453 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+/* ========================================
+   SISTEMA DE TEMAS PERSONALIZADO
+   ======================================== */
+
+/* Variables CSS para temas */
+:root {
+  /* Tema claro por defecto */
+  --theme-background: #ffffff;
+  --theme-surface: #f8f9fa;
+  --theme-text: #000000;
+  --theme-text-secondary: #6c757d;
+  --theme-border: #dee2e6;
+  --theme-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Tema oscuro */
+body.dark {
+  --theme-background: #0d0d0d;
+  --theme-surface: #1a1a1a;
+  --theme-text: #ffffff;
+  --theme-text-secondary: #cccccc;
+  --theme-border: #333333;
+  --theme-shadow: rgba(0, 0, 0, 0.3);
+  
+  /* Aplicar variables de Ionic para modo oscuro */
+  --ion-background-color: var(--theme-background);
+  --ion-background-color-rgb: 13, 13, 13;
+  --ion-text-color: var(--theme-text);
+  --ion-text-color-rgb: 255, 255, 255;
+  
+  /* Colores de superficie */
+  --ion-color-step-50: #1a1a1a;
+  --ion-color-step-100: #262626;
+  --ion-color-step-150: #333333;
+  --ion-color-step-200: #404040;
+  --ion-color-step-250: #4d4d4d;
+  --ion-color-step-300: #595959;
+  --ion-color-step-350: #666666;
+  --ion-color-step-400: #737373;
+  --ion-color-step-450: #808080;
+  --ion-color-step-500: #8c8c8c;
+  --ion-color-step-550: #999999;
+  --ion-color-step-600: #a6a6a6;
+  --ion-color-step-650: #b3b3b3;
+  --ion-color-step-700: #bfbfbf;
+  --ion-color-step-750: #cccccc;
+  --ion-color-step-800: #d9d9d9;
+  --ion-color-step-850: #e6e6e6;
+  --ion-color-step-900: #f2f2f2;
+  --ion-color-step-950: #ffffff;
+}
+
+/* Tema claro */
+body.light {
+  --theme-background: #ffffff;
+  --theme-surface: #f8f9fa;
+  --theme-text: #000000;
+  --theme-text-secondary: #6c757d;
+  --theme-border: #dee2e6;
+  --theme-shadow: rgba(0, 0, 0, 0.1);
+  
+  /* Aplicar variables de Ionic para modo claro */
+  --ion-background-color: var(--theme-background);
+  --ion-background-color-rgb: 255, 255, 255;
+  --ion-text-color: var(--theme-text);
+  --ion-text-color-rgb: 0, 0, 0;
+}
+
+/* Mejoras para componentes en modo oscuro */
+body.dark {
+  ion-card {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+    border: 1px solid var(--theme-border);
+  }
+  
+  ion-item {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+    --border-color: var(--theme-border);
+  }
+  
+  ion-toolbar {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-content {
+    --background: var(--theme-background);
+  }
+  
+  ion-header {
+    --background: var(--theme-surface);
+  }
+  
+  ion-menu {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-menu ion-content {
+    --background: var(--theme-surface);
+  }
+  
+  ion-menu ion-item {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+}
+
+/* Transiciones suaves para cambios de tema */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Mejorar contraste en modo oscuro */
+body.dark {
+  ion-button {
+    --color: var(--theme-text);
+  }
+  
+  ion-label {
+    --color: var(--theme-text);
+  }
+  
+  ion-input {
+    --color: var(--theme-text);
+    --background: var(--theme-surface);
+    --border-color: var(--theme-border);
+  }
+  
+  ion-textarea {
+    --color: var(--theme-text);
+    --background: var(--theme-surface);
+    --border-color: var(--theme-border);
+  }
+  
+  ion-select {
+    --color: var(--theme-text);
+    --background: var(--theme-surface);
+    --border-color: var(--theme-border);
+  }
+  
+  /* Mejorar componentes de selección */
+  ion-select-popover {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-select-popover ion-item {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+    --border-color: var(--theme-border);
+  }
+  
+  ion-select-popover ion-item:hover {
+    --background: var(--ion-color-step-100);
+  }
+  
+  /* Mejorar alertas y modales */
+  ion-alert {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-alert .alert-wrapper {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-alert .alert-button {
+    --color: var(--theme-text);
+  }
+  
+  ion-alert .alert-input {
+    --color: var(--theme-text);
+    --background: var(--theme-background);
+  }
+  
+  /* Mejorar toasts */
+  ion-toast {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar loading */
+  ion-loading {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar action sheet */
+  ion-action-sheet {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-action-sheet .action-sheet-button {
+    --color: var(--theme-text);
+    --background: var(--theme-surface);
+  }
+  
+  /* Mejorar popover */
+  ion-popover {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-popover ion-content {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar modal */
+  ion-modal {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-modal ion-content {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar picker */
+  ion-picker {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-picker ion-picker-column {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar datetime */
+  ion-datetime {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar checkbox y radio */
+  ion-checkbox {
+    --color: var(--theme-text);
+    --color-checked: var(--ion-color-primary);
+  }
+  
+  ion-radio {
+    --color: var(--theme-text);
+    --color-checked: var(--ion-color-primary);
+  }
+  
+  /* Mejorar toggle */
+  ion-toggle {
+    --color: var(--theme-text);
+    --color-checked: var(--ion-color-primary);
+  }
+  
+  /* Mejorar range */
+  ion-range {
+    --color: var(--theme-text);
+    --bar-background: var(--theme-border);
+    --bar-background-active: var(--ion-color-primary);
+  }
+  
+  /* Mejorar progress bar */
+  ion-progress-bar {
+    --background: var(--theme-border);
+    --buffer-background: var(--theme-border);
+    --progress-background: var(--ion-color-primary);
+  }
+  
+  /* Mejorar skeleton */
+  ion-skeleton-text {
+    --background: var(--theme-border);
+  }
+  
+  /* Mejorar spinner */
+  ion-spinner {
+    --color: var(--ion-color-primary);
+  }
+  
+  /* Mejorar refresher */
+  ion-refresher {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar infinite scroll */
+  ion-infinite-scroll {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar searchbar */
+  ion-searchbar {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+    --placeholder-color: var(--theme-text-secondary);
+    --icon-color: var(--theme-text);
+    --clear-button-color: var(--theme-text);
+  }
+  
+  /* Mejorar reorder */
+  ion-reorder {
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar segment */
+  ion-segment {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-segment-button {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+    --color-checked: var(--ion-color-primary);
+    --background-checked: var(--ion-color-primary-tint);
+  }
+  
+  /* Mejorar tabs */
+  ion-tab-bar {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+    --color-selected: var(--ion-color-primary);
+  }
+  
+  ion-tab-button {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+    --color-selected: var(--ion-color-primary);
+  }
+  
+  /* Mejorar breadcrumb */
+  ion-breadcrumb {
+    --color: var(--theme-text);
+  }
+  
+  ion-breadcrumb ion-icon {
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar chip */
+  ion-chip {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar avatar */
+  ion-avatar {
+    --background: var(--theme-border);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar thumbnail */
+  ion-thumbnail {
+    --background: var(--theme-border);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar note */
+  ion-note {
+    --color: var(--theme-text-secondary);
+  }
+  
+  /* Mejorar text */
+  ion-text {
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar title */
+  ion-title {
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar subtitle */
+  ion-subtitle {
+    --color: var(--theme-text-secondary);
+  }
+  
+  /* Mejorar caption */
+  ion-caption {
+    --color: var(--theme-text-secondary);
+  }
+  
+  /* Mejorar badge */
+  ion-badge {
+    --background: var(--ion-color-primary);
+    --color: white;
+  }
+  
+  /* Mejorar fab */
+  ion-fab {
+    --background: var(--ion-color-primary);
+    --color: white;
+  }
+  
+  ion-fab-button {
+    --background: var(--ion-color-primary);
+    --color: white;
+  }
+  
+  /* Mejorar back button */
+  ion-back-button {
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar menu button */
+  ion-menu-button {
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar menu */
+  ion-menu {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-menu ion-content {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-menu ion-item {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+    --border-color: var(--theme-border);
+  }
+  
+  ion-menu ion-item:hover {
+    --background: var(--ion-color-step-100);
+  }
+  
+  /* Mejorar split pane */
+  ion-split-pane {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar virtual scroll */
+  ion-virtual-scroll {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+}
+
+/* Importar estilos estandarizados */
+@import './app/estilos-estandarizados.scss';

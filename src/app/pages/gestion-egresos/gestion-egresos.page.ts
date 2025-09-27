@@ -68,16 +68,14 @@ export class GestionEgresosPage implements OnInit {
 
   async cargarTiposEgreso() {
     try {
-      console.log('🔄 Iniciando carga de tipos de egreso...');
+
       // Cargar todos los tipos de egreso disponibles
       this.tiposEgreso = await firstValueFrom(this.tiposEgresoService.getTiposEgreso());
-      console.log(`📋 Cargados ${this.tiposEgreso.length} tipos de egreso`);
-      
+
       // Log para debug
-      console.log('📋 Tipos de egreso cargados:', this.tiposEgreso.map(t => ({ id: t.id, nombre: t.nombre })));
-      console.log('📋 Array completo de tipos:', this.tiposEgreso);
+
     } catch (error) {
-      console.error('❌ Error al cargar tipos de egreso:', error);
+
     }
   }
 
@@ -86,7 +84,7 @@ export class GestionEgresosPage implements OnInit {
     try {
       const currentUser = this.authService.getCurrentUserValue();
       if (!currentUser) {
-        console.error('No hay usuario autenticado');
+
         return;
       }
 
@@ -106,42 +104,16 @@ export class GestionEgresosPage implements OnInit {
           filtros.periodo = 'personalizado';
           filtros.mes = this.mesSeleccionado;
           filtros.año = this.anioSeleccionado;
-          console.log('🎯 Filtro personalizado configurado:', {
-            mes: this.mesSeleccionado,
-            año: this.anioSeleccionado,
-            periodo: 'personalizado'
-          });
+
         } else {
           filtros.periodo = this.filtroPeriodo;
-          console.log('🎯 Filtro período estándar configurado:', {
-            periodo: this.filtroPeriodo
-          });
+
         }
       }
-      
-      console.log('🔍 Enviando filtros al backend:', filtros);
-      console.log('🔍 Valores de filtros:', {
-        filtroEstado: this.filtroEstado,
-        filtroTipoEgreso: this.filtroTipoEgreso,
-        filtroPeriodo: this.filtroPeriodo,
-        mesSeleccionado: this.mesSeleccionado,
-        anioSeleccionado: this.anioSeleccionado,
-        mostrarSelectorPersonalizado: this.mostrarSelectorPersonalizado
-      });
-      console.log('🔍 Filtros que se enviarán:', {
-        estado: filtros.estado || 'todos',
-        tipoEgresoId: filtros.tipoEgresoId || 'todos', 
-        periodo: filtros.periodo || 'todos',
-        mes: filtros.mes || 'no especificado',
-        año: filtros.año || 'no especificado'
-      });
-      
+
       // Cargar egresos con filtros
       const egresos = await firstValueFrom(this.egresosService.getEgresos(usuarioId, filtros));
-      
-      console.log('📥 Datos recibidos del backend:', egresos);
-      console.log('📥 Cantidad de egresos recibidos:', egresos.length);
-      
+
       // Convertir fechas de string a Date y monto a número
       const egresosConvertidos = egresos.map(egreso => ({
         ...egreso,
@@ -159,19 +131,11 @@ export class GestionEgresosPage implements OnInit {
       // Los datos ya vienen filtrados del backend, solo los asignamos
       this.egresosFiltrados = [...this.egresos];
       this.filtrosConfigurados = true;
-      
-      console.log(`📊 Cargados ${this.egresos.length} egresos activos (excluyendo ${egresos.length - this.egresos.length} parcializados) para el usuario ${usuarioId}`);
-      
+
       // Log de indicadores para verificación
-      console.log('📈 Indicadores calculados:', {
-        totalEgresos: this.getTotalEgresos(),
-        totalPendientes: this.getTotalPendientes(),
-        totalPagados: this.getTotalPagados(),
-        cantidadEgresos: this.egresosFiltrados.length
-      });
-      
+
     } catch (error) {
-      console.error('Error al cargar datos:', error);
+
     } finally {
       this.cargando = false;
     }
@@ -181,7 +145,6 @@ export class GestionEgresosPage implements OnInit {
     // Recargar datos con los nuevos filtros
     await this.cargarDatos();
   }
-
 
   async onFiltroChange() {
     // Siempre recargar datos con los nuevos filtros
@@ -326,7 +289,7 @@ export class GestionEgresosPage implements OnInit {
           text: 'Cancelar',
           role: 'cancel',
           handler: () => {
-            console.log('Eliminación cancelada');
+
           }
         },
         {
@@ -334,16 +297,13 @@ export class GestionEgresosPage implements OnInit {
           role: 'destructive',
           handler: async () => {
             try {
-              console.log('🗑️ Eliminando egreso:', egreso.id);
-              
+
               await firstValueFrom(this.egresosService.eliminarEgreso(egreso.id));
               
               // Remover el egreso de las listas locales
               this.egresos = this.egresos.filter(e => e.id !== egreso.id);
               this.egresosFiltrados = this.egresosFiltrados.filter(e => e.id !== egreso.id);
-              
-              console.log('✅ Egreso eliminado exitosamente');
-              
+
               // Mostrar toast de confirmación
               const toast = await this.toastController.create({
                 message: 'Egreso eliminado exitosamente',
@@ -354,8 +314,7 @@ export class GestionEgresosPage implements OnInit {
               await toast.present();
               
             } catch (error) {
-              console.error('❌ Error al eliminar egreso:', error);
-              
+
               const toast = await this.toastController.create({
                 message: 'Error al eliminar el egreso',
                 duration: 3000,
@@ -387,7 +346,7 @@ export class GestionEgresosPage implements OnInit {
         }
       }
     } catch (error) {
-      console.error('Error al actualizar estado:', error);
+
     }
   }
 
@@ -398,7 +357,6 @@ export class GestionEgresosPage implements OnInit {
   async marcarComoPendiente(egreso: Egreso) {
     await this.cambiarEstado(egreso, 'pendiente');
   }
-
 
   getCategoriaNombre(egreso: Egreso): string {
     // Usar datos del JOIN si están disponibles, sino buscar en categorías
@@ -437,25 +395,23 @@ export class GestionEgresosPage implements OnInit {
     return 'help-circle-outline'; // Icono por defecto
   }
 
-
   getTotalEgresos(): number {
     const total = this.egresosFiltrados.reduce((total, egreso) => total + egreso.monto, 0);
-    console.log('💰 Total egresos calculado:', total, 'de', this.egresosFiltrados.length, 'egresos');
+
     return total;
   }
 
   getTotalPendientes(): number {
     const pendientes = this.egresosFiltrados.filter(e => e.estado === 'pendiente');
     const total = pendientes.reduce((total, egreso) => total + egreso.monto, 0);
-    console.log('⏳ Total pendientes calculado:', total, 'de', pendientes.length, 'egresos pendientes');
+
     return total;
   }
-
 
   getTotalPagados(): number {
     const pagados = this.egresosFiltrados.filter(e => e.estado === 'pagado');
     const total = pagados.reduce((total, egreso) => total + egreso.monto, 0);
-    console.log('✅ Total pagados calculado:', total, 'de', pagados.length, 'egresos pagados');
+
     return total;
   }
 
@@ -510,14 +466,14 @@ export class GestionEgresosPage implements OnInit {
   getTotalPagosTardios(): number {
     const pagosTardios = this.egresosFiltrados.filter(e => this.esPagoTardio(e));
     const total = pagosTardios.reduce((total, egreso) => total + egreso.monto, 0);
-    console.log('⚠️ Total pagos tardíos calculado:', total, 'de', pagosTardios.length, 'egresos');
+
     return total;
   }
 
   getTotalPagosATiempo(): number {
     const pagosATiempo = this.egresosFiltrados.filter(e => this.esPagoATiempo(e));
     const total = pagosATiempo.reduce((total, egreso) => total + egreso.monto, 0);
-    console.log('✅ Total pagos a tiempo calculado:', total, 'de', pagosATiempo.length, 'egresos');
+
     return total;
   }
 
@@ -530,8 +486,7 @@ export class GestionEgresosPage implements OnInit {
 
   // Helper para convertir campos de camelCase a snake_case para el backend
   private convertirParaBackend(egreso: any): any {
-    console.log('🔍 Objeto egreso antes de convertir:', egreso);
-    
+
     const resultado = {
       descripcion: egreso.descripcion,
       monto: egreso.monto,
@@ -545,8 +500,7 @@ export class GestionEgresosPage implements OnInit {
       estado: egreso.estado,
       notas: egreso.notas
     };
-    
-    console.log('🔍 Objeto egreso después de convertir:', resultado);
+
     return resultado;
   }
 
@@ -566,26 +520,19 @@ export class GestionEgresosPage implements OnInit {
 
     // Validar que el monto del pago parcial no exceda el monto original
     if (this.montoPagoParcial >= this.egresoSeleccionado.monto) {
-      console.log('❌ El monto del pago parcial debe ser menor al monto total');
+
       // Aquí podrías mostrar un toast o alerta al usuario
       return;
     }
 
     // Validar que el monto sea mayor a 0
     if (this.montoPagoParcial <= 0) {
-      console.log('❌ El monto del pago parcial debe ser mayor a 0');
+
       return;
     }
 
     try {
       const saldoPendiente = this.calcularSaldoPendiente();
-      
-      console.log('💳 Procesando pago parcial:', {
-        egresoOriginal: this.egresoSeleccionado.descripcion,
-        montoOriginal: this.egresoSeleccionado.monto,
-        montoAbonado: this.montoPagoParcial,
-        saldoPendiente: saldoPendiente
-      });
 
       // TRANSACCIÓN: Crear todos los registros primero, luego actualizar el original
       
@@ -605,11 +552,6 @@ export class GestionEgresosPage implements OnInit {
         notas: `Abono de pago parcial. Monto original: ${egresoSeleccionado.monto}`
       };
 
-      console.log('🔍 Egreso abono creado:', egresoAbono);
-      console.log('🔍 EgresoSeleccionado:', this.egresoSeleccionado);
-      console.log('🔍 CategoriaId del seleccionado:', this.egresoSeleccionado.categoriaId);
-      console.log('🔍 UsuarioId del seleccionado:', this.egresoSeleccionado.usuarioId);
-
       // 2. Preparar egreso del saldo pendiente
       const egresoSaldo = {
         descripcion: `${egresoSeleccionado.descripcion} (Saldo pendiente)`,
@@ -625,29 +567,18 @@ export class GestionEgresosPage implements OnInit {
         notas: `Saldo pendiente de pago parcial. Monto original: ${egresoSeleccionado.monto}, abonado: ${this.montoPagoParcial}`
       };
 
-      console.log('🔍 Egreso saldo creado:', egresoSaldo);
-
       // 3. Crear los nuevos registros primero
-      console.log('🔄 Creando registros de abono y saldo...');
-      
+
       const egresoAbonoBackend = this.convertirParaBackend(egresoAbono);
       const egresoSaldoBackend = this.convertirParaBackend(egresoSaldo);
-      
-      console.log('📤 Payload del abono:', egresoAbonoBackend);
-      console.log('📤 Payload del saldo:', egresoSaldoBackend);
-      
+
       const [abonoCreado, saldoCreado] = await Promise.all([
         firstValueFrom(this.egresosService.crearEgreso(egresoAbonoBackend)),
         firstValueFrom(this.egresosService.crearEgreso(egresoSaldoBackend))
       ]);
 
-      console.log('✅ Registros creados exitosamente:', {
-        abono: abonoCreado.id,
-        saldo: saldoCreado.id
-      });
-
       // 4. Solo después de crear los nuevos registros, actualizar el original
-      console.log('🔄 Actualizando egreso original a parcializado...');
+
       const egresoOriginalActualizado = {
         ...egresoSeleccionado,
         estado: 'parcializado' as const,
@@ -662,10 +593,8 @@ export class GestionEgresosPage implements OnInit {
       // 6. Cerrar modal
       this.cerrarModalPagoParcial();
 
-      console.log('✅ Pago parcial procesado exitosamente - 3 registros creados');
-      
     } catch (error) {
-      console.error('❌ Error al procesar pago parcial:', error);
+
       // En caso de error, los registros creados quedarán, pero el original no se marcará como parcializado
     }
   }

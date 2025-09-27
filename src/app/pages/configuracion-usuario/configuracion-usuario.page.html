@@ -96,10 +96,11 @@
           <ion-label>Tema</ion-label>
           <ion-select 
             [(ngModel)]="preferencias.tema" 
+            (ionChange)="aplicarTemaSistema()"
             interface="popover">
-            <ion-select-option value="claro">Claro</ion-select-option>
-            <ion-select-option value="oscuro">Oscuro</ion-select-option>
-            <ion-select-option value="auto">Automático</ion-select-option>
+            <ion-select-option value="claro">🌞 Claro</ion-select-option>
+            <ion-select-option value="oscuro">🌙 Oscuro</ion-select-option>
+            <ion-select-option value="auto">🔄 Automático</ion-select-option>
           </ion-select>
         </ion-item>
 
@@ -124,10 +125,27 @@
           </ion-select>
         </ion-item>
 
+        <!-- Demo de tema -->
+        <div class="tema-demo" *ngIf="preferencias.tema">
+          <h4>Vista Previa del Tema</h4>
+          <div class="demo-cards">
+            <ion-card class="demo-card">
+              <ion-card-header>
+                <ion-card-title>Ejemplo de Card</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <p>Este es un ejemplo de cómo se verá el contenido con el tema seleccionado.</p>
+                <ion-button size="small" color="primary">Botón Primario</ion-button>
+                <ion-button size="small" color="secondary" fill="outline">Botón Secundario</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
+
         <ion-button 
           expand="block" 
           color="secondary" 
-          (click)="guardarPreferencias()"
+          (click)="guardarPreferencias(true)"
           class="boton-guardar">
           <ion-icon name="checkmark-outline" slot="start"></ion-icon>
           Guardar Preferencias

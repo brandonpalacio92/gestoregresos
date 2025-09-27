@@ -411,3 +411,347 @@ ion-card {
     }
   }
 }
+
+/* Estilos para temas claro/oscuro */
+:host {
+  // Tema claro (por defecto)
+  &.light {
+    --ion-background-color: #ffffff;
+    --ion-background-color-rgb: 255, 255, 255;
+    --ion-text-color: #000000;
+    --ion-text-color-rgb: 0, 0, 0;
+    --ion-color-step-50: #f2f2f2;
+    --ion-color-step-100: #e6e6e6;
+    --ion-color-step-150: #d9d9d9;
+    --ion-color-step-200: #cccccc;
+    --ion-color-step-250: #bfbfbf;
+    --ion-color-step-300: #b3b3b3;
+    --ion-color-step-350: #a6a6a6;
+    --ion-color-step-400: #999999;
+    --ion-color-step-450: #8c8c8c;
+    --ion-color-step-500: #808080;
+    --ion-color-step-550: #737373;
+    --ion-color-step-600: #666666;
+    --ion-color-step-650: #595959;
+    --ion-color-step-700: #4d4d4d;
+    --ion-color-step-750: #404040;
+    --ion-color-step-800: #333333;
+    --ion-color-step-850: #262626;
+    --ion-color-step-900: #1a1a1a;
+    --ion-color-step-950: #0d0d0d;
+  }
+
+  // Tema oscuro
+  &.dark {
+    --ion-background-color: #0d0d0d;
+    --ion-background-color-rgb: 13, 13, 13;
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255, 255, 255;
+    --ion-color-step-50: #1a1a1a;
+    --ion-color-step-100: #262626;
+    --ion-color-step-150: #333333;
+    --ion-color-step-200: #404040;
+    --ion-color-step-250: #4d4d4d;
+    --ion-color-step-300: #595959;
+    --ion-color-step-350: #666666;
+    --ion-color-step-400: #737373;
+    --ion-color-step-450: #808080;
+    --ion-color-step-500: #8c8c8c;
+    --ion-color-step-550: #999999;
+    --ion-color-step-600: #a6a6a6;
+    --ion-color-step-650: #b3b3b3;
+    --ion-color-step-700: #bfbfbf;
+    --ion-color-step-750: #cccccc;
+    --ion-color-step-800: #d9d9d9;
+    --ion-color-step-850: #e6e6e6;
+    --ion-color-step-900: #f2f2f2;
+    --ion-color-step-950: #ffffff;
+  }
+}
+
+// Aplicar estilos globales para temas
+body.light {
+  --ion-background-color: #ffffff;
+  --ion-background-color-rgb: 255, 255, 255;
+  --ion-text-color: #000000;
+  --ion-text-color-rgb: 0, 0, 0;
+}
+
+body.dark {
+  --ion-background-color: #0d0d0d;
+  --ion-background-color-rgb: 13, 13, 13;
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255, 255, 255;
+}
+
+// Mejorar contraste en modo oscuro
+body.dark {
+  ion-card {
+    --background: #1a1a1a;
+    --color: #ffffff;
+  }
+  
+  ion-item {
+    --background: #1a1a1a;
+    --color: #ffffff;
+    --border-color: #333333;
+  }
+  
+  .perfil-info {
+    background: #1a1a1a;
+    border: 1px solid #333333;
+  }
+  
+  .usuario-datos h3 {
+    color: #ffffff;
+  }
+  
+  .usuario-datos p {
+    color: #cccccc;
+  }
+}
+
+/* Demo de tema */
+.tema-demo {
+  margin: 16px 0;
+  padding: 16px;
+  background: var(--ion-color-light);
+  border-radius: 12px;
+  border: 1px solid var(--ion-color-step-200);
+  
+  h4 {
+    margin: 0 0 12px 0;
+    color: var(--ion-color-primary);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  .demo-cards {
+    .demo-card {
+      margin: 0;
+      box-shadow: 0 2px 8px var(--theme-shadow);
+      
+      ion-card-header {
+        background: var(--ion-color-primary);
+        color: white;
+        padding: 12px 16px;
+        
+        ion-card-title {
+          font-size: 1rem;
+          margin: 0;
+        }
+      }
+      
+      ion-card-content {
+        padding: 16px;
+        
+        p {
+          margin: 0 0 12px 0;
+          color: var(--theme-text);
+          font-size: 0.9rem;
+        }
+        
+        ion-button {
+          margin-right: 8px;
+          margin-bottom: 8px;
+        }
+      }
+    }
+  }
+}
+
+/* Mejorar demo en modo oscuro */
+body.dark .tema-demo {
+  background: var(--theme-surface);
+  border-color: var(--theme-border);
+  
+  .demo-cards .demo-card {
+    --background: var(--theme-surface);
+    border: 1px solid var(--theme-border);
+  }
+}
+
+/* Mejoras específicas para modo oscuro en configuración */
+body.dark {
+  /* Mejorar acordeones */
+  .acordeon-header-clickeable {
+    color: var(--theme-text) !important;
+    
+    .acordeon-title-content {
+      color: var(--theme-text) !important;
+    }
+    
+    .acordeon-icon {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+  }
+  
+  /* Mejorar cards */
+  ion-card {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+    border: 1px solid var(--theme-border);
+  }
+  
+  ion-card-header {
+    background: var(--ion-color-primary) !important;
+    color: white !important;
+  }
+  
+  ion-card-title {
+    color: white !important;
+  }
+  
+  /* Mejorar items */
+  ion-item {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+    --border-color: var(--theme-border);
+    --inner-border-color: var(--theme-border);
+  }
+  
+  ion-item:hover {
+    --background: var(--ion-color-step-100);
+  }
+  
+  /* Mejorar inputs */
+  ion-input {
+    --color: var(--theme-text);
+    --background: var(--theme-background);
+    --border-color: var(--theme-border);
+  }
+  
+  ion-input:focus {
+    --border-color: var(--ion-color-primary);
+  }
+  
+  /* Mejorar selects */
+  ion-select {
+    --color: var(--theme-text);
+    --background: var(--theme-surface);
+    --border-color: var(--theme-border);
+  }
+  
+  ion-select-option {
+    --color: var(--theme-text);
+    --background: var(--theme-surface);
+  }
+  
+  /* Mejorar toggles */
+  ion-toggle {
+    --color: var(--theme-text);
+    --color-checked: var(--ion-color-primary);
+    --background: var(--theme-border);
+    --background-checked: var(--ion-color-primary);
+  }
+  
+  /* Mejorar botones */
+  ion-button {
+    --color: var(--theme-text);
+  }
+  
+  ion-button[color="primary"] {
+    --background: var(--ion-color-primary);
+    --color: white;
+  }
+  
+  ion-button[color="secondary"] {
+    --background: var(--ion-color-secondary);
+    --color: white;
+  }
+  
+  ion-button[color="danger"] {
+    --background: var(--ion-color-danger);
+    --color: white;
+  }
+  
+  ion-button[fill="outline"] {
+    --color: var(--theme-text);
+    --border-color: var(--theme-border);
+  }
+  
+  /* Mejorar perfil info */
+  .perfil-info {
+    background: var(--theme-surface) !important;
+    border: 1px solid var(--theme-border) !important;
+  }
+  
+  .usuario-datos h3 {
+    color: var(--theme-text) !important;
+  }
+  
+  .usuario-datos p {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  /* Mejorar formularios */
+  .formulario-perfil,
+  .formulario-password {
+    ion-item {
+      --background: var(--theme-surface);
+      --color: var(--theme-text);
+    }
+  }
+  
+  /* Mejorar datos opciones */
+  .datos-opciones {
+    ion-button {
+      --color: var(--theme-text);
+    }
+  }
+  
+  /* Mejorar esquemas de colores */
+  .esquemas-colores {
+    .esquema-color {
+      background: var(--theme-surface) !important;
+      border-color: var(--theme-border) !important;
+      
+      &.seleccionado {
+        background: var(--ion-color-primary-tint) !important;
+        border-color: var(--ion-color-primary) !important;
+      }
+    }
+    
+    .esquema-nombre {
+      color: var(--theme-text) !important;
+    }
+  }
+  
+  /* Mejorar personalización individual */
+  .personalizacion-individual {
+    ion-label {
+      color: var(--theme-text) !important;
+    }
+    
+    .color-value {
+      background: var(--theme-surface) !important;
+      color: var(--theme-text) !important;
+    }
+  }
+  
+  /* Mejorar preview */
+  .color-preview {
+    background: var(--theme-surface) !important;
+    border: 1px solid var(--theme-border) !important;
+    
+    h3 {
+      color: var(--ion-color-primary) !important;
+    }
+    
+    p {
+      color: var(--theme-text) !important;
+    }
+  }
+  
+  /* Mejorar loading */
+  .loading {
+    background: rgba(0, 0, 0, 0.9) !important;
+    
+    p {
+      color: var(--theme-text) !important;
+    }
+  }
+}
+
+/* Importar correcciones específicas para tema oscuro */
+@import './dark-theme-fixes.scss';

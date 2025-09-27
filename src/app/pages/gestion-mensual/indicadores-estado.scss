@@ -1,0 +1,252 @@
+/* ========================================
+   INDICADORES DE ESTADO - GESTIÓN MENSUAL
+   ======================================== */
+
+/* Estilos base para indicadores */
+.indicador-estado {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.indicador-estado:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.indicador-estado ion-icon {
+  font-size: 1.1rem;
+}
+
+.indicador-estado .estado-texto {
+  flex: 1;
+  text-align: center;
+}
+
+.indicador-estado .estado-valor {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* Estados específicos */
+.indicador-estado.pendiente {
+  background: linear-gradient(135deg, #ffc409, #ffd700);
+  color: #000;
+  border-color: #ffc409;
+}
+
+.indicador-estado.pagado {
+  background: linear-gradient(135deg, #2dd55b, #4ade80);
+  color: #000;
+  border-color: #2dd55b;
+}
+
+.indicador-estado.vencido {
+  background: linear-gradient(135deg, #c5000f, #ef4444);
+  color: #fff;
+  border-color: #c5000f;
+}
+
+.indicador-estado.parcial {
+  background: linear-gradient(135deg, #6030ff, #8b5cf6);
+  color: #fff;
+  border-color: #6030ff;
+}
+
+.indicador-estado.cancelado {
+  background: linear-gradient(135deg, #636469, #9ca3af);
+  color: #fff;
+  border-color: #636469;
+}
+
+/* Mejoras para tema oscuro */
+body.dark {
+  .indicador-estado {
+    border: 1px solid var(--theme-border);
+  }
+  
+  .indicador-estado:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .indicador-estado.pendiente {
+    background: linear-gradient(135deg, #ffc409, #ffd700) !important;
+    color: #000 !important;
+    border-color: #ffc409 !important;
+  }
+  
+  .indicador-estado.pagado {
+    background: linear-gradient(135deg, #2dd55b, #4ade80) !important;
+    color: #000 !important;
+    border-color: #2dd55b !important;
+  }
+  
+  .indicador-estado.vencido {
+    background: linear-gradient(135deg, #c5000f, #ef4444) !important;
+    color: #fff !important;
+    border-color: #c5000f !important;
+  }
+  
+  .indicador-estado.parcial {
+    background: linear-gradient(135deg, #6030ff, #8b5cf6) !important;
+    color: #fff !important;
+    border-color: #6030ff !important;
+  }
+  
+  .indicador-estado.cancelado {
+    background: linear-gradient(135deg, #636469, #9ca3af) !important;
+    color: #fff !important;
+    border-color: #636469 !important;
+  }
+}
+
+/* Grid de indicadores */
+.indicadores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.indicadores-grid.compacto {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.indicadores-grid.denso {
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 6px;
+}
+
+/* Indicadores en línea */
+.indicadores-linea {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.indicadores-linea .indicador-estado {
+  flex: 1;
+  min-width: 120px;
+}
+
+/* Indicadores compactos */
+.indicador-compacto {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: var(--theme-surface);
+  border: 1px solid var(--theme-border);
+  color: var(--theme-text);
+}
+
+.indicador-compacto ion-icon {
+  font-size: 1rem;
+}
+
+.indicador-compacto .estado-valor {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* Mejoras para tema oscuro en indicadores compactos */
+body.dark {
+  .indicador-compacto {
+    background: var(--theme-surface) !important;
+    border-color: var(--theme-border) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  .indicador-compacto.pendiente {
+    background: linear-gradient(135deg, #ffc409, #ffd700) !important;
+    color: #000 !important;
+    border-color: #ffc409 !important;
+  }
+  
+  .indicador-compacto.pagado {
+    background: linear-gradient(135deg, #2dd55b, #4ade80) !important;
+    color: #000 !important;
+    border-color: #2dd55b !important;
+  }
+  
+  .indicador-compacto.vencido {
+    background: linear-gradient(135deg, #c5000f, #ef4444) !important;
+    color: #fff !important;
+    border-color: #c5000f !important;
+  }
+  
+  .indicador-compacto.parcial {
+    background: linear-gradient(135deg, #6030ff, #8b5cf6) !important;
+    color: #fff !important;
+    border-color: #6030ff !important;
+  }
+  
+  .indicador-compacto.cancelado {
+    background: linear-gradient(135deg, #636469, #9ca3af) !important;
+    color: #fff !important;
+    border-color: #636469 !important;
+  }
+}
+
+/* Animaciones */
+.indicador-estado {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .indicadores-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .indicadores-linea {
+    flex-direction: column;
+  }
+  
+  .indicadores-linea .indicador-estado {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .indicador-estado {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+  
+  .indicador-estado .estado-valor {
+    font-size: 0.9rem;
+  }
+  
+  .indicador-compacto {
+    padding: 4px 6px;
+    font-size: 0.7rem;
+  }
+  
+  .indicador-compacto .estado-valor {
+    font-size: 0.8rem;
+  }
+}

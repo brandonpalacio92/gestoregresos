@@ -1,0 +1,511 @@
+/* ========================================
+   ESTILOS ESTANDARIZADOS PARA TODA LA APP
+   ======================================== */
+
+/* Variables globales para temas */
+:root {
+  /* Tema claro por defecto */
+  --theme-background: #ffffff;
+  --theme-surface: #f8f9fa;
+  --theme-text: #000000;
+  --theme-text-secondary: #6c757d;
+  --theme-border: #dee2e6;
+  --theme-shadow: rgba(0, 0, 0, 0.1);
+  --theme-hover: #f8f9fa;
+  --theme-focus: rgba(var(--ion-color-primary-rgb), 0.2);
+}
+
+/* Tema oscuro */
+body.dark {
+  --theme-background: #0d0d0d;
+  --theme-surface: #1a1a1a;
+  --theme-text: #ffffff;
+  --theme-text-secondary: #cccccc;
+  --theme-border: #333333;
+  --theme-shadow: rgba(0, 0, 0, 0.3);
+  --theme-hover: #2a2a2a;
+  --theme-focus: rgba(var(--ion-color-primary-rgb), 0.3);
+}
+
+/* Tema claro */
+body.light {
+  --theme-background: #ffffff;
+  --theme-surface: #f8f9fa;
+  --theme-text: #000000;
+  --theme-text-secondary: #6c757d;
+  --theme-border: #dee2e6;
+  --theme-shadow: rgba(0, 0, 0, 0.1);
+  --theme-hover: #f8f9fa;
+  --theme-focus: rgba(var(--ion-color-primary-rgb), 0.2);
+}
+
+/* ========================================
+   ESTILOS ESTANDARIZADOS PARA COMPONENTES
+   ======================================== */
+
+/* Cards estandarizados */
+.card-estandarizada {
+  background: var(--theme-surface);
+  border: 1px solid var(--theme-border);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--theme-shadow);
+  transition: all 0.3s ease;
+}
+
+.card-estandarizada:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--theme-shadow);
+}
+
+.card-estandarizada .card-header {
+  background: var(--ion-color-primary);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  padding: 16px;
+}
+
+.card-estandarizada .card-title {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.card-estandarizada .card-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  margin: 4px 0 0 0;
+}
+
+.card-estandarizada .card-content {
+  padding: 16px;
+  background: var(--theme-surface);
+  color: var(--theme-text);
+}
+
+/* Botones estandarizados */
+.boton-estandarizado {
+  --background: var(--ion-color-primary);
+  --color: white;
+  --border-radius: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.boton-estandarizado:hover {
+  --background: var(--ion-color-primary-shade);
+  transform: translateY(-1px);
+}
+
+.boton-estandarizado[fill="outline"] {
+  --background: transparent;
+  --color: var(--ion-color-primary);
+  --border-color: var(--ion-color-primary);
+  --border-width: 1px;
+  --border-style: solid;
+}
+
+.boton-estandarizado[fill="outline"]:hover {
+  --background: var(--ion-color-primary);
+  --color: white;
+}
+
+/* Inputs estandarizados */
+.input-estandarizado {
+  --background: var(--theme-background);
+  --color: var(--theme-text);
+  --border-color: var(--theme-border);
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.input-estandarizado:focus {
+  --border-color: var(--ion-color-primary);
+  --box-shadow: 0 0 0 2px var(--theme-focus);
+}
+
+/* Items estandarizados */
+.item-estandarizado {
+  --background: var(--theme-surface);
+  --color: var(--theme-text);
+  --border-color: var(--theme-border);
+  --inner-border-color: var(--theme-border);
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.item-estandarizado:hover {
+  --background: var(--theme-hover);
+}
+
+.item-estandarizado:focus {
+  --border-color: var(--ion-color-primary);
+  --box-shadow: 0 0 0 2px var(--theme-focus);
+}
+
+/* Labels estandarizados */
+.label-estandarizado {
+  --color: var(--theme-text);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Textos estandarizados */
+.texto-estandarizado {
+  --color: var(--theme-text);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.texto-secundario {
+  --color: var(--theme-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Títulos estandarizados */
+.titulo-estandarizado {
+  --color: var(--theme-text);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+}
+
+.subtitulo-estandarizado {
+  --color: var(--theme-text-secondary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
+/* Badges estandarizados */
+.badge-estandarizado {
+  --background: var(--ion-color-primary);
+  --color: white;
+  --border-radius: 12px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 4px;
+  --padding-bottom: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-estandarizado.success {
+  --background: var(--ion-color-success);
+  --color: white;
+}
+
+.badge-estandarizado.warning {
+  --background: var(--ion-color-warning);
+  --color: #000;
+}
+
+.badge-estandarizado.danger {
+  --background: var(--ion-color-danger);
+  --color: white;
+}
+
+.badge-estandarizado.medium {
+  --background: var(--ion-color-medium);
+  --color: white;
+}
+
+/* Chips estandarizados */
+.chip-estandarizado {
+  --background: var(--theme-surface);
+  --color: var(--theme-text);
+  --border-radius: 16px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 6px;
+  --padding-bottom: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid var(--theme-border);
+  transition: all 0.3s ease;
+}
+
+.chip-estandarizado:hover {
+  --background: var(--theme-hover);
+  transform: translateY(-1px);
+}
+
+/* Progress bars estandarizados */
+.progress-estandarizado {
+  --background: var(--theme-border);
+  --buffer-background: var(--theme-border);
+  --progress-background: var(--ion-color-primary);
+  --border-radius: 4px;
+  height: 8px;
+  transition: all 0.3s ease;
+}
+
+/* Toggles estandarizados */
+.toggle-estandarizado {
+  --color: var(--theme-text);
+  --color-checked: var(--ion-color-primary);
+  --background: var(--theme-border);
+  --background-checked: var(--ion-color-primary);
+  --border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+/* Checkboxes estandarizados */
+.checkbox-estandarizado {
+  --color: var(--theme-text);
+  --color-checked: var(--ion-color-primary);
+  --border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+/* Radio buttons estandarizados */
+.radio-estandarizado {
+  --color: var(--theme-text);
+  --color-checked: var(--ion-color-primary);
+  transition: all 0.3s ease;
+}
+
+/* Range estandarizado */
+.range-estandarizado {
+  --color: var(--theme-text);
+  --bar-background: var(--theme-border);
+  --bar-background-active: var(--ion-color-primary);
+  --knob-background: var(--ion-color-primary);
+  --knob-size: 20px;
+  transition: all 0.3s ease;
+}
+
+/* Selects estandarizados */
+.select-estandarizado {
+  --background: var(--theme-surface);
+  --color: var(--theme-text);
+  --border-color: var(--theme-border);
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.select-estandarizado:focus {
+  --border-color: var(--ion-color-primary);
+  --box-shadow: 0 0 0 2px var(--theme-focus);
+}
+
+/* Textareas estandarizados */
+.textarea-estandarizado {
+  --background: var(--theme-background);
+  --color: var(--theme-text);
+  --border-color: var(--theme-border);
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.textarea-estandarizado:focus {
+  --border-color: var(--ion-color-primary);
+  --box-shadow: 0 0 0 2px var(--theme-focus);
+}
+
+/* ========================================
+   ESTILOS ESTANDARIZADOS PARA LAYOUTS
+   ======================================== */
+
+/* Grid estandarizado */
+.grid-estandarizado {
+  display: grid;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.grid-estandarizado.columnas-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-estandarizado.columnas-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-estandarizado.columnas-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-estandarizado.auto-fit {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.grid-estandarizado.auto-fill {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* Flex estandarizado */
+.flex-estandarizado {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.flex-estandarizado.centrado {
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-estandarizado.espaciado {
+  justify-content: space-between;
+}
+
+.flex-estandarizado.vertical {
+  flex-direction: column;
+}
+
+.flex-estandarizado.wrap {
+  flex-wrap: wrap;
+}
+
+/* Contenedor estandarizado */
+.contenedor-estandarizado {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.contenedor-estandarizado.compacto {
+  padding: 8px;
+}
+
+.contenedor-estandarizado.espacioso {
+  padding: 24px;
+}
+
+/* ========================================
+   ESTILOS ESTANDARIZADOS PARA ESTADOS
+   ======================================== */
+
+/* Estados de éxito */
+.estado-exito {
+  --color: var(--ion-color-success);
+  --background: rgba(var(--ion-color-success-rgb), 0.1);
+  --border-color: var(--ion-color-success);
+}
+
+/* Estados de advertencia */
+.estado-advertencia {
+  --color: var(--ion-color-warning);
+  --background: rgba(var(--ion-color-warning-rgb), 0.1);
+  --border-color: var(--ion-color-warning);
+}
+
+/* Estados de error */
+.estado-error {
+  --color: var(--ion-color-danger);
+  --background: rgba(var(--ion-color-danger-rgb), 0.1);
+  --border-color: var(--ion-color-danger);
+}
+
+/* Estados de información */
+.estado-info {
+  --color: var(--ion-color-primary);
+  --background: rgba(var(--ion-color-primary-rgb), 0.1);
+  --border-color: var(--ion-color-primary);
+}
+
+/* Estados de neutral */
+.estado-neutral {
+  --color: var(--ion-color-medium);
+  --background: rgba(var(--ion-color-medium-rgb), 0.1);
+  --border-color: var(--ion-color-medium);
+}
+
+/* ========================================
+   ESTILOS ESTANDARIZADOS PARA ANIMACIONES
+   ======================================== */
+
+/* Animaciones de entrada */
+.animacion-entrada {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animaciones de hover */
+.animacion-hover {
+  transition: all 0.3s ease;
+}
+
+.animacion-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--theme-shadow);
+}
+
+/* Animaciones de focus */
+.animacion-focus {
+  transition: all 0.3s ease;
+}
+
+.animacion-focus:focus {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 2px var(--theme-focus);
+}
+
+/* ========================================
+   ESTILOS ESTANDARIZADOS PARA RESPONSIVE
+   ======================================== */
+
+/* Mobile first */
+@media (max-width: 768px) {
+  .grid-estandarizado.columnas-2,
+  .grid-estandarizado.columnas-3,
+  .grid-estandarizado.columnas-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .flex-estandarizado {
+    flex-direction: column;
+  }
+  
+  .contenedor-estandarizado {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contenedor-estandarizado {
+    padding: 4px;
+  }
+  
+  .card-estandarizada .card-content {
+    padding: 12px;
+  }
+  
+  .boton-estandarizado {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+  }
+}

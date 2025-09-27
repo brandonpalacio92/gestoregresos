@@ -15,10 +15,7 @@ export class AppInitService {
     try {
       // Cargar tema personalizado al iniciar la app
       this.loadCustomTheme();
-      
-      console.log('✅ App inicializada correctamente');
     } catch (error) {
-      console.error('❌ Error inicializando app:', error);
     }
   }
 
@@ -29,7 +26,6 @@ export class AppInitService {
     // El ThemeService ya se encarga de cargar el tema en su constructor
     // pero podemos forzar una recarga aquí si es necesario
     const currentTheme = this.themeService.getCurrentTheme();
-    console.log('🎨 Tema cargado:', currentTheme);
   }
 
   /**
@@ -51,7 +47,6 @@ export class AppInitService {
       try {
         return JSON.parse(preferencias);
       } catch (error) {
-        console.error('Error parsing stored preferences:', error);
         return null;
       }
     }

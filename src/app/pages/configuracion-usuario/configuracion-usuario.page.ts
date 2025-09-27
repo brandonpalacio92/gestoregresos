@@ -89,6 +89,8 @@ export class ConfiguracionUsuarioPage implements OnInit {
     await this.cargarPreferencias();
     // Cargar tema actual
     this.cargarTemaActual();
+    // Aplicar tema del sistema al cargar
+    this.aplicarTemaSistema();
   }
 
   // Métodos para controlar acordeones
@@ -127,7 +129,7 @@ export class ConfiguracionUsuarioPage implements OnInit {
         };
       }
     } catch (error) {
-      console.error('Error cargando datos del usuario:', error);
+
     } finally {
       this.cargando = false;
     }
@@ -155,6 +157,9 @@ export class ConfiguracionUsuarioPage implements OnInit {
     try {
       localStorage.setItem('preferenciasApp', JSON.stringify(this.preferencias));
       
+      // Aplicar tema de color (claro/oscuro/auto)
+      this.aplicarTemaSistema();
+      
       // Actualizar tema con los colores actuales
       this.actualizarTema();
       
@@ -169,6 +174,31 @@ export class ConfiguracionUsuarioPage implements OnInit {
       }
     } catch (error) {
       console.error('Error guardando preferencias:', error);
+    }
+  }
+
+  // Aplicar tema del sistema (claro/oscuro/auto)
+  aplicarTemaSistema() {
+    const body = document.body;
+    
+    // Remover clases de tema existentes
+    body.classList.remove('dark', 'light');
+    
+    switch (this.preferencias.tema) {
+      case 'claro':
+        body.classList.add('light');
+        break;
+      case 'oscuro':
+        body.classList.add('dark');
+        break;
+      case 'auto':
+        // Detectar preferencia del sistema
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          body.classList.add('dark');
+        } else {
+          body.classList.add('light');
+        }
+        break;
     }
   }
 
@@ -225,8 +255,7 @@ export class ConfiguracionUsuarioPage implements OnInit {
 
     try {
       // Aquí iría la lógica para actualizar el perfil en el backend
-      console.log('Actualizando perfil:', this.perfilForm);
-      
+
       // Simular actualización
       await new Promise(resolve => setTimeout(resolve, 1000));
       
@@ -239,8 +268,7 @@ export class ConfiguracionUsuarioPage implements OnInit {
       await toast.present();
       
     } catch (error) {
-      console.error('Error actualizando perfil:', error);
-      
+
       const toast = await this.toastController.create({
         message: 'Error al actualizar el perfil',
         duration: 3000,
@@ -273,8 +301,7 @@ export class ConfiguracionUsuarioPage implements OnInit {
 
     try {
       // Aquí iría la lógica para cambiar la contraseña en el backend
-      console.log('Cambiando contraseña...');
-      
+
       // Simular cambio de contraseña
       await new Promise(resolve => setTimeout(resolve, 1000));
       
@@ -294,8 +321,7 @@ export class ConfiguracionUsuarioPage implements OnInit {
       await toast.present();
       
     } catch (error) {
-      console.error('Error cambiando contraseña:', error);
-      
+
       const toast = await this.toastController.create({
         message: 'Error al cambiar la contraseña',
         duration: 3000,
@@ -360,7 +386,7 @@ export class ConfiguracionUsuarioPage implements OnInit {
       await toast.present();
       
     } catch (error) {
-      console.error('Error exportando datos:', error);
+
     }
   }
 

@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
 
-
   beforeEach(async () => {
 
     await TestBed.configureTestingModule({

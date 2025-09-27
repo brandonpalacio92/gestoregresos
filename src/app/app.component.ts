@@ -18,8 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
     { title: 'Egresos', url: '/gestion-egresos', icon: 'list' },
     { title: 'Reportes Anuales', url: '/reportes', icon: 'bar-chart' },
   ];
-  
-  
+
   public isAuthenticated = false;
   public currentUser: User | null = null;
   public isAuthReady = false;
@@ -69,7 +68,7 @@ export class AppComponent implements OnInit, OnDestroy {
     
     // Si después de 5 segundos no está listo, forzar logout
     if (!this.authService.isAuthReady()) {
-      console.warn('AuthService no se inicializó correctamente, forzando logout');
+
       await this.authService.logout();
     }
   }
@@ -84,7 +83,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.menuController.close();
       this.router.navigate(['/login']);
     } catch (error) {
-      console.error('Error al cerrar sesión:', error);
+
     }
   }
 

@@ -35,15 +35,20 @@ const PORT = process.env.PORT || 3000;
 app.use(helmet());
 app.use(cors({
   origin: [
-    process.env.FRONTEND_URL || //'http://localhost:8100',
-    //'http://localhost:8101',
-    //'http://localhost:4200',
-    'http://192.168.1.7:8101',
+    process.env.FRONTEND_URL || 'http://localhost:4200',
+    'http://localhost:8100',
+    'http://localhost:8101',
+    'http://localhost:8102',
+    'http://localhost:4200',
     'http://192.168.1.7:8100',
+    'http://192.168.1.7:8101',
+    'http://192.168.1.7:8102',
     'http://192.168.1.7:4200',
     productionConfig.CORS_ORIGIN
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 app.use(morgan('combined'));
 app.use(express.json({ limit: '10mb' }));

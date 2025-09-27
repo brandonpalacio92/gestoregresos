@@ -589,3 +589,814 @@ ion-card {
   transform: translateY(0);
   overflow: visible;
 }
+
+/* ========================================
+   MEJORAS PARA TEMA OSCURO - GESTIÓN MENSUAL
+   ======================================== */
+
+/* Aplicar estilos globales para temas */
+body.light {
+  --theme-background: #ffffff;
+  --theme-surface: #f8f9fa;
+  --theme-text: #000000;
+  --theme-text-secondary: #6c757d;
+  --theme-border: #dee2e6;
+  --theme-shadow: rgba(0, 0, 0, 0.1);
+}
+
+body.dark {
+  --theme-background: #0d0d0d;
+  --theme-surface: #1a1a1a;
+  --theme-text: #ffffff;
+  --theme-text-secondary: #cccccc;
+  --theme-border: #333333;
+  --theme-shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* Mejoras específicas para modo oscuro */
+body.dark {
+  /* Mejorar cards */
+  ion-card {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+    border: 1px solid var(--theme-border) !important;
+  }
+  
+  ion-card-header {
+    background: var(--ion-color-primary) !important;
+    color: white !important;
+  }
+  
+  ion-card-title {
+    color: white !important;
+  }
+  
+  ion-card-subtitle {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+  
+  ion-card-content {
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar selector de mes */
+  .mes-selector {
+    background: var(--ion-color-secondary) !important;
+    color: white !important;
+  }
+  
+  .mes-navegacion {
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  .mes-actual h2 {
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar resumen del mes */
+  .resumen-item {
+    background: var(--theme-surface) !important;
+    border: 1px solid var(--theme-border) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  .resumen-valor {
+    color: var(--theme-text) !important;
+  }
+  
+  .resumen-valor.gastado {
+    color: var(--ion-color-warning) !important;
+  }
+  
+  .resumen-valor.ahorro {
+    color: var(--ion-color-success) !important;
+  }
+  
+  .resumen-valor.deficit {
+    color: var(--ion-color-danger) !important;
+  }
+  
+  .resumen-valor.pagos-tardios {
+    color: var(--ion-color-warning) !important;
+  }
+  
+  .resumen-valor.total {
+    color: var(--ion-color-primary) !important;
+  }
+  
+  .resumen-valor.pagado {
+    color: var(--ion-color-success) !important;
+  }
+  
+  .resumen-valor.pendiente {
+    color: var(--ion-color-warning) !important;
+  }
+  
+  .resumen-label {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  /* Mejorar tendencias */
+  .tendencia-item {
+    background: var(--theme-surface) !important;
+    border: 1px solid var(--theme-border) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  .tendencia-valor {
+    color: var(--ion-color-primary) !important;
+  }
+  
+  .tendencia-label {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  .tendencia-destacada {
+    background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-secondary)) !important;
+    color: white !important;
+  }
+  
+  .destacada-titulo {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+  
+  .destacada-descripcion {
+    color: white !important;
+  }
+  
+  .destacada-monto {
+    color: #ffd700 !important;
+  }
+  
+  /* Mejorar categorías */
+  .categoria-item {
+    background: var(--theme-surface) !important;
+    border: 1px solid var(--theme-border) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  .categoria-nombre {
+    color: var(--theme-text) !important;
+  }
+  
+  .categoria-monto {
+    color: var(--ion-color-primary) !important;
+  }
+  
+  .categoria-porcentaje {
+    color: var(--ion-color-primary) !important;
+  }
+  
+  .progreso-porcentaje {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  .progreso-texto {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  /* Mejorar egresos */
+  .egreso-item {
+    border-bottom-color: var(--theme-border) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  .egreso-descripcion {
+    color: var(--theme-text) !important;
+  }
+  
+  .egreso-fecha {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  .egreso-categoria {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  .monto-valor {
+    color: var(--ion-color-primary) !important;
+  }
+  
+  /* Mejorar información adicional */
+  .info-adicional {
+    border-top-color: var(--theme-border) !important;
+  }
+  
+  .info-item {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  .info-item ion-icon {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  /* Mejorar detalles */
+  .detalle-item span {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  .detalle-item ion-icon {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  .egreso-categoria {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  .egreso-categoria ion-icon {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  /* Mejorar loading */
+  .loading {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  .loading p {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  /* Mejorar ver todos */
+  .ver-todos {
+    color: var(--theme-text) !important;
+  }
+  
+  .ver-todos ion-button {
+    --color: var(--theme-text) !important;
+  }
+  
+  .ver-todos ion-button ion-icon {
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar categorías resumen */
+  .categorias-resumen {
+    background: var(--theme-surface) !important;
+    border: 1px solid var(--theme-border) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  .categoria-porcentaje {
+    color: var(--ion-color-primary) !important;
+  }
+  
+  .categoria-header {
+    color: var(--theme-text) !important;
+  }
+  
+  .categoria-info {
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar acordeones */
+  .acordeon-header-clickeable {
+    color: white !important;
+    
+    .acordeon-title-content {
+      color: white !important;
+    }
+    
+    .acordeon-count {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .acordeon-icon {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+  }
+  
+  .categorias-header-clickeable {
+    color: white !important;
+    
+    .categorias-title-content {
+      color: white !important;
+    }
+    
+    .categorias-count {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .acordeon-icon {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+  }
+  
+  /* Mejorar scrollbar */
+  .categorias-scroll-container::-webkit-scrollbar-track {
+    background: var(--theme-border) !important;
+  }
+  
+  .categorias-scroll-container::-webkit-scrollbar-thumb {
+    background: var(--ion-color-medium) !important;
+  }
+  
+  .categorias-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: var(--ion-color-primary) !important;
+  }
+  
+  /* Mejorar indicador de scroll */
+  .scroll-indicator {
+    background: var(--theme-surface) !important;
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  .scroll-indicator ion-icon {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  .scroll-indicator span {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  /* Mejorar hover effects */
+  .resumen-item:hover,
+  .categoria-item:hover {
+    background: var(--ion-color-step-100) !important;
+    border-color: var(--ion-color-primary) !important;
+  }
+  
+  .resumen-item:hover .resumen-valor,
+  .resumen-item:hover .resumen-label {
+    color: var(--theme-text) !important;
+  }
+  
+  .categoria-item:hover .categoria-nombre,
+  .categoria-item:hover .categoria-monto,
+  .categoria-item:hover .categoria-porcentaje {
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar progress bars */
+  ion-progress-bar {
+    --background: var(--theme-border) !important;
+    --buffer-background: var(--theme-border) !important;
+    --progress-background: var(--ion-color-primary) !important;
+  }
+  
+  .categoria-progreso {
+    color: var(--theme-text) !important;
+  }
+  
+  .progreso-texto {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  /* Mejorar botones */
+  ion-button {
+    --color: var(--theme-text) !important;
+  }
+  
+  ion-button[color="primary"] {
+    --background: var(--ion-color-primary) !important;
+    --color: white !important;
+  }
+  
+  ion-button[color="secondary"] {
+    --background: var(--ion-color-secondary) !important;
+    --color: white !important;
+  }
+  
+  ion-button[color="danger"] {
+    --background: var(--ion-color-danger) !important;
+    --color: white !important;
+  }
+  
+  ion-button[color="success"] {
+    --background: var(--ion-color-success) !important;
+    --color: white !important;
+  }
+  
+  ion-button[color="warning"] {
+    --background: var(--ion-color-warning) !important;
+    --color: #000 !important;
+  }
+  
+  ion-button[fill="outline"] {
+    --color: var(--theme-text) !important;
+    --border-color: var(--theme-border) !important;
+  }
+  
+  ion-button[fill="clear"] {
+    --color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar items */
+  ion-item {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    --border-color: var(--theme-border) !important;
+    --inner-border-color: var(--theme-border) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  ion-item:hover {
+    --background: var(--ion-color-step-100) !important;
+    background: var(--ion-color-step-100) !important;
+  }
+  
+  ion-item ion-label {
+    color: var(--theme-text) !important;
+  }
+  
+  ion-item ion-icon {
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar inputs */
+  ion-input {
+    --color: var(--theme-text) !important;
+    --background: var(--theme-background) !important;
+    --border-color: var(--theme-border) !important;
+    color: var(--theme-text) !important;
+    background: var(--theme-background) !important;
+  }
+  
+  ion-input:focus {
+    --border-color: var(--ion-color-primary) !important;
+    border-color: var(--ion-color-primary) !important;
+  }
+  
+  ion-input::placeholder {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  /* Mejorar selects */
+  ion-select {
+    --color: var(--theme-text) !important;
+    --background: var(--theme-surface) !important;
+    --border-color: var(--theme-border) !important;
+    color: var(--theme-text) !important;
+    background: var(--theme-surface) !important;
+  }
+  
+  ion-select-option {
+    --color: var(--theme-text) !important;
+    --background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+    background: var(--theme-surface) !important;
+  }
+  
+  /* Mejorar toggles */
+  ion-toggle {
+    --color: var(--theme-text) !important;
+    --color-checked: var(--ion-color-primary) !important;
+    --background: var(--theme-border) !important;
+    --background-checked: var(--ion-color-primary) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar labels */
+  ion-label {
+    --color: var(--theme-text) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar textos */
+  ion-text {
+    --color: var(--theme-text) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar títulos */
+  ion-title {
+    --color: var(--theme-text) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar subtítulos */
+  ion-subtitle {
+    --color: var(--theme-text-secondary) !important;
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  /* Mejorar notas */
+  ion-note {
+    --color: var(--theme-text-secondary) !important;
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  /* Mejorar badges */
+  ion-badge {
+    --background: var(--ion-color-primary) !important;
+    --color: white !important;
+    background: var(--ion-color-primary) !important;
+    color: white !important;
+  }
+  
+  ion-badge[color="success"] {
+    --background: var(--ion-color-success) !important;
+    --color: white !important;
+    background: var(--ion-color-success) !important;
+    color: white !important;
+  }
+  
+  ion-badge[color="warning"] {
+    --background: var(--ion-color-warning) !important;
+    --color: #000 !important;
+    background: var(--ion-color-warning) !important;
+    color: #000 !important;
+  }
+  
+  ion-badge[color="danger"] {
+    --background: var(--ion-color-danger) !important;
+    --color: white !important;
+    background: var(--ion-color-danger) !important;
+    color: white !important;
+  }
+  
+  /* Mejorar chips */
+  ion-chip {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar avatares */
+  ion-avatar {
+    --background: var(--theme-border) !important;
+    --color: var(--theme-text) !important;
+    background: var(--theme-border) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar thumbnails */
+  ion-thumbnail {
+    --background: var(--theme-border) !important;
+    --color: var(--theme-text) !important;
+    background: var(--theme-border) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar iconos */
+  ion-icon {
+    --color: var(--theme-text) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar iconos específicos */
+  .acordeon-header-clickeable ion-icon {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+  
+  .categorias-header-clickeable ion-icon {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+  
+  .egreso-categoria ion-icon {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  .categoria-nombre ion-icon {
+    color: var(--theme-text) !important;
+  }
+  
+  .mes-navegacion ion-icon {
+    color: var(--theme-text) !important;
+  }
+  
+  .ver-todos ion-icon {
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar segmentos */
+  ion-segment {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  ion-segment-button {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    --color-checked: var(--ion-color-primary) !important;
+    --background-checked: var(--ion-color-primary-tint) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar tabs */
+  ion-tab-bar {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    --color-selected: var(--ion-color-primary) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  ion-tab-button {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    --color-selected: var(--ion-color-primary) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar range */
+  ion-range {
+    --color: var(--theme-text) !important;
+    --bar-background: var(--theme-border) !important;
+    --bar-background-active: var(--ion-color-primary) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar checkbox */
+  ion-checkbox {
+    --color: var(--theme-text) !important;
+    --color-checked: var(--ion-color-primary) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar radio */
+  ion-radio {
+    --color: var(--theme-text) !important;
+    --color-checked: var(--ion-color-primary) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar spinner */
+  ion-spinner {
+    --color: var(--ion-color-primary) !important;
+    color: var(--ion-color-primary) !important;
+  }
+  
+  /* Mejorar refresher */
+  ion-refresher {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar infinite scroll */
+  ion-infinite-scroll {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar searchbar */
+  ion-searchbar {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    --placeholder-color: var(--theme-text-secondary) !important;
+    --icon-color: var(--theme-text) !important;
+    --clear-button-color: var(--theme-text) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar reorder */
+  ion-reorder {
+    --color: var(--theme-text) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar breadcrumb */
+  ion-breadcrumb {
+    --color: var(--theme-text) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  ion-breadcrumb ion-icon {
+    --color: var(--theme-text) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar back button */
+  ion-back-button {
+    --color: var(--theme-text) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar menu button */
+  ion-menu-button {
+    --color: var(--theme-text) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar menu */
+  ion-menu {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  ion-menu ion-content {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  ion-menu ion-item {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    --border-color: var(--theme-border) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  ion-menu ion-item:hover {
+    --background: var(--ion-color-step-100) !important;
+    background: var(--ion-color-step-100) !important;
+  }
+  
+  /* Mejorar split pane */
+  ion-split-pane {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar virtual scroll */
+  ion-virtual-scroll {
+    --background: var(--theme-surface) !important;
+    --color: var(--theme-text) !important;
+    background: var(--theme-surface) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  /* Mejorar focus states */
+  ion-item:focus,
+  ion-button:focus,
+  ion-input:focus {
+    --border-color: var(--ion-color-primary) !important;
+    --box-shadow: 0 0 0 2px rgba(var(--ion-color-primary-rgb), 0.2) !important;
+    border-color: var(--ion-color-primary) !important;
+    box-shadow: 0 0 0 2px rgba(var(--ion-color-primary-rgb), 0.2) !important;
+  }
+  
+  /* Mejorar hover states */
+  ion-item:hover {
+    --background: var(--ion-color-step-100) !important;
+    background: var(--ion-color-step-100) !important;
+  }
+  
+  ion-button:hover {
+    --background: var(--ion-color-primary-shade) !important;
+    background: var(--ion-color-primary-shade) !important;
+  }
+  
+  /* Mejorar disabled states */
+  ion-item[disabled],
+  ion-button[disabled],
+  ion-input[disabled] {
+    --color: var(--ion-color-medium) !important;
+    --background: var(--theme-border) !important;
+    color: var(--ion-color-medium) !important;
+    background: var(--theme-border) !important;
+    opacity: 0.6 !important;
+  }
+  
+  /* Mejorar placeholder text */
+  ion-input::placeholder,
+  ion-textarea::placeholder {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  ion-input::placeholder {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  ion-textarea::placeholder {
+    color: var(--theme-text-secondary) !important;
+  }
+  
+  /* Mejorar selection states */
+  ::selection {
+    background: var(--ion-color-primary-tint) !important;
+    color: var(--ion-color-primary) !important;
+  }
+  
+  *::selection {
+    background: var(--ion-color-primary-tint) !important;
+    color: var(--ion-color-primary) !important;
+  }
+  
+  /* Mejorar outline para accesibilidad */
+  ion-item:focus-visible,
+  ion-button:focus-visible,
+  ion-input:focus-visible {
+    outline: 2px solid var(--ion-color-primary) !important;
+    outline-offset: 2px !important;
+  }
+  
+  /* Mejorar outline para accesibilidad en todos los elementos */
+  *:focus-visible {
+    outline: 2px solid var(--ion-color-primary) !important;
+    outline-offset: 2px !important;
+  }
+}
+
+/* Importar estilos para indicadores de estado */
+@import './indicadores-estado.scss';

@@ -16,9 +16,6 @@ export class EgresosService {
   // Obtener egresos del usuario con filtros opcionales
   getEgresos(usuarioId: string, filtros?: {estado?: string, tipoEgresoId?: string, periodo?: string, mes?: number, año?: number}): Observable<Egreso[]> {
     let url = `${this.baseUrl}?usuarioId=${usuarioId}`;
-    
-    console.log('🔗 Construyendo URL con filtros:', filtros);
-    
     if (filtros) {
       if (filtros.estado && filtros.estado !== 'todos') {
         url += `&estado=${filtros.estado}`;
@@ -37,9 +34,6 @@ export class EgresosService {
         url += `&año=${filtros.año}`;
       }
     }
-    
-    console.log('🌐 URL final:', url);
-    
     return this.http.get<Egreso[]>(url);
   }
 

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Storage } from '@ionic/storage-angular';
+import { ConfigService } from './config.service';
 
 export interface User {
   id: number;
@@ -46,8 +47,6 @@ export interface AuthError {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'http://192.168.1.7:3000/api/auth';
-  //private readonly API_URL = 'http://localhost:3000/api/auth';
   private readonly ACCESS_TOKEN_KEY = 'access_token';
   private readonly REFRESH_TOKEN_KEY = 'refresh_token';
   private readonly USER_KEY = 'user_data';
@@ -60,7 +59,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private storage: Storage
+    private storage: Storage,
+    private configService: ConfigService
   ) {
     this.init();
   }
@@ -70,7 +70,7 @@ export class AuthService {
       await this.storage.create();
       await this.loadStoredAuth();
     } catch (error) {
-      console.error('Error inicializando AuthService:', error);
+
       // Asegurar que siempre se limpien los datos en caso de error
       await this.clearAuthData();
     }
@@ -98,21 +98,21 @@ export class AuthService {
               this.isAuthenticatedSubject.next(true);
             } else {
               // Token expirado
-              console.log('Token expirado, limpiando datos');
+
               await this.clearAuthData();
             }
           } catch (error) {
-            console.error('Error decodificando token:', error);
+
             await this.clearAuthData();
           }
         } else {
           // Token inválido
-          console.log('Token inválido, limpiando datos');
+
           await this.clearAuthData();
         }
       }
     } catch (error) {
-      console.error('Error cargando autenticación almacenada:', error);
+
       await this.clearAuthData();
     }
   }
@@ -126,7 +126,7 @@ export class AuthService {
     telefono?: string;
     fecha_nacimiento?: string;
   }): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>(`${this.API_URL}/register`, userData)
+    return this.http.post<RegisterResponse>(`${this.configService.authUrl}/register`, userData)
       .pipe(
         tap(async (response) => {
           if (response.success) {
@@ -139,7 +139,7 @@ export class AuthService {
 
   // Iniciar sesión
   login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.API_URL}/login`, { email, password })
+    return this.http.post<LoginResponse>(`${this.configService.authUrl}/login`, { email, password })
       .pipe(
         tap(async (response) => {
           if (response.success) {
@@ -159,13 +159,13 @@ export class AuthService {
       // Opcional: notificar al servidor (sin bloquear)
       const accessToken = await this.storage.get(this.ACCESS_TOKEN_KEY);
       if (accessToken) {
-        this.http.post(`${this.API_URL}/logout`, {}).subscribe({
+        this.http.post(`${this.configService.authUrl}/logout`, {}).subscribe({
           next: () => console.log('Logout notificado al servidor'),
           error: (error) => console.warn('Error notificando logout al servidor:', error)
         });
       }
     } catch (error) {
-      console.warn('Error en logout:', error);
+
       // Asegurar que siempre se limpien los datos
       await this.clearAuthData();
     }
@@ -180,7 +180,7 @@ export class AuthService {
           return;
         }
 
-        this.http.post(`${this.API_URL}/refresh`, { refreshToken })
+        this.http.post(`${this.configService.authUrl}/refresh`, { refreshToken })
           .subscribe({
             next: (response: any) => {
               if (response.success) {
@@ -193,7 +193,7 @@ export class AuthService {
               }
             },
             error: (error) => {
-              console.error('Error renovando token:', error);
+
               this.logout();
               observer.error(error);
             }
@@ -204,7 +204,7 @@ export class AuthService {
 
   // Obtener información del usuario actual
   getCurrentUser(): Observable<User> {
-    return this.http.get<{ success: boolean; data: { user: User } }>(`${this.API_URL}/me`)
+    return this.http.get<{ success: boolean; data: { user: User } }>(`${this.configService.authUrl}/me`)
       .pipe(
         map(response => response.data.user),
         tap(user => {
@@ -222,7 +222,7 @@ export class AuthService {
     telefono?: string;
     fecha_nacimiento?: string;
   }): Observable<User> {
-    return this.http.put<{ success: boolean; data: { user: User } }>(`${this.API_URL}/profile`, profileData)
+    return this.http.put<{ success: boolean; data: { user: User } }>(`${this.configService.authUrl}/profile`, profileData)
       .pipe(
         map(response => response.data.user),
         tap(user => {
@@ -235,7 +235,7 @@ export class AuthService {
 
   // Cambiar contraseña
   changePassword(currentPassword: string, newPassword: string): Observable<{ success: boolean; message: string }> {
-    return this.http.post<{ success: boolean; message: string }>(`${this.API_URL}/change-password`, {
+    return this.http.post<{ success: boolean; message: string }>(`${this.configService.authUrl}/change-password`, {
       currentPassword,
       newPassword
     }).pipe(
@@ -297,7 +297,6 @@ export class AuthService {
       errorMessage = error.message;
     }
 
-    console.error('Error en AuthService:', error);
     return throwError(() => new Error(errorMessage));
   };
 

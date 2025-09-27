@@ -72,7 +72,6 @@ export class RegistroEgresosPage implements OnInit {
         const fechaPrincipal = this.formulario.get('fecha')?.value;
         if (fechaPrincipal) {
           this.formulario.get('fechaInicio')?.setValue(fechaPrincipal);
-          console.log('Fecha de inicio forzada:', fechaPrincipal);
         }
       } else {
         this.formulario.get('frecuencia')?.clearValidators();
@@ -90,7 +89,6 @@ export class RegistroEgresosPage implements OnInit {
     this.formulario.get('fecha')?.valueChanges.subscribe(fecha => {
       if (this.esPeriodico && fecha) {
         this.formulario.get('fechaInicio')?.setValue(fecha);
-        console.log('Fecha de inicio actualizada:', fecha);
       }
     });
 
@@ -111,7 +109,6 @@ export class RegistroEgresosPage implements OnInit {
       if (categoriaId) {
         const categoriaSeleccionada = this.categoriasFiltradas.find(cat => cat.id === categoriaId);
         if (categoriaSeleccionada) {
-          console.log('Categoría seleccionada:', categoriaSeleccionada.nombre);
           // Aquí puedes agregar lógica adicional cuando se selecciona una categoría
         }
       }
@@ -123,7 +120,6 @@ export class RegistroEgresosPage implements OnInit {
       const respuesta = await firstValueFrom(this.tiposEgresoService.getTiposEgreso());
   
       if (!respuesta || !Array.isArray(respuesta)) {
-        console.error('⚠️ Error: La respuesta de tipos de egreso no es válida:', respuesta);
         this.mostrarMensaje('Respuesta inválida al cargar tipos de egreso', 'danger');
         return;
       }
@@ -133,24 +129,18 @@ export class RegistroEgresosPage implements OnInit {
       try {
         this.tiposEgreso.sort((a, b) => a.orden - b.orden);
       } catch (ordenError) {
-        console.error('⚠️ Error al ordenar los tipos de egreso por "orden":', ordenError);
       }
   
       if (this.tiposEgreso.length === 1) {
         try {
           this.formulario.patchValue({ tipoId: this.tiposEgreso[0].id });
         } catch (patchError) {
-          console.error('⚠️ Error al aplicar patchValue al formulario:', patchError);
         }
       }
   
     } catch (error: any) {
       const tipoError = error?.name || typeof error;
       const mensajeError = error?.message || 'Sin mensaje';
-  
-      console.error(`🔥 Error al cargar tipos de egreso desde el servicio [${tipoError}]:`, mensajeError);
-      console.error('📦 Detalles completos del error:', error);
-  
       this.mostrarMensaje('Error al cargar los tipos disponibles', 'danger');
     }
   }
@@ -167,7 +157,6 @@ export class RegistroEgresosPage implements OnInit {
         this.formulario.patchValue({ categoriaId: this.categoriasFiltradas[0].id });
       }
     } catch (error) {
-      console.error('Error al cargar categorías del tipo:', error);
       this.mostrarMensaje('Error al cargar las categorías disponibles', 'danger');
     }
   }
@@ -198,9 +187,6 @@ export class RegistroEgresosPage implements OnInit {
           estado: 'pendiente' as 'pendiente' | 'pagado' | 'vencido',
           notas: egresoData.notas || null
         };
-        
-        console.log('Enviando egreso:', egresoParaEnviar);
-        
         // Mostrar modal de progreso si es periódico
         if (egresoData.esPeriodico) {
           await this.mostrarModalProgreso();
@@ -224,8 +210,6 @@ export class RegistroEgresosPage implements OnInit {
           this.formulario.patchValue({ esPeriodico: false });
         }
       } catch (error: any) {
-        console.error('Error al guardar egreso:', error);
-        
         // Cerrar modal de progreso en caso de error
         if (this.modalProgresoAbierto) {
           await this.cerrarModalProgreso();
@@ -243,11 +227,9 @@ export class RegistroEgresosPage implements OnInit {
       const control = this.formulario.get(key);
       if (control?.invalid) {
         control.markAsTouched();
-        console.log(`Campo inválido: ${key}`, control.errors);
       }
     });
   }
-
 
   // Método para obtener el tipo seleccionado actualmente
   get tipoSeleccionado(): TipoEgreso | undefined {
@@ -324,7 +306,6 @@ seleccionarFecha(event: any) {
   this.formulario.get('fecha')?.setValue(this.fechaSeleccionada);
 }
 
-
   mostrarModalFechafin = false;
 fechafinSeleccionada: string = '';
 fechaMinimaFinal: string = '';
@@ -372,7 +353,6 @@ seleccionarFechaFinalRapida(periodo: string) {
   this.formulario.get('fechaFin')?.setValue(this.fechafinSeleccionada);
   this.cerrarSelectorFechafin();
 }
-
 
   async mostrarConfirmacion() {
     const alert = await this.alertController.create({

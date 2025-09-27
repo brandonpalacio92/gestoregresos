@@ -1,0 +1,217 @@
+/* ========================================
+   CORRECCIONES ESPECÍFICAS PARA TEMA OSCURO
+   ======================================== */
+
+/* Mejorar popovers y modales específicos */
+body.dark {
+  /* Popover de selección de tema */
+  ion-popover ion-select-popover {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+    
+    ion-item {
+      --background: var(--theme-surface);
+      --color: var(--theme-text);
+      --border-color: var(--theme-border);
+    }
+    
+    ion-item:hover {
+      --background: var(--ion-color-step-100);
+    }
+    
+    ion-item.selected {
+      --background: var(--ion-color-primary-tint);
+      --color: var(--ion-color-primary);
+    }
+  }
+  
+  /* Modal de exportación de datos */
+  ion-modal ion-content {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-modal ion-header {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-modal ion-toolbar {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Alertas de confirmación */
+  ion-alert .alert-wrapper {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-alert .alert-head {
+    --color: var(--theme-text);
+  }
+  
+  ion-alert .alert-message {
+    --color: var(--theme-text-secondary);
+  }
+  
+  ion-alert .alert-button {
+    --color: var(--theme-text);
+    --background: transparent;
+  }
+  
+  ion-alert .alert-button:hover {
+    --background: var(--ion-color-step-100);
+  }
+  
+  ion-alert .alert-button.alert-button-role-cancel {
+    --color: var(--ion-color-medium);
+  }
+  
+  ion-alert .alert-button.alert-button-role-destructive {
+    --color: var(--ion-color-danger);
+  }
+  
+  /* Toast notifications */
+  ion-toast {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+    --border-color: var(--theme-border);
+  }
+  
+  /* Loading overlays */
+  ion-loading {
+    --background: rgba(0, 0, 0, 0.8);
+    --color: var(--theme-text);
+  }
+  
+  ion-loading .loading-wrapper {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Action sheets */
+  ion-action-sheet {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-action-sheet .action-sheet-wrapper {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-action-sheet .action-sheet-button {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-action-sheet .action-sheet-button:hover {
+    --background: var(--ion-color-step-100);
+  }
+  
+  ion-action-sheet .action-sheet-button.ion-focused {
+    --background: var(--ion-color-step-100);
+  }
+  
+  /* Picker components */
+  ion-picker {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-picker .picker-wrapper {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-picker .picker-column {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-picker .picker-opt {
+    --color: var(--theme-text);
+  }
+  
+  ion-picker .picker-opt.picker-opt-selected {
+    --color: var(--ion-color-primary);
+  }
+  
+  /* DateTime picker */
+  ion-datetime {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  ion-datetime .datetime-wrapper {
+    --background: var(--theme-surface);
+    --color: var(--theme-text);
+  }
+  
+  /* Mejorar scrollbars en modo oscuro */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--theme-border);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--ion-color-medium);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ion-color-primary);
+  }
+  
+  /* Mejorar focus states */
+  ion-item:focus,
+  ion-button:focus,
+  ion-input:focus {
+    --border-color: var(--ion-color-primary);
+    --box-shadow: 0 0 0 2px rgba(var(--ion-color-primary-rgb), 0.2);
+  }
+  
+  /* Mejorar hover states */
+  ion-item:hover {
+    --background: var(--ion-color-step-100);
+  }
+  
+  ion-button:hover {
+    --background: var(--ion-color-primary-shade);
+  }
+  
+  /* Mejorar disabled states */
+  ion-item[disabled],
+  ion-button[disabled],
+  ion-input[disabled] {
+    --color: var(--ion-color-medium);
+    --background: var(--theme-border);
+    opacity: 0.6;
+  }
+  
+  /* Mejorar placeholder text */
+  ion-input::placeholder,
+  ion-textarea::placeholder {
+    color: var(--theme-text-secondary);
+  }
+  
+  /* Mejorar selection states */
+  ::selection {
+    background: var(--ion-color-primary-tint);
+    color: var(--ion-color-primary);
+  }
+  
+  /* Mejorar outline para accesibilidad */
+  ion-item:focus-visible,
+  ion-button:focus-visible,
+  ion-input:focus-visible {
+    outline: 2px solid var(--ion-color-primary);
+    outline-offset: 2px;
+  }
+}

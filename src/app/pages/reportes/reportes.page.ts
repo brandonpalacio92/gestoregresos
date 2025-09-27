@@ -65,20 +65,15 @@ export class ReportesPage implements OnInit, AfterViewInit {
   async cargarReporteAnual() {
     this.cargando = true;
     try {
-      console.log('Cargando reporte anual para año:', this.anioSeleccionado);
-      
       // Obtener usuario actual (asumiendo ID 1 por ahora)
       const usuarioId = '1';
       
       const egresos = await firstValueFrom(
         this.egresosService.getReporteAnual(usuarioId, this.anioSeleccionado)
       );
-
-      console.log('Egresos recibidos:', egresos);
       this.procesarDatosReporte(egresos);
       
     } catch (error) {
-      console.error('Error cargando reporte anual:', error);
     } finally {
       this.cargando = false;
     }
@@ -117,9 +112,6 @@ export class ReportesPage implements OnInit, AfterViewInit {
       gastosPorCategoria,
       gastosPorMes
     };
-
-    console.log('Reporte procesado:', this.reporteAnual);
-    
     // Mostrar visualización automáticamente
     setTimeout(() => {
       this.crearGrafica();
@@ -128,7 +120,6 @@ export class ReportesPage implements OnInit, AfterViewInit {
 
   // Cambiar tipo de visualización
   cambiarTipoVisualizacion(tipo: any) {
-    console.log('Cambiando tipo de visualización a:', tipo);
     this.tipoVisualizacion = tipo as 'tipo' | 'categoria';
     this.crearGrafica();
   }
@@ -197,10 +188,7 @@ export class ReportesPage implements OnInit, AfterViewInit {
 
   crearGrafica() {
     try {
-      console.log('Creando gráfica simplificada...');
-      
       if (!this.reporteAnual) {
-        console.log('No hay datos para crear gráfica');
         return;
       }
 
@@ -210,25 +198,19 @@ export class ReportesPage implements OnInit, AfterViewInit {
         : this.reporteAnual.gastosPorCategoria;
 
       if (!datos || typeof datos !== 'object') {
-        console.log('Datos inválidos para la gráfica');
         return;
       }
 
       const datosOrdenados = this.obtenerDatosOrdenados(datos);
       
       if (datosOrdenados.length === 0) {
-        console.log('No hay datos ordenados para mostrar');
         return;
       }
-
-      console.log('Datos para gráfica:', datosOrdenados);
-      
       // Mostrar datos directamente en la interfaz
       this.datosGrafica = datosOrdenados;
       this.mostrarDatosGrafica = true;
       
     } catch (error) {
-      console.error('Error al crear gráfica:', error);
     }
   }
 
@@ -281,7 +263,6 @@ export class ReportesPage implements OnInit, AfterViewInit {
       }
     });
     } catch (error) {
-      console.error('Error al crear gráfica de barras:', error);
     }
   }
   */
@@ -324,7 +305,6 @@ export class ReportesPage implements OnInit, AfterViewInit {
       }
     });
     } catch (error) {
-      console.error('Error al crear gráfica:', error);
     }
   }
 
@@ -387,7 +367,6 @@ export class ReportesPage implements OnInit, AfterViewInit {
       }
     });
     } catch (error) {
-      console.error('Error al crear gráfica de líneas:', error);
     }
   }
   */
