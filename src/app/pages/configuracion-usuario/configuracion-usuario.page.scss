@@ -251,6 +251,33 @@ ion-card {
 
 /* Personalización de Colores */
 .personalizacion-colores {
+  .personalizacion-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 8px;
+    border-radius: 8px;
+    background: var(--ion-color-light);
+    
+    /* Estilos para el scrollbar */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: var(--ion-color-light);
+      border-radius: 3px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: var(--ion-color-medium);
+      border-radius: 3px;
+      
+      &:hover {
+        background: var(--ion-color-primary);
+      }
+    }
+  }
+
   .esquemas-colores {
     margin-bottom: 24px;
     

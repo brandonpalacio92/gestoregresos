@@ -76,82 +76,7 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Preferencias de la App -->
-    <ion-card class="preferencias-app">
-      <ion-card-header>
-        <ion-card-title (click)="togglePreferencias()" class="acordeon-header-clickeable">
-          <div class="acordeon-title-content">
-            <ion-icon name="settings-outline"></ion-icon>
-            <span>Preferencias de la App</span>
-          </div>
-          <ion-icon 
-            [name]="preferenciasExpandido ? 'chevron-up-outline' : 'chevron-down-outline'" 
-            class="acordeon-icon">
-          </ion-icon>
-        </ion-card-title>
-      </ion-card-header>
-      
-      <ion-card-content [class.acordeon-colapsado]="!preferenciasExpandido">
-        <ion-item>
-          <ion-label>Tema</ion-label>
-          <ion-select 
-            [(ngModel)]="preferencias.tema" 
-            (ionChange)="aplicarTemaSistema()"
-            interface="popover">
-            <ion-select-option value="claro">🌞 Claro</ion-select-option>
-            <ion-select-option value="oscuro">🌙 Oscuro</ion-select-option>
-            <ion-select-option value="auto">🔄 Automático</ion-select-option>
-          </ion-select>
-        </ion-item>
 
-        <ion-item>
-          <ion-label>Moneda</ion-label>
-          <ion-select 
-            [(ngModel)]="preferencias.moneda" 
-            interface="popover">
-            <ion-select-option value="USD">USD ($)</ion-select-option>
-            <ion-select-option value="COP">COP ($)</ion-select-option>
-            <ion-select-option value="EUR">EUR (€)</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Idioma</ion-label>
-          <ion-select 
-            [(ngModel)]="preferencias.idioma" 
-            interface="popover">
-            <ion-select-option value="es">Español</ion-select-option>
-            <ion-select-option value="en">English</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <!-- Demo de tema -->
-        <div class="tema-demo" *ngIf="preferencias.tema">
-          <h4>Vista Previa del Tema</h4>
-          <div class="demo-cards">
-            <ion-card class="demo-card">
-              <ion-card-header>
-                <ion-card-title>Ejemplo de Card</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <p>Este es un ejemplo de cómo se verá el contenido con el tema seleccionado.</p>
-                <ion-button size="small" color="primary">Botón Primario</ion-button>
-                <ion-button size="small" color="secondary" fill="outline">Botón Secundario</ion-button>
-              </ion-card-content>
-            </ion-card>
-          </div>
-        </div>
-
-        <ion-button 
-          expand="block" 
-          color="secondary" 
-          (click)="guardarPreferencias(true)"
-          class="boton-guardar">
-          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
-          Guardar Preferencias
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
 
     <!-- Personalización de Colores -->
     <ion-card class="personalizacion-colores">
@@ -167,9 +92,75 @@
           </ion-icon>
         </ion-card-title>
       </ion-card-header>
-      
+
       <ion-card-content [class.acordeon-colapsado]="!preferenciasExpandido">
+        <div class="personalizacion-scroll"></div>
+      
+      <ion-item>
+        <ion-label>Tema</ion-label>
+        <ion-select 
+          [(ngModel)]="preferencias.tema" 
+          (ionChange)="aplicarTemaSistema()"
+          interface="popover">
+          <ion-select-option value="claro">🌞 Claro</ion-select-option>
+          <ion-select-option value="oscuro">🌙 Oscuro</ion-select-option>
+          <ion-select-option value="auto">🔄 Automático</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Moneda</ion-label>
+        <ion-select 
+          [(ngModel)]="preferencias.moneda" 
+          interface="popover">
+          <ion-select-option value="USD">USD ($)</ion-select-option>
+          <ion-select-option value="COP">COP ($)</ion-select-option>
+          <ion-select-option value="EUR">EUR (€)</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Idioma</ion-label>
+        <ion-select 
+          [(ngModel)]="preferencias.idioma" 
+          interface="popover">
+          <ion-select-option value="es">Español</ion-select-option>
+          <ion-select-option value="en">English</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Demo de tema -->
+      <div class="tema-demo" *ngIf="preferencias.tema">
+        <h4>Vista Previa del Tema</h4>
+        <div class="demo-cards">
+          <ion-card class="demo-card">
+            <ion-card-header>
+              <ion-card-title>Ejemplo de Card</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>Este es un ejemplo de cómo se verá el contenido con el tema seleccionado.</p>
+              <ion-button size="small" color="primary">Botón Primario</ion-button>
+              <ion-button size="small" color="secondary" fill="outline">Botón Secundario</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </div>
+
+      <ion-button 
+        expand="block" 
+        color="secondary" 
+        (click)="guardarPreferencias(true)"
+        class="boton-guardar">
+        <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+        Guardar Preferencias
+      </ion-button>
+      
+
+      
         
+
+        
+
         <!-- Esquemas Predefinidos -->
         <div class="esquemas-colores">
           <h3>Esquemas Predefinidos</h3>
@@ -285,6 +276,7 @@
           <ion-label>Resumen Diario</ion-label>
           <ion-toggle [(ngModel)]="preferencias.resumenDiario"></ion-toggle>
         </ion-item>
+        </div>
       </ion-card-content>
     </ion-card>
 
