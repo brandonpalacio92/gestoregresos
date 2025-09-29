@@ -33,9 +33,9 @@ export class GestionEgresosPage implements OnInit {
   mostrarSelectorPersonalizado = false;
   
   // Propiedades para acordeones
-  resumenExpandido = true;
+  resumenExpandido = false;
   filtrosExpandido = true;
-  egresosExpandido = true;
+  egresosExpandido = false;
   
   // Modal de pago parcial
   modalPagoParcialAbierto = false;
