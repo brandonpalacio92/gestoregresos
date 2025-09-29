@@ -234,49 +234,68 @@
           </div>
 
 
-          <!-- Controles de estado -->
-          <div class="egreso-controles">
-            <ion-button 
-              *ngIf="egreso.estado !== 'pagado'"
-              size="small" 
-              color="success" 
-              fill="outline"
-              (click)="marcarComoPagado(egreso)">
-              <ion-icon name="checkmark-outline" slot="start"></ion-icon>
-              Pagado
-            </ion-button>
-            
-            <ion-button 
-              *ngIf="egreso.estado !== 'pagado'"
-              size="small" 
-              color="primary" 
-              fill="outline"
-              (click)="abrirModalPagoParcial(egreso)">
-              <ion-icon name="card-outline" slot="start"></ion-icon>
-              Pago Parcial
-            </ion-button>
-            
-            <ion-button 
-              *ngIf="egreso.estado !== 'pendiente'"
-              size="small" 
-              color="warning" 
-              fill="outline"
-              (click)="marcarComoPendiente(egreso)">
-              <ion-icon name="time-outline" slot="start"></ion-icon>
-              Pendiente
-            </ion-button>
-            
-            <!-- Botón de eliminación -->
-            <ion-button 
-              size="small" 
-              color="danger" 
-              fill="outline"
-              (click)="eliminarEgreso(egreso)">
-              <ion-icon name="trash-outline" slot="start"></ion-icon>
-              Eliminar
-            </ion-button>
-            
-          </div>
+        <!-- Botón principal de pago -->
+        <div class="egreso-accion-principal" *ngIf="egreso.estado !== 'pagado'">
+          <ion-button 
+            expand="block" 
+            color="success" 
+            (click)="marcarComoPagado(egreso)"
+            class="boton-pagar">
+            <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+            Pagar
+          </ion-button>
+        </div>
+
+        <!-- Botón principal para marcar como pendiente -->
+        <div class="egreso-accion-principal" *ngIf="egreso.estado === 'pagado'">
+          <ion-button 
+            expand="block" 
+            color="warning" 
+            (click)="marcarComoPendiente(egreso)"
+            class="boton-pendiente">
+            <ion-icon name="time-outline" slot="start"></ion-icon>
+            Marcar como Pendiente
+          </ion-button>
+        </div>
+
+        <!-- Gestión adicional de egreso -->
+        <div class="egreso-gestion">
+          <ion-item>
+            <ion-label position="stacked">Otras acciones</ion-label>
+            <ion-select 
+              placeholder="Selecciona una acción"
+              interface="popover"
+              (ionChange)="onGestionChange($event, egreso)"
+              [value]="null">
+              <ion-select-option value="editar">
+                <ion-icon name="create-outline"></ion-icon>
+                Editar
+              </ion-select-option>
+              <ion-select-option 
+                *ngIf="egreso.estado !== 'pagado'"
+                value="marcar-pagado">
+                <ion-icon name="checkmark-outline"></ion-icon>
+                Marcar como Pagado
+              </ion-select-option>
+              <ion-select-option 
+                *ngIf="egreso.estado !== 'pendiente'"
+                value="marcar-pendiente">
+                <ion-icon name="time-outline"></ion-icon>
+                Marcar como Pendiente
+              </ion-select-option>
+              <ion-select-option 
+                *ngIf="egreso.estado !== 'pagado'"
+                value="pago-parcial">
+                <ion-icon name="card-outline"></ion-icon>
+                Pago Parcial
+              </ion-select-option>
+              <ion-select-option value="eliminar">
+                <ion-icon name="trash-outline"></ion-icon>
+                Eliminar
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
 
           <!-- Notas -->
           <div class="egreso-notas" *ngIf="egreso.notas">

@@ -598,4 +598,119 @@ export class GestionEgresosPage implements OnInit {
       // En caso de error, los registros creados quedarán, pero el original no se marcará como parcializado
     }
   }
+
+  // Método para manejar las opciones de gestión
+  async onGestionChange(event: any, egreso: Egreso) {
+    const accion = event.detail.value;
+    
+    switch (accion) {
+      case 'editar':
+        await this.editarEgreso(egreso);
+        break;
+      case 'marcar-pagado':
+        await this.marcarComoPagado(egreso);
+        break;
+      case 'marcar-pendiente':
+        await this.marcarComoPendiente(egreso);
+        break;
+      case 'pago-parcial':
+        await this.abrirModalPagoParcial(egreso);
+        break;
+      case 'eliminar':
+        await this.eliminarEgreso(egreso);
+        break;
+    }
+  }
+
+  // Método para editar egreso
+  async editarEgreso(egreso: Egreso) {
+    const alert = await this.alertController.create({
+      header: 'Editar Egreso',
+      inputs: [
+        {
+          name: 'descripcion',
+          type: 'text',
+          placeholder: 'Descripción',
+          value: egreso.descripcion
+        },
+        {
+          name: 'monto',
+          type: 'number',
+          placeholder: 'Monto',
+          value: egreso.monto.toString()
+        },
+        {
+          name: 'fecha',
+          type: 'date',
+          value: egreso.fecha.toISOString().split('T')[0]
+        },
+        {
+          name: 'notas',
+          type: 'textarea',
+          placeholder: 'Notas adicionales',
+          value: egreso.notas || ''
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Guardar',
+          handler: async (data) => {
+            if (data.descripcion && data.monto && data.fecha) {
+              try {
+                // Preparar datos para actualización
+                const datosActualizacion = {
+                  descripcion: data.descripcion,
+                  monto: parseFloat(data.monto),
+                  fecha: new Date(data.fecha),
+                  notas: data.notas || ''
+                };
+
+                console.log('🔄 Actualizando egreso:', egreso.id, 'con datos:', datosActualizacion);
+                console.log('📝 Datos del formulario recibidos:', data);
+                console.log('📝 Datos preparados para envío:', datosActualizacion);
+
+                // Llamar al servicio de actualización
+                const resultado = await firstValueFrom(
+                  this.egresosService.actualizarEgreso(egreso.id, datosActualizacion)
+                );
+
+                console.log('✅ Egreso actualizado:', resultado);
+                console.log('🔄 Recargando datos...');
+
+                // Recargar datos y mostrar mensaje
+                await this.cargarDatos();
+                this.mostrarMensaje('Egreso actualizado exitosamente', 'success');
+                return true;
+              } catch (error) {
+                console.error('❌ Error al actualizar egreso:', error);
+                const errorMessage = error instanceof Error ? error.message : 'Error desconocido';
+                this.mostrarMensaje('Error al actualizar el egreso: ' + errorMessage, 'danger');
+                return false;
+              }
+            } else {
+              this.mostrarMensaje('Por favor completa todos los campos requeridos', 'warning');
+              return false;
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  // Método para mostrar mensajes
+  async mostrarMensaje(mensaje: string, color: string = 'primary') {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 3000,
+      color: color,
+      position: 'top'
+    });
+    await toast.present();
+  }
 }

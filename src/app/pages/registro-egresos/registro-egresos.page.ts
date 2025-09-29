@@ -51,6 +51,7 @@ export class RegistroEgresosPage implements OnInit {
       frecuencia: [''],
       fechaInicio: [''],
       fechaFin: [''],
+      estado: ['pendiente', Validators.required],
       notas: ['']
     });
   }
@@ -184,9 +185,13 @@ export class RegistroEgresosPage implements OnInit {
           fechaInicio: egresoData.fechaInicio || null,
           fechaFin: egresoData.fechaFin || null,
           usuarioId: currentUser.id.toString(),
-          estado: 'pendiente' as 'pendiente' | 'pagado' | 'vencido',
+          estado: egresoData.estado || 'pendiente',
           notas: egresoData.notas || null
         };
+        
+        console.log('📤 Datos del formulario:', egresoData);
+        console.log('📤 Estado seleccionado:', egresoData.estado);
+        console.log('📤 Datos a enviar al backend:', egresoParaEnviar);
         // Mostrar modal de progreso si es periódico
         if (egresoData.esPeriodico) {
           await this.mostrarModalProgreso();

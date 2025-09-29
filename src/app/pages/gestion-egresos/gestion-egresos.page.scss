@@ -211,6 +211,71 @@ ion-select {
   font-size: 1.2rem;
 }
 
+// Estilos para el botón principal de pago
+.egreso-accion-principal {
+  margin-top: 16px;
+  margin-bottom: 12px;
+}
+
+.boton-pagar {
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  font-weight: 600;
+  font-size: 1.1rem;
+  height: 48px;
+}
+
+.boton-pagar:hover {
+  --box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+.boton-pendiente {
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+  font-weight: 600;
+  font-size: 1.1rem;
+  height: 48px;
+}
+
+.boton-pendiente:hover {
+  --box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+// Estilos para el componente de gestión
+.egreso-gestion {
+  margin-top: 8px;
+  padding: 12px;
+  background: var(--ion-color-light);
+  border-radius: 8px;
+  border: 1px solid var(--ion-color-light-shade);
+}
+
+.egreso-gestion ion-item {
+  --background: transparent;
+  --border-radius: 8px;
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+}
+
+.egreso-gestion ion-select {
+  --placeholder-color: var(--ion-color-medium);
+  --placeholder-opacity: 1;
+}
+
+.egreso-gestion ion-select-option {
+  --color: var(--ion-color-dark);
+}
+
+.egreso-gestion ion-select-option ion-icon {
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+
 .egreso-estado ion-badge {
   font-size: 0.8rem;
   padding: 6px 12px;

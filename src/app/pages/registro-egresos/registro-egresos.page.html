@@ -13,7 +13,7 @@
       <ion-card-header>
         <ion-card-title>
           <ion-icon name="add-circle-outline"></ion-icon>
-          Nuevo Egreso Previsto
+<!--          Nuevo Egreso Previsto-->
         </ion-card-title>
         <ion-card-subtitle>Registra un gasto u obligación futura</ion-card-subtitle>
       </ion-card-header>
@@ -240,6 +240,32 @@
               </ng-template>
             </ion-modal>
           </div>
+
+          <!-- Estado -->
+          <ion-item>
+            <ion-label position="stacked">Estado *</ion-label>
+            <ion-select 
+              formControlName="estado"
+              placeholder="Selecciona el estado"
+              interface="popover"
+              [class.ion-invalid]="formulario.get('estado')?.invalid && formulario.get('estado')?.touched">
+              <ion-select-option value="pendiente">
+                <ion-icon name="time-outline"></ion-icon>
+                Pendiente
+              </ion-select-option>
+              <ion-select-option value="pagado">
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+                Pagado
+              </ion-select-option>
+            </ion-select>
+            <ion-note slot="error" *ngIf="formulario.get('estado')?.invalid && formulario.get('estado')?.touched">
+              El estado es requerido
+            </ion-note>
+            <ion-note slot="helper">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              Selecciona si el egreso ya fue pagado o está pendiente
+            </ion-note>
+          </ion-item>
 
           <!-- Notas -->
           <ion-item>

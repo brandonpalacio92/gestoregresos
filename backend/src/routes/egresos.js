@@ -658,7 +658,7 @@ module.exports = (sql) => {
   router.put('/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      const { estado, descripcion, monto, fecha, categoriaId, notas } = req.body;
+      const { descripcion, monto, fecha, notas } = req.body;
       
       console.log(`🔄 Actualizando egreso ${id} con datos:`, req.body);
       
@@ -674,132 +674,19 @@ module.exports = (sql) => {
         });
       }
       
-      // Construir la consulta de actualización usando template literals
-      let resultado;
+      // Actualizar todos los campos en una sola consulta
+      const resultado = await sql`
+        UPDATE egresos 
+        SET 
+          descripcion = ${descripcion},
+          monto = ${parseFloat(monto)},
+          fecha = ${new Date(fecha)},
+          notas = ${notas}
+        WHERE id = ${parseInt(id)}
+        RETURNING *
+      `;
       
-      if (estado !== undefined && descripcion === undefined && monto === undefined && fecha === undefined && categoriaId === undefined && notas === undefined) {
-        // Solo actualizar estado
-        resultado = await sql`
-          UPDATE egresos 
-          SET estado = ${estado}
-          WHERE id = ${parseInt(id)}
-          RETURNING *
-        `;
-      } else if (descripcion !== undefined && estado === undefined && monto === undefined && fecha === undefined && categoriaId === undefined && notas === undefined) {
-        // Solo actualizar descripción
-        resultado = await sql`
-          UPDATE egresos 
-          SET descripcion = ${descripcion}
-          WHERE id = ${parseInt(id)}
-          RETURNING *
-        `;
-      } else if (monto !== undefined && estado === undefined && descripcion === undefined && fecha === undefined && categoriaId === undefined && notas === undefined) {
-        // Solo actualizar monto
-        resultado = await sql`
-          UPDATE egresos 
-          SET monto = ${parseFloat(monto)}
-          WHERE id = ${parseInt(id)}
-          RETURNING *
-        `;
-      } else if (fecha !== undefined && estado === undefined && descripcion === undefined && monto === undefined && categoriaId === undefined && notas === undefined) {
-        // Solo actualizar fecha
-        resultado = await sql`
-          UPDATE egresos 
-          SET fecha = ${new Date(fecha)}
-          WHERE id = ${parseInt(id)}
-          RETURNING *
-        `;
-      } else if (categoriaId !== undefined && estado === undefined && descripcion === undefined && monto === undefined && fecha === undefined && notas === undefined) {
-        // Solo actualizar categoría
-        resultado = await sql`
-          UPDATE egresos 
-          SET categoria_id = ${parseInt(categoriaId)}
-          WHERE id = ${parseInt(id)}
-          RETURNING *
-        `;
-      } else if (notas !== undefined && estado === undefined && descripcion === undefined && monto === undefined && fecha === undefined && categoriaId === undefined) {
-        // Solo actualizar notas
-        resultado = await sql`
-          UPDATE egresos 
-          SET notas = ${notas}
-          WHERE id = ${parseInt(id)}
-          RETURNING *
-        `;
-      } else {
-        // Múltiples campos - usar una consulta más compleja
-        const camposActualizar = [];
-        const valores = [];
-        
-        if (estado !== undefined) {
-          camposActualizar.push('estado = $' + (valores.length + 1));
-          valores.push(estado);
-        }
-        if (descripcion !== undefined) {
-          camposActualizar.push('descripcion = $' + (valores.length + 1));
-          valores.push(descripcion);
-        }
-        if (monto !== undefined) {
-          camposActualizar.push('monto = $' + (valores.length + 1));
-          valores.push(parseFloat(monto));
-        }
-        if (fecha !== undefined) {
-          camposActualizar.push('fecha = $' + (valores.length + 1));
-          valores.push(new Date(fecha));
-        }
-        if (categoriaId !== undefined) {
-          camposActualizar.push('categoria_id = $' + (valores.length + 1));
-          valores.push(parseInt(categoriaId));
-        }
-        if (notas !== undefined) {
-          camposActualizar.push('notas = $' + (valores.length + 1));
-          valores.push(notas);
-        }
-        
-        if (camposActualizar.length === 0) {
-          return res.status(400).json({ 
-            success: false,
-            error: 'No se proporcionaron campos para actualizar' 
-          });
-        }
-        
-        // Para múltiples campos, usar una consulta SQL directa
-        const query = `
-          UPDATE egresos 
-          SET ${camposActualizar.join(', ')}
-          WHERE id = $${valores.length + 1}
-          RETURNING *
-        `;
-        
-        console.log('📝 Query de actualización múltiple:', query);
-        console.log('📝 Valores:', [...valores, parseInt(id)]);
-        
-        // Usar sql.unsafe para consultas complejas (si está disponible) o fallback
-        try {
-          resultado = await sql.unsafe(query, [...valores, parseInt(id)]);
-        } catch (error) {
-          console.error('Error con sql.unsafe, usando consulta simple:', error);
-          // Fallback: actualizar solo el primer campo
-          if (estado !== undefined) {
-            resultado = await sql`
-              UPDATE egresos 
-              SET estado = ${estado}
-              WHERE id = ${parseInt(id)}
-              RETURNING *
-            `;
-          } else if (descripcion !== undefined) {
-            resultado = await sql`
-              UPDATE egresos 
-              SET descripcion = ${descripcion}
-              WHERE id = ${parseInt(id)}
-              RETURNING *
-            `;
-          } else {
-            throw new Error('No se pudo actualizar el egreso');
-          }
-        }
-      }
-      
-      console.log('📝 Resultado de la actualización:', resultado);
+      console.log('✅ Egreso actualizado exitosamente:', resultado[0]);
       
       if (resultado.length === 0) {
         return res.status(404).json({ 
@@ -810,8 +697,6 @@ module.exports = (sql) => {
       
       const egresoActualizado = resultado[0];
       
-      console.log(`✅ Egreso ${id} actualizado exitosamente`);
-      
       res.json({
         success: true,
         message: 'Egreso actualizado exitosamente',
@@ -819,7 +704,7 @@ module.exports = (sql) => {
       });
       
     } catch (error) {
-      console.error('Error al actualizar egreso:', error);
+      console.error('❌ Error al actualizar egreso:', error);
       res.status(500).json({ 
         success: false,
         error: 'Error interno del servidor',
