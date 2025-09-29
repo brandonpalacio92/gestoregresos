@@ -68,7 +68,7 @@ module.exports = (sql) => {
 
       const tiposConCategorias = tipos.map(tipo => ({
         ...tipo,
-        categorias: categorias.filter(cat => cat.tipo_id === tipo.id)
+        categorias: categorias.filter(cat => cat.tipo_egreso_id === tipo.id)
       }));
 
       res.json(tiposConCategorias);
@@ -102,7 +102,7 @@ module.exports = (sql) => {
         SELECT e.*, c.nombre as categoria_nombre, t.nombre as tipo_egreso_nombre
         FROM egresos e
         LEFT JOIN categorias c ON e.categoria_id = c.id
-        LEFT JOIN tipo_egreso t ON c.tipo_id = t.id
+        LEFT JOIN tipo_egreso t ON c.tipo_egreso_id = t.id
         WHERE e.usuario_id = ${parseInt(usuarioId)}
           AND e.fecha >= ${fechaInicio}
           AND e.fecha <= ${fechaFin}
@@ -187,7 +187,7 @@ module.exports = (sql) => {
           AND e.fecha >= ${fechaInicio}
           AND e.fecha <= ${fechaFin}
           AND e.estado != 'parcializado'  -- Excluir registros parcializados
-        LEFT JOIN tipo_egreso t ON c.tipo_id = t.id
+        LEFT JOIN tipo_egreso t ON c.tipo_egreso_id = t.id
         GROUP BY c.id, c.nombre, t.id, t.nombre
         ORDER BY monto_total DESC
       `;
@@ -321,7 +321,7 @@ module.exports = (sql) => {
             LEFT JOIN categorias c ON e.categoria_id = c.id
             WHERE e.usuario_id = ${parseInt(usuarioId)}
               AND e.estado = ${estado}
-              AND c.tipo_id = ${parseInt(tipoEgresoId)}
+              AND c.tipo_egreso_id = ${parseInt(tipoEgresoId)}
               AND e.fecha < ${fechaFin}
               AND e.estado != 'pagado'
             ORDER BY e.fecha DESC
@@ -333,7 +333,7 @@ module.exports = (sql) => {
             LEFT JOIN categorias c ON e.categoria_id = c.id
             WHERE e.usuario_id = ${parseInt(usuarioId)}
               AND e.estado = ${estado}
-              AND c.tipo_id = ${parseInt(tipoEgresoId)}
+              AND c.tipo_egreso_id = ${parseInt(tipoEgresoId)}
               AND e.fecha >= ${fechaInicio}
               AND e.fecha <= ${fechaFin}
             ORDER BY e.fecha DESC
@@ -348,7 +348,7 @@ module.exports = (sql) => {
           LEFT JOIN categorias c ON e.categoria_id = c.id
           WHERE e.usuario_id = ${parseInt(usuarioId)}
             AND e.estado = ${estado}
-            AND c.tipo_id = ${parseInt(tipoEgresoId)}
+            AND c.tipo_egreso_id = ${parseInt(tipoEgresoId)}
           ORDER BY e.fecha DESC
         `;
       } else if (estado && estado !== 'todos' && periodo && periodo !== 'todos') {
@@ -434,7 +434,7 @@ module.exports = (sql) => {
             FROM egresos e
             LEFT JOIN categorias c ON e.categoria_id = c.id
             WHERE e.usuario_id = ${parseInt(usuarioId)}
-              AND c.tipo_id = ${parseInt(tipoEgresoId)}
+              AND c.tipo_egreso_id = ${parseInt(tipoEgresoId)}
               AND e.fecha < ${fechaFin}
               AND e.estado != 'pagado'
             ORDER BY e.fecha DESC
@@ -445,7 +445,7 @@ module.exports = (sql) => {
             FROM egresos e
             LEFT JOIN categorias c ON e.categoria_id = c.id
             WHERE e.usuario_id = ${parseInt(usuarioId)}
-              AND c.tipo_id = ${parseInt(tipoEgresoId)}
+              AND c.tipo_egreso_id = ${parseInt(tipoEgresoId)}
               AND e.fecha >= ${fechaInicio}
               AND e.fecha <= ${fechaFin}
             ORDER BY e.fecha DESC
@@ -470,7 +470,7 @@ module.exports = (sql) => {
           FROM egresos e
           LEFT JOIN categorias c ON e.categoria_id = c.id
           WHERE e.usuario_id = ${parseInt(usuarioId)}
-            AND c.tipo_id = ${parseInt(tipoEgresoId)}
+            AND c.tipo_egreso_id = ${parseInt(tipoEgresoId)}
           ORDER BY e.fecha DESC
         `;
       } else if (periodo && periodo !== 'todos') {
@@ -914,7 +914,7 @@ module.exports = (sql) => {
           t.nombre as tipo_egreso_nombre
         FROM egresos e
         LEFT JOIN categorias c ON e.categoria_id = c.id
-        LEFT JOIN tipo_egreso t ON c.tipo_id = t.id
+        LEFT JOIN tipo_egreso t ON c.tipo_egreso_id = t.id
         WHERE e.usuario_id = ${parseInt(usuarioId)}
           AND e.fecha >= ${fechaInicio}
           AND e.fecha <= ${fechaFin}
