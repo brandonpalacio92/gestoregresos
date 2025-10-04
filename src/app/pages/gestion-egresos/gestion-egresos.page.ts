@@ -333,8 +333,21 @@ export class GestionEgresosPage implements OnInit {
 
   async cambiarEstado(egreso: Egreso, nuevoEstado: 'pendiente' | 'pagado' | 'vencido') {
     try {
+      console.log('🔄 Cambiando estado del egreso:', egreso.id, 'a:', nuevoEstado);
+      
+      // Preparar datos completos para actualización
+      const datosActualizacion = {
+        descripcion: egreso.descripcion,
+        monto: egreso.monto,
+        fecha: egreso.fecha,
+        notas: egreso.notas || '',
+        estado: nuevoEstado
+      };
+      
+      console.log('📝 Datos para actualización:', datosActualizacion);
+      
       const egresoActualizado = await firstValueFrom(
-        this.egresosService.actualizarEgreso(egreso.id, { estado: nuevoEstado })
+        this.egresosService.actualizarEgreso(egreso.id, datosActualizacion)
       );
       
       if (egresoActualizado) {
@@ -344,9 +357,11 @@ export class GestionEgresosPage implements OnInit {
           this.egresos[index] = { ...this.egresos[index], estado: nuevoEstado };
           this.aplicarFiltros();
         }
+        console.log('✅ Estado actualizado exitosamente');
       }
     } catch (error) {
-
+      console.error('❌ Error al cambiar estado:', error);
+      this.mostrarMensaje('Error al cambiar el estado del egreso', 'danger');
     }
   }
 
@@ -642,7 +657,7 @@ export class GestionEgresosPage implements OnInit {
         {
           name: 'fecha',
           type: 'date',
-          value: egreso.fecha.toISOString().split('T')[0]
+          value: this.formatearFechaParaInput(egreso.fecha)
         },
         {
           name: 'notas',
@@ -661,11 +676,18 @@ export class GestionEgresosPage implements OnInit {
           handler: async (data) => {
             if (data.descripcion && data.monto && data.fecha) {
               try {
+                // Validar y preparar fecha
+                const fechaValidada = this.validarYFormatearFecha(data.fecha);
+                if (!fechaValidada) {
+                  this.mostrarMensaje('Fecha inválida. Por favor selecciona una fecha válida.', 'warning');
+                  return false;
+                }
+
                 // Preparar datos para actualización
                 const datosActualizacion = {
                   descripcion: data.descripcion,
                   monto: parseFloat(data.monto),
-                  fecha: new Date(data.fecha),
+                  fecha: fechaValidada,
                   notas: data.notas || ''
                 };
 
@@ -701,6 +723,76 @@ export class GestionEgresosPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  // Método para formatear fecha para input de tipo date
+  formatearFechaParaInput(fecha: any): string {
+    try {
+      // Si es un string, intentar convertirlo a Date
+      let fechaObj: Date;
+      if (typeof fecha === 'string') {
+        fechaObj = new Date(fecha);
+      } else if (fecha instanceof Date) {
+        fechaObj = fecha;
+      } else {
+        console.error('❌ Tipo de fecha no válido:', typeof fecha, fecha);
+        return new Date().toISOString().split('T')[0];
+      }
+
+      // Verificar si la fecha es válida
+      if (isNaN(fechaObj.getTime())) {
+        console.error('❌ Fecha inválida:', fecha);
+        return new Date().toISOString().split('T')[0];
+      }
+
+      // Formatear para input de tipo date (YYYY-MM-DD)
+      return fechaObj.toISOString().split('T')[0];
+    } catch (error) {
+      console.error('❌ Error al formatear fecha:', error, fecha);
+      return new Date().toISOString().split('T')[0];
+    }
+  }
+
+  // Método para validar y formatear fecha para envío al backend
+  validarYFormatearFecha(fecha: any): Date | null {
+    try {
+      console.log('🔍 Validando fecha recibida:', fecha, 'Tipo:', typeof fecha);
+      
+      // Si es un string vacío o null/undefined
+      if (!fecha || fecha === '') {
+        console.error('❌ Fecha vacía o nula');
+        return null;
+      }
+
+      let fechaObj: Date;
+      
+      // Si es un string, intentar convertirlo a Date
+      if (typeof fecha === 'string') {
+        // Verificar formato YYYY-MM-DD
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
+          console.error('❌ Formato de fecha inválido:', fecha);
+          return null;
+        }
+        fechaObj = new Date(fecha + 'T00:00:00.000Z');
+      } else if (fecha instanceof Date) {
+        fechaObj = fecha;
+      } else {
+        console.error('❌ Tipo de fecha no válido:', typeof fecha, fecha);
+        return null;
+      }
+
+      // Verificar si la fecha es válida
+      if (isNaN(fechaObj.getTime())) {
+        console.error('❌ Fecha inválida después de conversión:', fecha);
+        return null;
+      }
+
+      console.log('✅ Fecha válida:', fechaObj.toISOString());
+      return fechaObj;
+    } catch (error) {
+      console.error('❌ Error al validar fecha:', error, fecha);
+      return null;
+    }
   }
 
   // Método para mostrar mensajes

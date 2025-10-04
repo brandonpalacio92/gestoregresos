@@ -346,12 +346,33 @@ export class GestionMensualPage implements OnInit {
   // Método para actualizar estado de egreso
   async actualizarEstadoEgreso(egresoId: string, nuevoEstado: 'pendiente' | 'pagado' | 'vencido') {
     try {
-      await firstValueFrom(this.egresosService.actualizarEgreso(egresoId, { estado: nuevoEstado }));
+      console.log('🔄 Cambiando estado del egreso:', egresoId, 'a:', nuevoEstado);
+      
+      // Buscar el egreso en la lista local para obtener todos los datos
+      const egreso = this.egresos.find(e => e.id === egresoId);
+      if (!egreso) {
+        console.error('❌ Egreso no encontrado:', egresoId);
+        return;
+      }
+      
+      // Preparar datos completos para actualización
+      const datosActualizacion = {
+        descripcion: egreso.descripcion,
+        monto: egreso.monto,
+        fecha: egreso.fecha,
+        notas: egreso.notas || '',
+        estado: nuevoEstado
+      };
+      
+      console.log('📝 Datos para actualización:', datosActualizacion);
+      
+      await firstValueFrom(this.egresosService.actualizarEgreso(egresoId, datosActualizacion));
 
       // Recargar datos para reflejar el cambio
       this.cargarDatosMensuales();
+      console.log('✅ Estado actualizado exitosamente');
     } catch (error) {
-
+      console.error('❌ Error al cambiar estado:', error);
     }
   }
 

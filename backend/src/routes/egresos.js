@@ -658,9 +658,17 @@ module.exports = (sql) => {
   router.put('/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      const { descripcion, monto, fecha, notas } = req.body;
+      const { descripcion, monto, fecha, notas, estado } = req.body;
       
       console.log(`🔄 Actualizando egreso ${id} con datos:`, req.body);
+      
+      // Validar campos requeridos
+      if (!descripcion || monto === undefined || !fecha || !estado) {
+        return res.status(400).json({
+          success: false,
+          error: 'Faltan campos requeridos: descripcion, monto, fecha, estado'
+        });
+      }
       
       // Validar que el egreso existe
       const egresoExistente = await sql`
@@ -681,7 +689,8 @@ module.exports = (sql) => {
           descripcion = ${descripcion},
           monto = ${parseFloat(monto)},
           fecha = ${new Date(fecha)},
-          notas = ${notas}
+          notas = ${notas},
+          estado = ${estado}
         WHERE id = ${parseInt(id)}
         RETURNING *
       `;
